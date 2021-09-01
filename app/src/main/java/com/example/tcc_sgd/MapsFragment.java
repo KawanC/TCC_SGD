@@ -117,6 +117,7 @@ public class MapsFragment extends Fragment {
             startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
             Toast.makeText(view.getContext(), "Para este aplicativo é necessário habilitar o GPS", Toast.LENGTH_LONG).show();
         }
+
         return view;
     }
 
