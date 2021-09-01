@@ -9,5 +9,20 @@
             android:icon="@drawable/ic_round_map_24"
             android:title="@string/menu_mapa" />
 
+        <item
+            android:id="@+id/nav_perfil"
+            android:icon="@drawable/ic_baseline_account_circle_24"
+            android:title="@string/menu_perfil" />
+
+        <item
+            android:id="@+id/nav_como_usar"
+            android:icon="@drawable/ic_baseline_help_24"
+            android:title="@string/menu_como_usar" />
+        <item
+            android:id="@+id/nav_feedback_app"
+            android:icon="@drawable/ic_baseline_star_half_24"
+            android:title="@string/menu_feedback_app" />
+
+
     </group>
 </menu>

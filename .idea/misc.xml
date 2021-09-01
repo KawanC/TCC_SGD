@@ -12,14 +12,19 @@
         <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/layout/app_bar_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/layout/content_main.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/layout/fragment_como_usar.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/layout/fragment_feedback_app.xml" value="0.35260416666666666" />
         <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/layout/fragment_gallery.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/layout/fragment_maps.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/menu/activity_main_drawer.xml" value="0.67" />
+        <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/layout/fragment_maps.xml" value="0.5" />
+        <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/layout/fragment_perfil.xml" value="0.19114583333333332" />
+        <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/layout/perfil_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/layout/perfil_fragment_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
         <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/menu/main.xml" value="0.20520833333333333" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

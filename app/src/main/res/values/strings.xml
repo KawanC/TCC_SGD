@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TCC_SGD</string>
+    <string name="app_name">SGD</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -8,4 +8,11 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_mapa">Mapa</string>
+    <string name="menu_perfil">Perfil</string>
+    <string name="menu_como_usar">Como Usar</string>
+    <string name="menu_feedback_app">Feedback App</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
