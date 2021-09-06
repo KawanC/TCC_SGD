@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -38,6 +39,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.util.List;
@@ -45,8 +48,10 @@ import java.util.concurrent.Executor;
 
 public class MapsFragment extends Fragment {
 
+
     private View view;
     private SearchView searchView;
+    private FloatingActionButton BotaoFeedback;
 
     // A classe FusedLocationProviderCliente irá fornecer os métodos para interagir com o GPS
     private FusedLocationProviderClient servicoLocalizacao;
@@ -95,6 +100,31 @@ public class MapsFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
+            }
+        });
+
+        // Metodo do botão do feedback.
+        BotaoFeedback = view.findViewById(R.id.ButtonFeedback);
+        BotaoFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                        view.getContext(), R.style.BottomSheetDialogTheme
+                );
+                View bottomSheetView = LayoutInflater.from(view.getContext().getApplicationContext())
+                        .inflate(
+                                R.layout.layout_bottom_sheet,
+                                (LinearLayout)view.findViewById(R.id.bottomSheetContainer)
+                        );
+                bottomSheetView.findViewById(R.id.buttonEnviar).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(view.getContext().getApplicationContext(), "Enviado", Toast.LENGTH_SHORT).show();
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
             }
         });
 

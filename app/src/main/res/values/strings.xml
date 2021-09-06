@@ -15,4 +15,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="feedback_here">Feedback Aqui</string>
+    <string name="por_favor_deixe_seu_feedback_sobre_o_local">"Por favor, deixe o seu feedback sobre o local. "</string>
+    <string name="agrade_emos_desde_j">Agradeçemos desde já!</string>
+    <string name="lugar_favorito">Lugar favorito</string>
+    <string name="compartilhe_o_local">Compartilhe o local</string>
+    <string name="enviar">ENVIAR</string>
 </resources>
