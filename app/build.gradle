@@ -47,4 +47,7 @@ dependencies {
     //Material Design
     implementation 'com.google.android.material:material:1.2.0-alpha02'
     implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    // Google Places implementation
+    implementation 'com.google.android.libraries.places:places:2.2.0'
 }

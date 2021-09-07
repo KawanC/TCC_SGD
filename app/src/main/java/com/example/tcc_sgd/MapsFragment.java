@@ -3,7 +3,10 @@ package com.example.tcc_sgd;
 import static android.content.Context.LOCATION_SERVICE;
 import static androidx.core.content.ContextCompat.getSystemService;
 
-import static com.example.tcc_sgd.R.id.barra_pesquisa;
+//import static com.example.tcc_sgd.R.id.barra_pesquisa;
+import static com.example.tcc_sgd.R.id.campo_pesquisa;
+import static com.example.tcc_sgd.R.id.center;
+import static com.example.tcc_sgd.R.id.map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,9 +29,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -39,18 +44,26 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.AutocompleteFragment;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executor;
 
 public class MapsFragment extends Fragment {
 
-
     private View view;
-    private SearchView searchView;
+    //private SearchView searchView;
+    private EditText editTextPesquisa;
     private FloatingActionButton BotaoFeedback;
 
     // A classe FusedLocationProviderCliente irá fornecer os métodos para interagir com o GPS
@@ -76,7 +89,14 @@ public class MapsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_maps, container, false);
 
-        searchView = view.findViewById(R.id.barra_pesquisa);
+
+        // NAO APAGAR ESSE METODO DE PESQUISA, POIS USANDO O AUTOCOMPLETE EU
+        // SO PEGUEI A LAT E LONG DO LUGAR DIGITADO PELO USUARIO E MANDEI
+        // ADICIONAR O MARCADOR. CASO NAO DE CERTO, TEREMOS QUE USAR
+        // ESSE METODO AQUI EM BAIXO NOVAMENTE. ENTAO, NAO APAGUEM.
+
+
+        /*searchView = view.findViewById(R.id.barra_pesquisa);
         // Metodo da barra de pesquisa (SearchView)
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -101,6 +121,24 @@ public class MapsFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
+        });*/
+
+        editTextPesquisa = view.findViewById(R.id.campo_pesquisa);
+        // Inicializando o Google Places
+        Places.initialize(view.getContext().getApplicationContext(), "AIzaSyBg3R695yf-eoLyYk9QXKxwgsbUvoCHRec");
+        editTextPesquisa.setFocusable(false);
+        editTextPesquisa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             // Inicializando a lista do Google Places
+             List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS
+                     ,Place.Field.LAT_LNG, Place.Field.NAME);
+             // Criando uma intent
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,
+                        fieldList).build(view.getContext());
+             // Startando a activity
+             startActivityForResult(intent, 100);
+            }
         });
 
         // Metodo do botão do feedback.
@@ -119,7 +157,7 @@ public class MapsFragment extends Fragment {
                 bottomSheetView.findViewById(R.id.buttonEnviar).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(view.getContext().getApplicationContext(), "Enviado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext().getApplicationContext(), "Enviado", Toast.LENGTH_LONG).show();
                         bottomSheetDialog.dismiss();
                     }
                 });
@@ -147,9 +185,37 @@ public class MapsFragment extends Fragment {
             startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
             Toast.makeText(view.getContext(), "Para este aplicativo é necessário habilitar o GPS", Toast.LENGTH_LONG).show();
         }
-
         return view;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 100 && resultCode == Activity.RESULT_OK){
+            // Se deu certo, inicializamos o place
+            Place place = Autocomplete.getPlaceFromIntent(data);
+            editTextPesquisa.setText(place.getAddress());
+            // Adicionando o marcador no local pesquisado
+            mMap.clear();
+            mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getName()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
+        }else if(resultCode == AutocompleteActivity.RESULT_ERROR){
+            // Se nao deu certo, inicializamos o status
+            Status status = Autocomplete.getStatusFromIntent(data);
+            Toast.makeText(view.getContext(), status.getStatusMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private OnMapReadyCallback callback = new OnMapReadyCallback() {
+        // Quando o mapa estiver na tela do celular do usuario, o metodo
+        // abaixo sera iniciado.
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            mMap = googleMap;
+            recuperarPosicaoAtual();
+            adicionaComponentesVisuais();
+        }
+    };
 
     // Adicionando o botão para centralizar o mapa na posição atual.
     private void adicionaComponentesVisuais() {
@@ -217,17 +283,6 @@ public class MapsFragment extends Fragment {
             Log.e("TESTE_GPS", e.getMessage());
         }
     }
-
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
-        // Quando o mapa estiver na tela do celular do usuario, o metodo
-        // abaixo sera iniciado.
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-            mMap = googleMap;
-            recuperarPosicaoAtual();
-            adicionaComponentesVisuais();
-        }
-    };
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
