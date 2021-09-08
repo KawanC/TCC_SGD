@@ -141,6 +141,8 @@ public class MapsFragment extends Fragment {
             }
         });
 
+
+
         // Metodo do botão do feedback.
         BotaoFeedback = view.findViewById(R.id.ButtonFeedback);
         BotaoFeedback.setOnClickListener(new View.OnClickListener() {
@@ -154,9 +156,16 @@ public class MapsFragment extends Fragment {
                                 R.layout.layout_bottom_sheet,
                                 (LinearLayout)view.findViewById(R.id.bottomSheetContainer)
                         );
+
+                //EVENTO DA SEEKBAR PARA MOSTRAR AO USUARIO (VAZIO, POUCO MOVIMENTADO...)
+
+
+                //EVENTO DO BOTÃO QUE FICA DENTRO DO BOTTOM SHET
                 bottomSheetView.findViewById(R.id.buttonEnviar).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //COLOCAR IFS PARA PODER ATIVAR O BOTÃO
+
                         Toast.makeText(view.getContext().getApplicationContext(), "Enviado", Toast.LENGTH_LONG).show();
                         bottomSheetDialog.dismiss();
                     }
