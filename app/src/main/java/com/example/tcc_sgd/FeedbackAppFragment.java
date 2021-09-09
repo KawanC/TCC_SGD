@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +17,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class FeedbackAppFragment extends Fragment {
+    private View view;
+    SeekBar seekBar;
+    private TextView textViewMovimentacao;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,6 +29,7 @@ public class FeedbackAppFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     public FeedbackAppFragment() {
         // Required empty public constructor
@@ -59,6 +66,38 @@ public class FeedbackAppFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feedback_app, container, false);
+       view = inflater.inflate(R.layout.fragment_feedback_app, container, false);
+
+        seekBar = view.findViewById(R.id.seekBar);
+        textViewMovimentacao = view.findViewById(R.id.textViewMovimentacao);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                switch (progress){
+                    case 0: textViewMovimentacao.setText("Vazio");
+                        break;
+                    case 1: textViewMovimentacao.setText("Pouco Movimentado");
+                        break;
+                    case 2: textViewMovimentacao.setText("Movimentado");
+                        break;
+                    case 3: textViewMovimentacao.setText("Abarrotado");
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        return view;
     }
 }

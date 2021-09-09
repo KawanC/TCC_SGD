@@ -31,6 +31,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
@@ -65,6 +67,8 @@ public class MapsFragment extends Fragment {
     //private SearchView searchView;
     private EditText editTextPesquisa;
     private FloatingActionButton BotaoFeedback;
+    private SeekBar seekBar;
+    private TextView textViewMovimentacao;
 
     // A classe FusedLocationProviderCliente irá fornecer os métodos para interagir com o GPS
     private FusedLocationProviderClient servicoLocalizacao;
@@ -143,6 +147,7 @@ public class MapsFragment extends Fragment {
 
 
 
+
         // Metodo do botão do feedback.
         BotaoFeedback = view.findViewById(R.id.ButtonFeedback);
         BotaoFeedback.setOnClickListener(new View.OnClickListener() {
@@ -172,8 +177,13 @@ public class MapsFragment extends Fragment {
                 });
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
+
+                seekBar = view.findViewById(R.id.seekBar1);
+                textViewMovimentacao = view.findViewById(R.id.textViewMovimento1);
             }
         });
+
+
 
         // Chamando o serviço de localização do Andrdoid e atribuindo ao nosso objeto
         servicoLocalizacao = LocationServices.getFusedLocationProviderClient(view.getContext());
