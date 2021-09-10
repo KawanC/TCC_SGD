@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,14 +65,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executor;
 
+import kotlin.random.Random;
+
 public class MapsFragment extends Fragment {
 
-    private View view;
+
     //private SearchView searchView;
+    private View view;
     private EditText editTextPesquisa;
     private FloatingActionButton BotaoFeedback;
     private SeekBar seekBar;
     private TextView textViewMovimentacao;
+    private RadioGroup radioGroupEstabelecimento;
 
     // A classe FusedLocationProviderCliente irá fornecer os métodos para interagir com o GPS
     private FusedLocationProviderClient servicoLocalizacao;
@@ -186,18 +191,21 @@ public class MapsFragment extends Fragment {
                                 textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
                                 seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
                                 seekBar.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+
                                 break;
                             case 2:
                                 textViewMovimentacao.setText("Movimentado");
                                 textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
                                 seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
                                 seekBar.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+
                                 break;
                             case 3:
                                 textViewMovimentacao.setText("Cheio");
                                 textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
                                 seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
                                 seekBar.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+
                                 break;
                         }
                     }
@@ -213,14 +221,71 @@ public class MapsFragment extends Fragment {
                     }
                 });
 
+
+
                 //EVENTO DO BOTÃO QUE FICA DENTRO DO BOTTOM SHET
                 bottomSheetView.findViewById(R.id.buttonEnviar).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //COLOCAR IFS PARA PODER ATIVAR O BOTÃO
+                        radioGroupEstabelecimento = bottomSheetView.findViewById(R.id.radioGroupTamanho);
+                        textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento1);
+                        int radioId = radioGroupEstabelecimento.getCheckedRadioButtonId(); //pegando id do botão selecionado
+                        switch (radioId){
+                            case R.id.radioButtonPequeno:
+                                if (textViewMovimentacao.getText().equals("Vazio")){
 
-                        Toast.makeText(view.getContext().getApplicationContext(), "Enviado", Toast.LENGTH_LONG).show();
-                        bottomSheetDialog.dismiss();
+                                }
+                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")){
+
+                                }
+                                if (textViewMovimentacao.getText().equals("Movimentado")){
+
+                                }
+                                if (textViewMovimentacao.getText().equals("Cheio")){
+
+                                }
+                                bottomSheetDialog.dismiss();
+                                break;
+
+                            case R.id.radioButtonMedio:
+                                if (textViewMovimentacao.getText().equals("Vazio")){
+
+                                }
+                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")){
+
+                                }
+                                if (textViewMovimentacao.getText().equals("Movimentado")){
+                                    Toast.makeText(view.getContext(), "TESTE", Toast.LENGTH_SHORT).show();
+                                }
+                                if (textViewMovimentacao.getText().equals("Cheio")){
+
+                                }
+
+                                bottomSheetDialog.dismiss();
+                                break;
+
+                            case R.id.radioButtonGrande:
+                                if (textViewMovimentacao.getText().equals("Vazio")){
+
+                                }
+                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")){
+
+                                }
+                                if (textViewMovimentacao.getText().equals("Movimentado")){
+
+                                }
+                                if (textViewMovimentacao.getText().equals("Cheio")){
+
+                                }
+
+                                bottomSheetDialog.dismiss();
+                                break;
+
+                            default:
+                                Toast.makeText(view.getContext(), "Por favor selecione o tamanho do estabelecimento!", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
                     }
                 });
                 bottomSheetDialog.setContentView(bottomSheetView);
