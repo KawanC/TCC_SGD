@@ -1,5 +1,7 @@
 package com.example.tcc_sgd;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -76,12 +78,25 @@ public class FeedbackAppFragment extends Fragment {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 switch (progress){
                     case 0: textViewMovimentacao.setText("Vazio");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#000000"));
+                        seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN);
+
                         break;
                     case 1: textViewMovimentacao.setText("Pouco Movimentado");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#90EE90"));
+                        seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#90EE90"), PorterDuff.Mode.MULTIPLY);
+                        seekBar.getThumb().setColorFilter(Color.parseColor("#90EE90"), PorterDuff.Mode.SRC_IN);
                         break;
                     case 2: textViewMovimentacao.setText("Movimentado");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                        seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                        seekBar.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
                         break;
-                    case 3: textViewMovimentacao.setText("Abarrotado");
+                    case 3: textViewMovimentacao.setText("Cheio");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                        seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
                         break;
                 }
 

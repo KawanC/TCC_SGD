@@ -4,6 +4,7 @@ import static android.content.Context.LOCATION_SERVICE;
 import static androidx.core.content.ContextCompat.getSystemService;
 
 //import static com.example.tcc_sgd.R.id.barra_pesquisa;
+import static com.example.tcc_sgd.R.id.buttonEnviar;
 import static com.example.tcc_sgd.R.id.campo_pesquisa;
 import static com.example.tcc_sgd.R.id.center;
 import static com.example.tcc_sgd.R.id.map;
@@ -19,6 +20,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -145,9 +148,6 @@ public class MapsFragment extends Fragment {
             }
         });
 
-
-
-
         // Metodo do botão do feedback.
         BotaoFeedback = view.findViewById(R.id.ButtonFeedback);
         BotaoFeedback.setOnClickListener(new View.OnClickListener() {
@@ -163,7 +163,55 @@ public class MapsFragment extends Fragment {
                         );
 
                 //EVENTO DA SEEKBAR PARA MOSTRAR AO USUARIO (VAZIO, POUCO MOVIMENTADO...)
+                seekBar = bottomSheetView.findViewById(R.id.seekBar1); //PEGANDO ID DA SEEKBAR PELO BOTTOMSHEET
+                textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento1);
 
+                // EVENTO LISTINER QUE "ESCUTA O MOVIMENTO" DA SEEK BAR
+                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                        // NECESSÁRIO ESTAR AQUI DENTRO NOVAMENTE POIS SE NÃO O LISTINER NÃO "EXERGA" O TEXTVIEW
+                        textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento1);
+                        switch (progress){
+                            //PROGRESS SÃO OS ESTAGIOS DA SEEKBAR, QUE VAI DE 0 A 3
+                            case 0:
+                                textViewMovimentacao.setText("Vazio");
+                                textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                                seekBar.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                                break;
+                            case 1:
+                                textViewMovimentacao.setText("Pouco Movimentado");
+                                textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                                seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                                seekBar.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                                break;
+                            case 2:
+                                textViewMovimentacao.setText("Movimentado");
+                                textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                                seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                                seekBar.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                                break;
+                            case 3:
+                                textViewMovimentacao.setText("Cheio");
+                                textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                                seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                                seekBar.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                        //ACIONADO AO CLICAR NA SEEKBAR
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        //ACIONADO AO "SOLTAR" A SEEKBAR
+                    }
+                });
 
                 //EVENTO DO BOTÃO QUE FICA DENTRO DO BOTTOM SHET
                 bottomSheetView.findViewById(R.id.buttonEnviar).setOnClickListener(new View.OnClickListener() {
