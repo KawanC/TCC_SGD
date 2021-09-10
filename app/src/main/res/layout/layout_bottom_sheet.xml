@@ -33,10 +33,10 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:layout_margin="10dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/sgdbottomsheet"
+            android:src="@drawable/sgd_sem_fundo"
             app:riv_corner_radius="10dp"/>
 
         <LinearLayout
@@ -165,7 +165,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="36dp"
-            android:text="TextView"
+            android:text="Vazio"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
