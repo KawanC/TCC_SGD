@@ -15,7 +15,7 @@
 
     <EditText
         android:id="@+id/campo_pesquisa"
-        android:layout_width="338dp"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:background="@android:drawable/editbox_background"
         android:drawableLeft="@drawable/ic_search"

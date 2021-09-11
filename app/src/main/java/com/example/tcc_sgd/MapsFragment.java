@@ -11,12 +11,14 @@ import static com.example.tcc_sgd.R.id.map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -77,6 +79,10 @@ public class MapsFragment extends Fragment {
     private SeekBar seekBar;
     private TextView textViewMovimentacao;
     private RadioGroup radioGroupEstabelecimento;
+    //private AppCompatButton btn_sucesso;
+
+    AlertDialog.Builder builderDialog;
+    AlertDialog alertDialog;
 
     // A classe FusedLocationProviderCliente irá fornecer os métodos para interagir com o GPS
     private FusedLocationProviderClient servicoLocalizacao;
@@ -246,6 +252,7 @@ public class MapsFragment extends Fragment {
 
                                 }
                                 bottomSheetDialog.dismiss();
+                                showAlertDialog(R.layout.dialog_sucesso_feedback);
                                 break;
 
                             case R.id.radioButtonMedio:
@@ -263,6 +270,7 @@ public class MapsFragment extends Fragment {
                                 }
 
                                 bottomSheetDialog.dismiss();
+                                showAlertDialog(R.layout.dialog_sucesso_feedback);
                                 break;
 
                             case R.id.radioButtonGrande:
@@ -280,12 +288,31 @@ public class MapsFragment extends Fragment {
                                 }
 
                                 bottomSheetDialog.dismiss();
+                                showAlertDialog(R.layout.dialog_sucesso_feedback);
                                 break;
 
                             default:
-                                Toast.makeText(view.getContext(), "Por favor selecione o tamanho do estabelecimento!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(view.getContext(), "Por favor selecione o tamanho do estabelecimento para completar o seu feedback.", Toast.LENGTH_LONG).show();
                                 break;
                         }
+                    }
+                    // Metodo do custom dialog.
+                    private void showAlertDialog(int layoutDialog){
+                        builderDialog = new AlertDialog.Builder(view.getContext());
+                        View LayoutView = getLayoutInflater().inflate(layoutDialog, null);
+                        AppCompatButton dialogButtom = LayoutView.findViewById(R.id.botao_ok_dialog);
+                        builderDialog.setView(LayoutView);
+                        alertDialog = builderDialog.create();
+                        alertDialog.show();
+
+                        // Quando clicado no botão de "Ok" no custom dialog
+                        dialogButtom.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                // Desabilitando o dialog
+                                alertDialog.dismiss();
+                            }
+                        });
                     }
                 });
                 bottomSheetDialog.setContentView(bottomSheetView);
@@ -295,8 +322,6 @@ public class MapsFragment extends Fragment {
                 textViewMovimentacao = view.findViewById(R.id.textViewMovimento1);
             }
         });
-
-
 
         // Chamando o serviço de localização do Andrdoid e atribuindo ao nosso objeto
         servicoLocalizacao = LocationServices.getFusedLocationProviderClient(view.getContext());

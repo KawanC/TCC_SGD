@@ -10,7 +10,7 @@
     <color name="CorTudo">#BBF3FF</color>
     <color name="CorTopo">#A1D2DD</color>
 
-    //Colors feedback
+    <!--Colors feedback-->
     <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#1976D2</color>
     <color name="colorAccent">#FF5252</color>
@@ -18,4 +18,9 @@
     <color name="colorSecondaryText">#757575</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorDuvider">#ECECEC</color>
+
+    <!--Colors custom dialog-->
+    <color name="colorPrimaryCustom">#306b34</color>
+    <color name="buttom_location">#FFFFFF</color>
+
 </resources>
