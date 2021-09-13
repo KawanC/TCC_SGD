@@ -21,6 +21,7 @@
 
     <!--Colors custom dialog-->
     <color name="colorPrimaryCustom">#306b34</color>
+    <color name="colorSecondCustom">#CD4444</color>
     <color name="buttom_location">#FFFFFF</color>
 
 </resources>

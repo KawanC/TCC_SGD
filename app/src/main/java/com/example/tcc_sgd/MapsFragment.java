@@ -34,8 +34,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -61,6 +63,11 @@ import com.google.android.libraries.places.widget.AutocompleteFragment;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -79,6 +86,8 @@ public class MapsFragment extends Fragment {
     private SeekBar seekBar;
     private TextView textViewMovimentacao;
     private RadioGroup radioGroupEstabelecimento;
+    private int numeroMovimentacao;
+    private RadioButton radioButtonPequeno, radioButtonMedio, radioButtonGrande;
     //private AppCompatButton btn_sucesso;
 
     AlertDialog.Builder builderDialog;
@@ -197,37 +206,30 @@ public class MapsFragment extends Fragment {
                                 textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
                                 seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
                                 seekBar.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
-
                                 break;
                             case 2:
                                 textViewMovimentacao.setText("Movimentado");
                                 textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
                                 seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
                                 seekBar.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
-
                                 break;
                             case 3:
                                 textViewMovimentacao.setText("Cheio");
                                 textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
                                 seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
                                 seekBar.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
-
                                 break;
                         }
                     }
-
                     @Override
                     public void onStartTrackingTouch(SeekBar seekBar) {
                         //ACIONADO AO CLICAR NA SEEKBAR
                     }
-
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
                         //ACIONADO AO "SOLTAR" A SEEKBAR
                     }
                 });
-
-
 
                 //EVENTO DO BOTÃO QUE FICA DENTRO DO BOTTOM SHET
                 bottomSheetView.findViewById(R.id.buttonEnviar).setOnClickListener(new View.OnClickListener() {
@@ -240,60 +242,90 @@ public class MapsFragment extends Fragment {
                         switch (radioId){
                             case R.id.radioButtonPequeno:
                                 if (textViewMovimentacao.getText().equals("Vazio")){
-
+                                    numeroMovimentacao = 0;
                                 }
                                 if (textViewMovimentacao.getText().equals("Pouco Movimentado")){
-
+                                    numeroMovimentacao = 50;
                                 }
                                 if (textViewMovimentacao.getText().equals("Movimentado")){
-
+                                    numeroMovimentacao = 100;
                                 }
                                 if (textViewMovimentacao.getText().equals("Cheio")){
-
+                                    numeroMovimentacao = 200;
                                 }
-                                bottomSheetDialog.dismiss();
-                                showAlertDialog(R.layout.dialog_sucesso_feedback);
+                                //bottomSheetDialog.dismiss();
                                 break;
 
                             case R.id.radioButtonMedio:
                                 if (textViewMovimentacao.getText().equals("Vazio")){
-
+                                    numeroMovimentacao = 0;
                                 }
                                 if (textViewMovimentacao.getText().equals("Pouco Movimentado")){
-
+                                    numeroMovimentacao = 75;
                                 }
                                 if (textViewMovimentacao.getText().equals("Movimentado")){
-                                    Toast.makeText(view.getContext(), "TESTE", Toast.LENGTH_SHORT).show();
+                                    numeroMovimentacao = 150;
                                 }
                                 if (textViewMovimentacao.getText().equals("Cheio")){
-
+                                    numeroMovimentacao = 250;
                                 }
-
-                                bottomSheetDialog.dismiss();
-                                showAlertDialog(R.layout.dialog_sucesso_feedback);
+                                //bottomSheetDialog.dismiss();
                                 break;
 
                             case R.id.radioButtonGrande:
                                 if (textViewMovimentacao.getText().equals("Vazio")){
-
+                                    numeroMovimentacao = 0;
                                 }
                                 if (textViewMovimentacao.getText().equals("Pouco Movimentado")){
-
+                                    numeroMovimentacao = 100;
                                 }
                                 if (textViewMovimentacao.getText().equals("Movimentado")){
-
+                                    numeroMovimentacao = 200;
                                 }
                                 if (textViewMovimentacao.getText().equals("Cheio")){
+                                    numeroMovimentacao = 400;
+                                }
+                                break;
+                        }
+                        radioButtonPequeno = bottomSheetView.findViewById(R.id.radioButtonPequeno);
+                        radioButtonMedio = bottomSheetView.findViewById(R.id.radioButtonMedio);
+                        radioButtonGrande = bottomSheetView.findViewById(R.id.radioButtonGrande);
 
+                        if(radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked()){
+                            //Toast.makeText(view.getContext(), "TESTE BUTTON", Toast.LENGTH_SHORT).show();
+                            // CODIGO BANCO DE DADOS
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference();
+                            String idRegistro = myRef.push().getKey();
+
+                            int radioIdBanco = radioGroupEstabelecimento.getCheckedRadioButtonId();
+                            switch (radioIdBanco){
+                                case R.id.radioButtonPequeno:
+                                    myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue("Pequeno");
+                                    break;
+                                case R.id.radioButtonMedio:
+                                    myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue("Medio");
+                                    break;
+                                case R.id.radioButtonGrande:
+                                    myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue("Grande");
+                                    break;
+                            }
+                            myRef.child(idRegistro).child("Movimentação Estabelecimento").setValue(numeroMovimentacao + " pessoas");
+
+                            myRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    showAlertDialog(R.layout.dialog_sucesso_feedback);
                                 }
 
-                                bottomSheetDialog.dismiss();
-                                showAlertDialog(R.layout.dialog_sucesso_feedback);
-                                break;
-
-                            default:
-                                Toast.makeText(view.getContext(), "Por favor selecione o tamanho do estabelecimento para completar o seu feedback.", Toast.LENGTH_LONG).show();
-                                break;
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    showAlertDialog(R.layout.dialog_erro_feedback);
+                                }
+                            });
+                            bottomSheetDialog.dismiss();
+                        }else{
+                            Toast.makeText(view.getContext(), "Por favor selecione o tamanho do estabelecimento para completar o seu feedback.", Toast.LENGTH_LONG).show();
                         }
                     }
                     // Metodo do custom dialog.
@@ -322,6 +354,35 @@ public class MapsFragment extends Fragment {
                 textViewMovimentacao = view.findViewById(R.id.textViewMovimento1);
             }
         });
+
+        /*radioGroupEstabelecimento = view.findViewById(R.id.radioGroupTamanho);
+        textViewMovimentacao = view.findViewById(R.id.textViewMovimento1);
+        Button botaoEnviar = view.findViewById(buttonEnviar);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+
+        botaoEnviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String idRegistro = myRef.push().getKey();
+
+                myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue(radioGroupEstabelecimento.getCheckedRadioButtonId());
+                myRef.child(idRegistro).child("Movimentação Estabelecimento").setValue(textViewMovimentacao.getText().toString());
+
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Toast.makeText(view.getContext(), "Feedback enviado", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(view.getContext(), "ERRO", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });*/
 
         // Chamando o serviço de localização do Andrdoid e atribuindo ao nosso objeto
         servicoLocalizacao = LocationServices.getFusedLocationProviderClient(view.getContext());
