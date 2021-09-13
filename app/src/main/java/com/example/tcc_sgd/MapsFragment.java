@@ -152,7 +152,7 @@ public class MapsFragment extends Fragment {
 
         editTextPesquisa = view.findViewById(R.id.campo_pesquisa);
         // Inicializando o Google Places
-        Places.initialize(view.getContext().getApplicationContext(), "AIzaSyBg3R695yf-eoLyYk9QXKxwgsbUvoCHRec");
+        Places.initialize(view.getContext().getApplicationContext(), "AIzaSyDm2buo0TV0GNdmCvA0HPas-ojkn6in2jk");
         editTextPesquisa.setFocusable(false);
         editTextPesquisa.setOnClickListener(new View.OnClickListener() {
             @Override
