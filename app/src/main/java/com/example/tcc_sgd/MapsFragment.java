@@ -1,31 +1,22 @@
 package com.example.tcc_sgd;
 
 import static android.content.Context.LOCATION_SERVICE;
-import static androidx.core.content.ContextCompat.getSystemService;
 
 //import static com.example.tcc_sgd.R.id.barra_pesquisa;
-import static com.example.tcc_sgd.R.id.buttonEnviar;
-import static com.example.tcc_sgd.R.id.campo_pesquisa;
-import static com.example.tcc_sgd.R.id.center;
-import static com.example.tcc_sgd.R.id.map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -34,7 +25,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -56,10 +46,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.AutocompleteFragment;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -69,12 +57,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Executor;
-
-import kotlin.random.Random;
 
 public class MapsFragment extends Fragment {
 
@@ -183,8 +167,8 @@ public class MapsFragment extends Fragment {
                         );
 
                 //EVENTO DA SEEKBAR PARA MOSTRAR AO USUARIO (VAZIO, POUCO MOVIMENTADO...)
-                seekBar = bottomSheetView.findViewById(R.id.seekBar1); //PEGANDO ID DA SEEKBAR PELO BOTTOMSHEET
-                textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento1);
+                seekBar = bottomSheetView.findViewById(R.id.seekBarInfo); //PEGANDO ID DA SEEKBAR PELO BOTTOMSHEET
+                textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimentoInfo);
 
                 // EVENTO LISTINER QUE "ESCUTA O MOVIMENTO" DA SEEK BAR
                 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -192,7 +176,7 @@ public class MapsFragment extends Fragment {
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
                         // NECESSÁRIO ESTAR AQUI DENTRO NOVAMENTE POIS SE NÃO O LISTINER NÃO "EXERGA" O TEXTVIEW
-                        textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento1);
+                        textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimentoInfo);
                         switch (progress){
                             //PROGRESS SÃO OS ESTAGIOS DA SEEKBAR, QUE VAI DE 0 A 3
                             case 0:
@@ -237,7 +221,7 @@ public class MapsFragment extends Fragment {
                     public void onClick(View v) {
                         //COLOCAR IFS PARA PODER ATIVAR O BOTÃO
                         radioGroupEstabelecimento = bottomSheetView.findViewById(R.id.radioGroupTamanho);
-                        textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento1);
+                        textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimentoInfo);
                         int radioId = radioGroupEstabelecimento.getCheckedRadioButtonId(); //pegando id do botão selecionado
                         switch (radioId){
                             case R.id.radioButtonPequeno:
@@ -350,8 +334,8 @@ public class MapsFragment extends Fragment {
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
 
-                seekBar = view.findViewById(R.id.seekBar1);
-                textViewMovimentacao = view.findViewById(R.id.textViewMovimento1);
+                seekBar = view.findViewById(R.id.seekBarInfo);
+                textViewMovimentacao = view.findViewById(R.id.textViewMovimentoInfo);
             }
         });
 

@@ -161,7 +161,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textViewMovimento1"
+            android:id="@+id/textViewMovimentoInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="36dp"
@@ -174,7 +174,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <SeekBar
-            android:id="@+id/seekBar1"
+            android:id="@+id/seekBarInfo"
             style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="365dp"
             android:layout_height="wrap_content"
@@ -188,7 +188,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewMovimento1"
+            app:layout_constraintTop_toBottomOf="@+id/textViewMovimentoInfo"
             app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
