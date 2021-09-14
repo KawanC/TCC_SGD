@@ -32,7 +32,8 @@
         android:id="@+id/ButtonFeedback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="false"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|end"
         android:layout_marginStart="@dimen/fab_margin"
@@ -41,5 +42,23 @@
         android:layout_marginBottom="@dimen/fab_margin"
         app:backgroundTint="@color/CorTudo"
         app:srcCompat="@drawable/ic_feedback" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonInformacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/ButtonFeedback"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="false"
+        android:layout_gravity="bottom|end"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        app:backgroundTint="@color/CorTudo"
+        app:srcCompat="@drawable/ic_baseline_info_24" />
 
 </RelativeLayout>

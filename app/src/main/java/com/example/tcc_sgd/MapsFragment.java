@@ -82,7 +82,7 @@ public class MapsFragment extends Fragment {
     //private SearchView searchView;
     private View view;
     private EditText editTextPesquisa;
-    private FloatingActionButton BotaoFeedback;
+    private FloatingActionButton BotaoFeedback, BotaoInformacao;
     private SeekBar seekBar;
     private TextView textViewMovimentacao;
     private RadioGroup radioGroupEstabelecimento;
@@ -352,6 +352,24 @@ public class MapsFragment extends Fragment {
 
                 seekBar = view.findViewById(R.id.seekBar1);
                 textViewMovimentacao = view.findViewById(R.id.textViewMovimento1);
+            }
+        });
+
+        // Metodo do botão da informação do estabelecimento
+        BotaoInformacao = view.findViewById(R.id.buttonInformacao);
+        BotaoInformacao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                        view.getContext(), R.style.BottomSheetDialogTheme
+                );
+                View bottomSheetView = LayoutInflater.from(view.getContext().getApplicationContext())
+                        .inflate(
+                                R.layout.layout_informacao_estabelecimento,
+                                (LinearLayout)view.findViewById(R.id.bottomSheetContainer)
+                        );
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
             }
         });
 
