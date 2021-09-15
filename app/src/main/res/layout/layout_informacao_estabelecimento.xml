@@ -35,31 +35,32 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/iconEstabelecimentoInfo"
-            android:layout_width="122dp"
-            android:layout_height="111dp"
+            android:layout_width="98dp"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/sgd_sem_fundo"
+            android:src="@drawable/ic_restaurante_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.121"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.426"
             app:riv_corner_radius="10dp" />
 
         <TextView
             android:id="@+id/nomeEstabelecimentoInfo"
-            android:layout_width="223dp"
-            android:layout_height="46dp"
-            android:text="@string/por_favor_deixe_seu_feedback_sobre_o_local"
+            android:layout_width="222dp"
+            android:layout_height="33dp"
+            android:gravity="center"
+            android:text="Nome do Estabelecimento"
             android:textColor="@color/colorPrimaryText"
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.92"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iconEstabelecimentoInfo"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.060000002" />
+            app:layout_constraintVertical_bias="0.18" />
 
         <TextView
             android:id="@+id/enderecoEstabelecimentoInfo"
@@ -73,7 +74,7 @@
             app:layout_constraintTop_toBottomOf="@+id/nomeEstabelecimentoInfo" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/telefoneEstabelecimentoInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Telefone"
@@ -82,13 +83,13 @@
             app:layout_constraintTop_toBottomOf="@+id/enderecoEstabelecimentoInfo" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/tamanhoEstabelecimentoInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tamanho estabelecimento"
             app:layout_constraintEnd_toEndOf="@+id/nomeEstabelecimentoInfo"
             app:layout_constraintStart_toStartOf="@+id/nomeEstabelecimentoInfo"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintTop_toBottomOf="@+id/telefoneEstabelecimentoInfo" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -114,9 +115,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="56dp"
-            android:text="Vazio"
-            android:textColor="@color/black"
+            android:text="Cheio!"
+            android:textColor="@color/colorAccent"
             android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -135,34 +137,50 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <LinearLayout
+            android:layout_width="322dp"
+            android:layout_height="15dp"
+            android:background="@drawable/seek_bar"
+            android:orientation="horizontal"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewMovimentoInfo"
+            app:layout_constraintVertical_bias="0.22000003"></LinearLayout>
+
         <TextView
             android:id="@+id/textViewVistoFeedBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ultima atualização:"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.84"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.87" />
-
-        <SeekBar
+            app:layout_constraintVertical_bias="0.96" />
+        <!--
+       <SeekBar
             android:id="@+id/seekBarInfo"
             style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="365dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/black"
             android:max="3"
-            android:progress="0"
-            android:progressBackgroundTint="@color/black"
+            android:progress="2"
+            android:progressDrawable="@drawable/seek_bar"
+            android:thumb="@drawable/thumb_seek_bar"
             android:scrollbarStyle="insideInset"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewMovimentoInfo"
             app:layout_constraintVertical_bias="0.0" />
+            -->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

@@ -7,8 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="CorTudo">#BBF3FF</color>
-    <color name="CorTopo">#A1D2DD</color>
+    <color name="CorTudo">#4169E1</color>
+    <color name="CorTopo">#335CD8</color>
 
     <!--Colors feedback-->
     <color name="colorPrimary">#2196F3</color>
@@ -23,5 +23,6 @@
     <color name="colorPrimaryCustom">#306b34</color>
     <color name="colorSecondCustom">#CD4444</color>
     <color name="buttom_location">#FFFFFF</color>
+    <color name="CorBotao">#1E90FF</color>
 
 </resources>
