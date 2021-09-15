@@ -19,6 +19,14 @@ public class Estabelecimento {
         return nome;
     }
 
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
     public int getMovimento() {
         return movimento;
     }

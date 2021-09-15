@@ -70,6 +70,7 @@ public class MapsFragment extends Fragment {
     private TextView textViewMovimentacao, textViewNomeInformacao, textViewEnderecoInformaco, textViewTelefoneInformacao,
             textViewTamanhoInformacao, textViewNomeFeedBack, getTextViewEnderecoFeedBack;
     private RadioGroup radioGroupEstabelecimento;
+    Estabelecimento estabelecimento;
     private int numeroMovimentacao;
     private RadioButton radioButtonPequeno, radioButtonMedio, radioButtonGrande;
 
@@ -93,6 +94,8 @@ public class MapsFragment extends Fragment {
 
     // Variável para armazenar o ponto retornoado pelo GPS do celular do usuario.
     Location ultimaPosicao;
+
+
 
     @Nullable
     @Override
@@ -147,8 +150,8 @@ public class MapsFragment extends Fragment {
         if(requestCode == 100 && resultCode == Activity.RESULT_OK){
             // Se deu certo, inicializamos o place
             Place place = Autocomplete.getPlaceFromIntent(data);
-            Estabelecimento estabelecimento = new Estabelecimento(place.getName(), place.getAddress(),
-                    place.getPhoneNumber(), 0, "Grande", "13:00");
+            estabelecimento = new Estabelecimento(place.getName(), place.getAddress(),
+            place.getPhoneNumber(), 0, "Grande", "13:00");
             //editTextPesquisa.setText(place.getAddress());
             // Adicionando o marcador no local pesquisado
             mMap.clear();
@@ -451,7 +454,10 @@ public class MapsFragment extends Fragment {
                 textViewEnderecoInformaco = bottomSheetView.findViewById(R.id.enderecoEstabelecimentoInfo);
                 textViewTamanhoInformacao = bottomSheetView.findViewById(R.id.tamanhoEstabelecimentoInfo);
 
-
+                textViewNomeInformacao.setText(estabelecimento.getNome());
+                textViewEnderecoInformaco.setText(estabelecimento.getEndereco());
+                textViewTelefoneInformacao.setText(estabelecimento.getTelefone());
+                textViewTamanhoInformacao.setText(estabelecimento.getTamanhoEstabelecimento());
             }
         });
 
