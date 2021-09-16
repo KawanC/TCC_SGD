@@ -151,7 +151,7 @@ public class MapsFragment extends Fragment {
             // Se deu certo, inicializamos o place
             Place place = Autocomplete.getPlaceFromIntent(data);
             estabelecimento = new Estabelecimento(place.getName(), place.getAddress(),
-            place.getPhoneNumber(), 0, "Grande", "13:00");
+            place.getPhoneNumber(), 0,"Teste" , "13:00");
             //editTextPesquisa.setText(place.getAddress());
             // Adicionando o marcador no local pesquisado
             mMap.clear();
@@ -456,8 +456,8 @@ public class MapsFragment extends Fragment {
 
                 textViewNomeInformacao.setText(estabelecimento.getNome());
                 textViewEnderecoInformaco.setText(estabelecimento.getEndereco());
-                textViewTelefoneInformacao.setText(estabelecimento.getTelefone());
-                textViewTamanhoInformacao.setText(estabelecimento.getTamanhoEstabelecimento());
+                textViewTelefoneInformacao.setText("Telefone: " + estabelecimento.getTelefone());
+                textViewTamanhoInformacao.setText("Tamanho do estabelecimento: " + estabelecimento.getTamanhoEstabelecimento());
             }
         });
 
