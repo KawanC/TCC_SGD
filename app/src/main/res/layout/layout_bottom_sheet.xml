@@ -15,55 +15,92 @@
         android:gravity="center"
         android:padding="15dp"
         android:text="@string/feedback_here"
-        android:textColor="@color/colorPrimaryText"
+        android:textColor="@color/quantum_bluegrey900"
         android:textSize="18dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
-    <View
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="18dp"
-        android:background="@color/colorDuvider"/>
+        android:layout_height="204dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDuvider" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="245dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="83dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="83dp"
+            android:layout_marginBottom="9dp"
+            android:gravity="center"
+            android:text="Nos ajude com seu FeedBack do movimento local!"
+            android:textColor="@color/quantum_deeporangeA700"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/nomeEstabelecimentoFeedback"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/nomeEstabelecimentoFeedback"
+            android:layout_width="231dp"
+            android:layout_height="64dp"
+            android:gravity="center"
+            android:text="Nome Estabelecimento"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/roundedImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.49" />
+
+        <TextView
+            android:id="@+id/enderecoEstabelecimento"
+            android:layout_width="220dp"
+            android:layout_height="71dp"
+            android:gravity="center"
+            android:text="Endereço"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/roundedImageView"
+            app:layout_constraintTop_toBottomOf="@+id/nomeEstabelecimentoFeedback"
+            app:layout_constraintVertical_bias="0.25" />
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:layout_width="100dp"
-            android:layout_height="150dp"
+            android:id="@+id/roundedImageView"
+            android:layout_width="89dp"
+            android:layout_height="82dp"
             android:layout_margin="10dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/sgd_sem_fundo"
-            app:riv_corner_radius="10dp"/>
+            android:src="@drawable/ic_mercado_info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.07"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.76"
+            app:riv_corner_radius="10dp" />
 
-        <LinearLayout
+        <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="10dp"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_height="1dp"
+            android:background="@color/colorDuvider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.26" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/por_favor_deixe_seu_feedback_sobre_o_local"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="17sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/agrade_emos_desde_j"
-                android:textColor="@color/colorSecondaryText"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:layout_width="match_parent"
@@ -81,6 +118,13 @@
         android:focusable="true"
         android:gravity="center_vertical">
 
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDuvider"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
@@ -93,7 +137,8 @@
             app:layout_constraintBottom_toTopOf="@+id/radioGroupTamanho"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.25" />
 
         <RadioGroup
             android:id="@+id/radioGroupTamanho"
@@ -106,15 +151,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.88">
+            app:layout_constraintVertical_bias="0.68">
 
             <RadioButton
                 android:id="@+id/radioButtonPequeno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Pequeno"
                 android:buttonTint="@color/colorAccent"
+                android:text="Pequeno"
                 android:textColor="@color/black" />
 
             <RadioButton
@@ -124,7 +169,7 @@
                 android:layout_weight="1"
                 android:buttonTint="@color/colorAccent"
                 android:text="Médio"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <RadioButton
                 android:id="@+id/radioButtonGrande"
@@ -132,16 +177,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_weight="1"
+                android:buttonTint="@color/colorAccent"
                 android:text="Grande"
-                android:textColor="@color/black"
-                android:buttonTint="@color/colorAccent"/>
+                android:textColor="@color/black" />
         </RadioGroup>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="97dp"
+        android:layout_height="102dp"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
@@ -151,7 +196,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:fontFamily="sans-serif-black"
             android:text="Como está a movimentação?"
             android:textColor="@color/black"
@@ -164,7 +209,7 @@
             android:id="@+id/textViewMovimento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
+            android:layout_marginBottom="34dp"
             android:text="Vazio"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -178,7 +223,7 @@
             style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="365dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="5dp"
             android:backgroundTint="@color/colorAccent"
             android:max="3"
             android:progress="0"

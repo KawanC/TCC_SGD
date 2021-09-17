@@ -46,6 +46,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
@@ -68,7 +69,7 @@ public class MapsFragment extends Fragment {
     private FloatingActionButton BotaoFeedback, BotaoInformacao;
     private SeekBar seekBar;
     private TextView textViewMovimentacao, textViewNomeInformacao, textViewEnderecoInformaco, textViewTelefoneInformacao,
-            textViewTamanhoInformacao, textViewNomeFeedBack, getTextViewEnderecoFeedBack;
+            textViewTamanhoInformacao, textViewNomeFeedBack, textViewEnderecoFeedBack;
     private RadioGroup radioGroupEstabelecimento;
     Estabelecimento estabelecimento;
     private int numeroMovimentacao;
@@ -117,7 +118,7 @@ public class MapsFragment extends Fragment {
                         , Place.Field.LAT_LNG, Place.Field.NAME);
                 // Criando uma intent
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,
-                        fieldList).build(view.getContext());
+                        fieldList).setCountry("BR").setTypeFilter(TypeFilter.ESTABLISHMENT).build(view.getContext());
                 // Startando a activity
                 startActivityForResult(intent, 100);
             }
@@ -255,180 +256,192 @@ public class MapsFragment extends Fragment {
                                 (LinearLayout) view.findViewById(R.id.bottomSheetContainer)
                         );
 
-                //EVENTO DA SEEKBAR PARA MOSTRAR AO USUARIO (VAZIO, POUCO MOVIMENTADO...)
-                seekBar = bottomSheetView.findViewById(R.id.seekBar); //PEGANDO ID DA SEEKBAR PELO BOTTOMSHEET
-                textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento);
+                if(estabelecimento != null) {
+                    //SETANDO NOME E ENDEREÇO DOS ESTABELECIMENTOS PESQUISADOS
+                    textViewNomeFeedBack = bottomSheetView.findViewById(R.id.nomeEstabelecimentoFeedback);
+                    textViewEnderecoFeedBack = bottomSheetView.findViewById(R.id.enderecoEstabelecimento);
 
-                // EVENTO LISTINER QUE "ESCUTA O MOVIMENTO" DA SEEK BAR
-                seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    textViewNomeFeedBack.setText(estabelecimento.getNome());
+                    textViewEnderecoFeedBack.setText(estabelecimento.getEndereco());
 
-                        // NECESSÁRIO ESTAR AQUI DENTRO NOVAMENTE POIS SE NÃO O LISTINER NÃO "EXERGA" O TEXTVIEW
-                        textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento);
-                        switch (progress) {
-                            //PROGRESS SÃO OS ESTAGIOS DA SEEKBAR, QUE VAI DE 0 A 3
-                            case 0:
-                                textViewMovimentacao.setText("Vazio");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
-                                seekBar.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
-                                break;
-                            case 1:
-                                textViewMovimentacao.setText("Pouco Movimentado");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
-                                seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
-                                break;
-                            case 2:
-                                textViewMovimentacao.setText("Movimentado");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
-                                seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
-                                seekBar.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
-                                break;
-                            case 3:
-                                textViewMovimentacao.setText("Cheio");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
-                                seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
-                                break;
-                        }
-                    }
 
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-                        //ACIONADO AO CLICAR NA SEEKBAR
-                    }
+                    //EVENTO DA SEEKBAR PARA MOSTRAR AO USUARIO (VAZIO, POUCO MOVIMENTADO...)
+                    seekBar = bottomSheetView.findViewById(R.id.seekBar); //PEGANDO ID DA SEEKBAR PELO BOTTOMSHEET
+                    textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento);
 
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-                        //ACIONADO AO "SOLTAR" A SEEKBAR
-                    }
-                });
+                    // EVENTO LISTINER QUE "ESCUTA O MOVIMENTO" DA SEEK BAR
+                    seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                        @Override
+                        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                //EVENTO DO BOTÃO QUE FICA DENTRO DO BOTTOM SHET
-                bottomSheetView.findViewById(R.id.buttonEnviar).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        radioGroupEstabelecimento = bottomSheetView.findViewById(R.id.radioGroupTamanho);
-                        textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento);
-                        int radioId = radioGroupEstabelecimento.getCheckedRadioButtonId(); //pegando id do botão selecionado
-
-                        switch (radioId) {
-                            case R.id.radioButtonPequeno:
-                                if (textViewMovimentacao.getText().equals("Vazio")) {
-                                    numeroMovimentacao = 0;
-                                }
-                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
-                                    numeroMovimentacao = 50;
-                                }
-                                if (textViewMovimentacao.getText().equals("Movimentado")) {
-                                    numeroMovimentacao = 100;
-                                }
-                                if (textViewMovimentacao.getText().equals("Cheio")) {
-                                    numeroMovimentacao = 200;
-                                }
-
-                                break;
-
-                            case R.id.radioButtonMedio:
-                                if (textViewMovimentacao.getText().equals("Vazio")) {
-                                    numeroMovimentacao = 0;
-                                }
-                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
-                                    numeroMovimentacao = 75;
-                                }
-                                if (textViewMovimentacao.getText().equals("Movimentado")) {
-                                    numeroMovimentacao = 150;
-                                }
-                                if (textViewMovimentacao.getText().equals("Cheio")) {
-                                    numeroMovimentacao = 250;
-                                }
-
-                                break;
-
-                            case R.id.radioButtonGrande:
-                                if (textViewMovimentacao.getText().equals("Vazio")) {
-                                    numeroMovimentacao = 0;
-                                }
-                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
-                                    numeroMovimentacao = 100;
-                                }
-                                if (textViewMovimentacao.getText().equals("Movimentado")) {
-                                    numeroMovimentacao = 200;
-                                }
-                                if (textViewMovimentacao.getText().equals("Cheio")) {
-                                    numeroMovimentacao = 400;
-                                }
-                                break;
-                        }
-
-                        radioButtonPequeno = bottomSheetView.findViewById(R.id.radioButtonPequeno);
-                        radioButtonMedio = bottomSheetView.findViewById(R.id.radioButtonMedio);
-                        radioButtonGrande = bottomSheetView.findViewById(R.id.radioButtonGrande);
-
-                        if (radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked()) {
-                            //Toast.makeText(view.getContext(), "TESTE BUTTON", Toast.LENGTH_SHORT).show();
-                            // CODIGO BANCO DE DADOS
-                            FirebaseDatabase database = FirebaseDatabase.getInstance();
-                            DatabaseReference myRef = database.getReference();
-                            String idRegistro = myRef.push().getKey();
-
-                            int radioIdBanco = radioGroupEstabelecimento.getCheckedRadioButtonId();
-                            switch (radioIdBanco) {
-                                case R.id.radioButtonPequeno:
-                                    myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue("Pequeno");
+                            // NECESSÁRIO ESTAR AQUI DENTRO NOVAMENTE POIS SE NÃO O LISTINER NÃO "EXERGA" O TEXTVIEW
+                            textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento);
+                            switch (progress) {
+                                //PROGRESS SÃO OS ESTAGIOS DA SEEKBAR, QUE VAI DE 0 A 3
+                                case 0:
+                                    textViewMovimentacao.setText("Vazio");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                                    seekBar.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                                     break;
-                                case R.id.radioButtonMedio:
-                                    myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue("Medio");
+                                case 1:
+                                    textViewMovimentacao.setText("Pouco Movimentado");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                                    seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
                                     break;
-                                case R.id.radioButtonGrande:
-                                    myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue("Grande");
+                                case 2:
+                                    textViewMovimentacao.setText("Movimentado");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                                    seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                                    break;
+                                case 3:
+                                    textViewMovimentacao.setText("Cheio");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                                    seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
                                     break;
                             }
-                            myRef.child(idRegistro).child("Movimentação Estabelecimento").setValue(numeroMovimentacao + " pessoas");
+                        }
 
-                            myRef.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    showAlertDialog(R.layout.dialog_sucesso_feedback);
+                        @Override
+                        public void onStartTrackingTouch(SeekBar seekBar) {
+                            //ACIONADO AO CLICAR NA SEEKBAR
+                        }
+
+                        @Override
+                        public void onStopTrackingTouch(SeekBar seekBar) {
+                            //ACIONADO AO "SOLTAR" A SEEKBAR
+                        }
+                    });
+
+
+                    //EVENTO DO BOTÃO QUE FICA DENTRO DO BOTTOM SHET
+                    bottomSheetView.findViewById(R.id.buttonEnviar).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            radioGroupEstabelecimento = bottomSheetView.findViewById(R.id.radioGroupTamanho);
+                            textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento);
+                            int radioId = radioGroupEstabelecimento.getCheckedRadioButtonId(); //pegando id do botão selecionado
+
+                            switch (radioId) {
+                                case R.id.radioButtonPequeno:
+                                    if (textViewMovimentacao.getText().equals("Vazio")) {
+                                        numeroMovimentacao = 0;
+                                    }
+                                    if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
+                                        numeroMovimentacao = 50;
+                                    }
+                                    if (textViewMovimentacao.getText().equals("Movimentado")) {
+                                        numeroMovimentacao = 100;
+                                    }
+                                    if (textViewMovimentacao.getText().equals("Cheio")) {
+                                        numeroMovimentacao = 200;
+                                    }
+
+                                    break;
+
+                                case R.id.radioButtonMedio:
+                                    if (textViewMovimentacao.getText().equals("Vazio")) {
+                                        numeroMovimentacao = 0;
+                                    }
+                                    if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
+                                        numeroMovimentacao = 75;
+                                    }
+                                    if (textViewMovimentacao.getText().equals("Movimentado")) {
+                                        numeroMovimentacao = 150;
+                                    }
+                                    if (textViewMovimentacao.getText().equals("Cheio")) {
+                                        numeroMovimentacao = 250;
+                                    }
+
+                                    break;
+
+                                case R.id.radioButtonGrande:
+                                    if (textViewMovimentacao.getText().equals("Vazio")) {
+                                        numeroMovimentacao = 0;
+                                    }
+                                    if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
+                                        numeroMovimentacao = 100;
+                                    }
+                                    if (textViewMovimentacao.getText().equals("Movimentado")) {
+                                        numeroMovimentacao = 200;
+                                    }
+                                    if (textViewMovimentacao.getText().equals("Cheio")) {
+                                        numeroMovimentacao = 400;
+                                    }
+                                    break;
+                            }
+
+                            radioButtonPequeno = bottomSheetView.findViewById(R.id.radioButtonPequeno);
+                            radioButtonMedio = bottomSheetView.findViewById(R.id.radioButtonMedio);
+                            radioButtonGrande = bottomSheetView.findViewById(R.id.radioButtonGrande);
+
+                            if (radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked()) {
+                                //Toast.makeText(view.getContext(), "TESTE BUTTON", Toast.LENGTH_SHORT).show();
+                                // CODIGO BANCO DE DADOS
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                DatabaseReference myRef = database.getReference();
+                                String idRegistro = myRef.push().getKey();
+
+                                int radioIdBanco = radioGroupEstabelecimento.getCheckedRadioButtonId();
+                                switch (radioIdBanco) {
+                                    case R.id.radioButtonPequeno:
+                                        myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue("Pequeno");
+                                        break;
+                                    case R.id.radioButtonMedio:
+                                        myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue("Medio");
+                                        break;
+                                    case R.id.radioButtonGrande:
+                                        myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue("Grande");
+                                        break;
                                 }
+                                myRef.child(idRegistro).child("Movimentação Estabelecimento").setValue(numeroMovimentacao + " pessoas");
 
+                                myRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        showAlertDialog(R.layout.dialog_sucesso_feedback);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                        showAlertDialog(R.layout.dialog_erro_feedback);
+                                    }
+                                });
+                                bottomSheetDialog.dismiss();
+                            } else {
+                                Toast.makeText(view.getContext(), "Por favor selecione o tamanho do estabelecimento para completar o seu feedback.", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        // Metodo do custom dialog.
+                        private void showAlertDialog(int layoutDialog) {
+                            builderDialog = new AlertDialog.Builder(view.getContext());
+                            View LayoutView = getLayoutInflater().inflate(layoutDialog, null);
+                            AppCompatButton dialogButtom = LayoutView.findViewById(R.id.botao_ok_dialog);
+                            builderDialog.setView(LayoutView);
+                            alertDialog = builderDialog.create();
+                            alertDialog.show();
+
+                            // Quando clicado no botão de "Ok" no custom dialog
+                            dialogButtom.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    showAlertDialog(R.layout.dialog_erro_feedback);
+                                public void onClick(View v) {
+                                    // Desabilitando o dialog
+                                    alertDialog.dismiss();
                                 }
                             });
-                            bottomSheetDialog.dismiss();
-                        } else {
-                            Toast.makeText(view.getContext(), "Por favor selecione o tamanho do estabelecimento para completar o seu feedback.", Toast.LENGTH_LONG).show();
                         }
-                    }
+                    });
+                    bottomSheetDialog.setContentView(bottomSheetView);
+                    bottomSheetDialog.show();
 
-                    // Metodo do custom dialog.
-                    private void showAlertDialog(int layoutDialog) {
-                        builderDialog = new AlertDialog.Builder(view.getContext());
-                        View LayoutView = getLayoutInflater().inflate(layoutDialog, null);
-                        AppCompatButton dialogButtom = LayoutView.findViewById(R.id.botao_ok_dialog);
-                        builderDialog.setView(LayoutView);
-                        alertDialog = builderDialog.create();
-                        alertDialog.show();
-
-                        // Quando clicado no botão de "Ok" no custom dialog
-                        dialogButtom.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                // Desabilitando o dialog
-                                alertDialog.dismiss();
-                            }
-                        });
-                    }
-                });
-                bottomSheetDialog.setContentView(bottomSheetView);
-                bottomSheetDialog.show();
-
-
+                }else{
+                    Toast.makeText(view.getContext(), "Por favor pesquise um estabelecimento antes de clicar no botão de FeedBack!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -445,19 +458,23 @@ public class MapsFragment extends Fragment {
                                 R.layout.layout_informacao_estabelecimento,
                                 (LinearLayout) view.findViewById(R.id.bottomSheetContainer)
                         );
-                bottomSheetDialog.setContentView(bottomSheetView);
-                bottomSheetDialog.show();
 
-                textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimentoInfo);
-                textViewNomeInformacao = bottomSheetView.findViewById(R.id.nomeEstabelecimentoInfo);
-                textViewTelefoneInformacao = bottomSheetView.findViewById(R.id.telefoneEstabelecimentoInfo);
-                textViewEnderecoInformaco = bottomSheetView.findViewById(R.id.enderecoEstabelecimentoInfo);
-                textViewTamanhoInformacao = bottomSheetView.findViewById(R.id.tamanhoEstabelecimentoInfo);
+                if(estabelecimento != null) {
 
-                textViewNomeInformacao.setText(estabelecimento.getNome());
-                textViewEnderecoInformaco.setText(estabelecimento.getEndereco());
-                textViewTelefoneInformacao.setText("Telefone: " + estabelecimento.getTelefone());
-                textViewTamanhoInformacao.setText("Tamanho do estabelecimento: " + estabelecimento.getTamanhoEstabelecimento());
+                    bottomSheetDialog.setContentView(bottomSheetView);
+                    bottomSheetDialog.show();
+
+                    textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimentoInfo);
+                    textViewNomeInformacao = bottomSheetView.findViewById(R.id.nomeEstabelecimentoInfo);
+                    textViewTelefoneInformacao = bottomSheetView.findViewById(R.id.telefoneEstabelecimentoInfo);
+                    textViewEnderecoInformaco = bottomSheetView.findViewById(R.id.enderecoEstabelecimentoInfo);
+                    textViewTamanhoInformacao = bottomSheetView.findViewById(R.id.tamanhoEstabelecimentoInfo);
+
+                    textViewNomeInformacao.setText(estabelecimento.getNome());
+                    textViewEnderecoInformaco.setText(estabelecimento.getEndereco());
+                    textViewTelefoneInformacao.setText("Telefone: " + estabelecimento.getTelefone());
+                    textViewTamanhoInformacao.setText("Tamanho do estabelecimento: " + estabelecimento.getTamanhoEstabelecimento());
+                } else Toast.makeText(view.getContext(), "Por favor pesquise um estabelecimento antes de clicar no botão de informações!", Toast.LENGTH_SHORT).show();
             }
         });
 

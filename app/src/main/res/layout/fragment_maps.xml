@@ -62,7 +62,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        app:backgroundTint="@color/CorBotao"
+        app:backgroundTint="#4682B4"
         app:srcCompat="@drawable/ic_baseline_info_24" />
 
 </RelativeLayout>

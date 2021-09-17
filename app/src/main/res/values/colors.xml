@@ -7,8 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="CorTudo">#4169E1</color>
-    <color name="CorTopo">#335CD8</color>
+    <color name="CorTudo">#B0C4DE</color>
+    <color name="CorTopo">#8FA5C3</color>
 
     <!--Colors feedback-->
     <color name="colorPrimary">#2196F3</color>
