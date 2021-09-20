@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.widget.Autocomplete;
@@ -58,7 +59,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 public class MapsFragment extends Fragment {
@@ -74,6 +77,7 @@ public class MapsFragment extends Fragment {
     Estabelecimento estabelecimento;
     private int numeroMovimentacao;
     private RadioButton radioButtonPequeno, radioButtonMedio, radioButtonGrande;
+
 
     //private AppCompatButton btn_sucesso;
 
@@ -149,10 +153,12 @@ public class MapsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 100 && resultCode == Activity.RESULT_OK){
+
             // Se deu certo, inicializamos o place
             Place place = Autocomplete.getPlaceFromIntent(data);
+
             estabelecimento = new Estabelecimento(place.getName(), place.getAddress(),
-            place.getPhoneNumber(), 0,"Teste" , "13:00");
+            place.getPhoneNumber(), 0,"Teste" ,"place.getTypes()" ,"horaFeedback");
             //editTextPesquisa.setText(place.getAddress());
             // Adicionando o marcador no local pesquisado
             mMap.clear();
@@ -279,13 +285,13 @@ public class MapsFragment extends Fragment {
                             switch (progress) {
                                 //PROGRESS SÃO OS ESTAGIOS DA SEEKBAR, QUE VAI DE 0 A 3
                                 case 0:
-                                    textViewMovimentacao.setText("Vazio");
+                                    textViewMovimentacao.setText("Vazio (0)");
                                     textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
                                     seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
                                     seekBar.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                                     break;
                                 case 1:
-                                    textViewMovimentacao.setText("Pouco Movimentado");
+                                    textViewMovimentacao.setText("Pouco Movimentado - 50 pess");
                                     textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
                                     seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
                                     seekBar.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
@@ -325,6 +331,10 @@ public class MapsFragment extends Fragment {
                             radioGroupEstabelecimento = bottomSheetView.findViewById(R.id.radioGroupTamanho);
                             textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento);
                             int radioId = radioGroupEstabelecimento.getCheckedRadioButtonId(); //pegando id do botão selecionado
+
+                            //ATUALIZANDO A HORA
+                            String horaFeedback = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+                            estabelecimento.setHora(horaFeedback);
 
                             switch (radioId) {
                                 case R.id.radioButtonPequeno:
@@ -384,7 +394,7 @@ public class MapsFragment extends Fragment {
                                 // CODIGO BANCO DE DADOS
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                                 DatabaseReference myRef = database.getReference();
-                                String idRegistro = myRef.push().getKey();
+                                String idRegistro = myRef.push().getKey() +  textViewNomeFeedBack.getText().toString();
 
                                 int radioIdBanco = radioGroupEstabelecimento.getCheckedRadioButtonId();
                                 switch (radioIdBanco) {
@@ -398,7 +408,11 @@ public class MapsFragment extends Fragment {
                                         myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue("Grande");
                                         break;
                                 }
-                                myRef.child(idRegistro).child("Movimentação Estabelecimento").setValue(numeroMovimentacao + " pessoas");
+                                myRef.child(idRegistro ).child("Movimentação Estabelecimento").setValue(numeroMovimentacao);
+                                myRef.child(idRegistro).child("Nome Estabelecimento").setValue(textViewNomeFeedBack.getText().toString());
+                                myRef.child(idRegistro).child("Hora Feedback").setValue(estabelecimento.getHora());
+                                myRef.child(idRegistro).child("Tipo Estabelecimento").setValue("TESTE" );
+                                myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue(estabelecimento.getTamanhoEstabelecimento());
 
                                 myRef.addValueEventListener(new ValueEventListener() {
                                     @Override
