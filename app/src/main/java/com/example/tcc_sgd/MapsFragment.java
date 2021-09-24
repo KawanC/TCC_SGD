@@ -459,13 +459,15 @@ public class MapsFragment extends Fragment {
                 }else{
                     Toast.makeText(view.getContext(), "Por favor pesquise um estabelecimento antes de clicar no botão de FeedBack!", Toast.LENGTH_SHORT).show();
                 }
-                botaoinformacaodois = bottomSheetView.findViewById(R.id.botaoinformacao);
-                botaoinformacaodois.setOnClickListener(new View.OnClickListener() {
+
+                imageViewLocalizacao = bottomSheetView.findViewById(R.id.imagemDuvida);
+                imageViewLocalizacao.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showAlertDialogDois(R.layout.dialog_informacao_estabelecimento);
                     }
                 });
+
             }
         });
 
@@ -530,4 +532,5 @@ public class MapsFragment extends Fragment {
             mapFragment.getMapAsync(callback);
         }
     }
+
 }

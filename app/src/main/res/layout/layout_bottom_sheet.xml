@@ -23,57 +23,94 @@
         android:layout_width="match_parent"
         android:layout_height="204dp">
 
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imagemDuvida"
+            android:layout_width="17dp"
+            android:layout_height="15dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_help_24"
+            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            app:riv_corner_radius="10dp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupTipo"
+            android:layout_width="348dp"
+            android:layout_height="37dp"
+            android:backgroundTint="@color/colorAccent"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.98">
+
+            <RadioButton
+                android:id="@+id/radioButtonMercado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/teal_700"
+                android:text="Mercado"
+                android:textColor="@color/black" />
+
+            <RadioButton
+                android:id="@+id/radioButtonRestaurante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:buttonTint="@color/teal_700"
+                android:text="Restaurante"
+                android:textColor="@color/black" />
+
+            <RadioButton
+                android:id="@+id/radioButtonShop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:buttonTint="@color/teal_700"
+                android:text="Shopping"
+                android:textColor="@color/black" />
+        </RadioGroup>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorDuvider" />
 
         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="245dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="83dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="83dp"
-            android:layout_marginBottom="9dp"
-            android:gravity="center"
-            android:text="Nos ajude com seu FeedBack do movimento local!"
-            android:textColor="@color/quantum_deeporangeA700"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/nomeEstabelecimentoFeedback"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
             android:id="@+id/nomeEstabelecimentoFeedback"
-            android:layout_width="231dp"
-            android:layout_height="64dp"
-            android:layout_marginEnd="72dp"
+            android:layout_width="242dp"
+            android:layout_height="60dp"
             android:gravity="center"
             android:text="Nome Estabelecimento"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="17sp"
+            android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.01999998" />
 
         <TextView
             android:id="@+id/enderecoEstabelecimento"
-            android:layout_width="206dp"
-            android:layout_height="51dp"
-            android:layout_marginEnd="100dp"
+            android:layout_width="237dp"
+            android:layout_height="50dp"
             android:gravity="center"
             android:text="Endereço"
             android:textColor="@color/colorPrimaryText"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nomeEstabelecimentoFeedback"
-            app:layout_constraintVertical_bias="0.947" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <View
             android:id="@+id/view"
@@ -82,17 +119,22 @@
             android:background="@color/colorDuvider"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.26" />
+            app:layout_constraintVertical_bias="0.57" />
 
-        <Button
-            android:id="@+id/botaoinformacao"
-            android:layout_width="83dp"
-            android:layout_height="37dp"
-            android:layout_marginBottom="52dp"
-            android:text="Click"
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:text="Tipo de Estabelecimento"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view"
+            app:layout_constraintVertical_bias="0.19999999" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -23,6 +23,9 @@
         <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_1/app/src/main/res/drawable/button_background.xml" value="0.3828125" />
         <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_1/app/src/main/res/layout/layout_bottom_sheet.xml" value="0.5" />
         <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_1/app/src/main/res/layout/layout_informacao_estabelecimento.xml" value="0.23703703703703705" />
+        <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_22/app/src/main/res/drawable/ic_baseline_help_24.xml" value="0.3828125" />
+        <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_22/app/src/main/res/layout/layout_bottom_sheet.xml" value="0.5" />
+        <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_22/app/src/main/res/layout/layout_informacao_estabelecimento.xml" value="0.35408022130013833" />
         <entry key="..\:/Users/aluno/Documents/SGD_2409/app/src/main/res/layout/dialog_informacao_estabelecimento.xml" value="0.34782608695652173" />
         <entry key="..\:/Users/aluno/Documents/SGD_2409/app/src/main/res/layout/dialog_sucesso_feedback.xml" value="0.34782608695652173" />
         <entry key="..\:/Users/aluno/Documents/SGD_2409/app/src/main/res/layout/fragment_feedback_app.xml" value="0.34782608695652173" />
@@ -70,7 +73,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
