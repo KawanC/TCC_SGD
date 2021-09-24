@@ -6,16 +6,15 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class Estabelecimento {
-    private String nome, endereco, telefone;
+    private String nome, endereco;
     private int movimento;
     private String tamanhoEstabelecimento;
-    public String tipoEstabelecimento;
+    private String tipoEstabelecimento;
     private String hora;
 
-    public Estabelecimento(String nome, String endereco, String telefone, int movimento, String tamanhoEstabelecimento, String tipoEstabelecimento, String hora) {
+    public Estabelecimento(String nome, String endereco, int movimento, String tamanhoEstabelecimento, String tipoEstabelecimento, String hora) {
         this.nome = nome;
         this.endereco = endereco;
-        this.telefone = telefone;
         this.movimento = movimento;
         this.tamanhoEstabelecimento = tamanhoEstabelecimento;
         this.tipoEstabelecimento = tipoEstabelecimento;
@@ -28,10 +27,6 @@ public class Estabelecimento {
 
     public String getEndereco() {
         return endereco;
-    }
-
-    public String getTelefone() {
-        return telefone;
     }
 
     public int getMovimento() {
@@ -48,4 +43,5 @@ public class Estabelecimento {
 
     public void setHora(String hora) { this.hora = hora; }
 
+    public void setTipoEstabelecimento(String tipoEstabelecimento) { this.tipoEstabelecimento = tipoEstabelecimento; }
 }

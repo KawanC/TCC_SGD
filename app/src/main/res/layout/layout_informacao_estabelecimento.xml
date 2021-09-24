@@ -54,7 +54,7 @@
             android:gravity="center"
             android:text="Nome do Estabelecimento"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="17sp"
+            android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,19 +70,21 @@
             android:gravity="center"
             android:maxWidth="300dp"
             android:text="endereço"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nomeEstabelecimentoInfo" />
 
         <TextView
-            android:id="@+id/telefoneEstabelecimentoInfo"
+            android:id="@+id/tipoEstabelecimentoInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Telefone"
+            android:text="Tipo Estabelecimento"
+            android:textColor="@color/black"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/enderecoEstabelecimentoInfo" />
@@ -94,10 +96,12 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="Tamanho estabelecimento"
+            android:textColor="@color/black"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/telefoneEstabelecimentoInfo" />
+            app:layout_constraintTop_toBottomOf="@+id/tipoEstabelecimentoInfo" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -112,7 +116,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="121dp"
+        android:layout_height="129dp"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
@@ -122,14 +126,13 @@
             android:id="@+id/textViewMovimentoInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="56dp"
+            android:layout_marginBottom="60dp"
             android:text="Cheio!"
             android:textColor="@color/colorAccent"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -166,10 +169,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.84"
+            app:layout_constraintHorizontal_bias="0.847"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.96" />
+            app:layout_constraintVertical_bias="0.854" />
         <!--
        <SeekBar
             android:id="@+id/seekBarInfo"
