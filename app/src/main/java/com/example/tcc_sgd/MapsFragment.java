@@ -25,7 +25,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -70,6 +72,7 @@ public class MapsFragment extends Fragment {
     private View view;
     private EditText editTextPesquisa;
     private FloatingActionButton BotaoFeedback, BotaoInformacao;
+    private Button botaoinformacaodois;
     private SeekBar seekBar;
     private TextView textViewMovimentacao, textViewNomeInformacao, textViewEnderecoInformaco, textViewTelefoneInformacao,
             textViewTamanhoInformacao, textViewNomeFeedBack, textViewEnderecoFeedBack;
@@ -77,6 +80,7 @@ public class MapsFragment extends Fragment {
     Estabelecimento estabelecimento;
     private int numeroMovimentacao;
     private RadioButton radioButtonPequeno, radioButtonMedio, radioButtonGrande;
+    private ImageView imageViewLocalizacao;
 
 
     //private AppCompatButton btn_sucesso;
@@ -327,7 +331,6 @@ public class MapsFragment extends Fragment {
                     bottomSheetView.findViewById(R.id.buttonEnviar).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
                             radioGroupEstabelecimento = bottomSheetView.findViewById(R.id.radioGroupTamanho);
                             textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento);
                             int radioId = radioGroupEstabelecimento.getCheckedRadioButtonId(); //pegando id do botão selecionado
@@ -432,7 +435,7 @@ public class MapsFragment extends Fragment {
                         }
 
                         // Metodo do custom dialog.
-                        private void showAlertDialog(int layoutDialog) {
+                        public void showAlertDialog(int layoutDialog) {
                             builderDialog = new AlertDialog.Builder(view.getContext());
                             View LayoutView = getLayoutInflater().inflate(layoutDialog, null);
                             AppCompatButton dialogButtom = LayoutView.findViewById(R.id.botao_ok_dialog);
@@ -456,6 +459,13 @@ public class MapsFragment extends Fragment {
                 }else{
                     Toast.makeText(view.getContext(), "Por favor pesquise um estabelecimento antes de clicar no botão de FeedBack!", Toast.LENGTH_SHORT).show();
                 }
+                botaoinformacaodois = bottomSheetView.findViewById(R.id.botaoinformacao);
+                botaoinformacaodois.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showAlertDialogDois(R.layout.dialog_informacao_estabelecimento);
+                    }
+                });
             }
         });
 
@@ -486,12 +496,29 @@ public class MapsFragment extends Fragment {
 
                     textViewNomeInformacao.setText(estabelecimento.getNome());
                     textViewEnderecoInformaco.setText(estabelecimento.getEndereco());
-                    textViewTelefoneInformacao.setText("Telefone: " + estabelecimento.getTelefone());
+                   // textViewTelefoneInformacao.setText("Telefone: " + estabelecimento.getTelefone());
                     textViewTamanhoInformacao.setText("Tamanho do estabelecimento: " + estabelecimento.getTamanhoEstabelecimento());
                 } else Toast.makeText(view.getContext(), "Por favor pesquise um estabelecimento antes de clicar no botão de informações!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    private void showAlertDialogDois(int dialog_informacao_estabelecimento) {
+        builderDialog = new AlertDialog.Builder(view.getContext());
+        View LayoutView = getLayoutInflater().inflate(dialog_informacao_estabelecimento, null);
+        AppCompatButton dialogButtom = LayoutView.findViewById(R.id.botao_ok_dialog);
+        builderDialog.setView(LayoutView);
+        alertDialog = builderDialog.create();
+        alertDialog.show();
+
+        // Quando clicado no botão de "Ok" no custom dialog
+        dialogButtom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Desabilitando o dialog
+                alertDialog.dismiss();
+            }
+        });
     }
 
     @Override
