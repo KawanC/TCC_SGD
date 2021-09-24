@@ -175,6 +175,7 @@ public class MapsFragment extends Fragment {
         }
     }
 
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         // Quando o mapa estiver na tela do celular do usuario, o metodo
         // abaixo sera iniciado.
