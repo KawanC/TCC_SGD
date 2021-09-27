@@ -45,6 +45,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -59,6 +61,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -81,7 +84,7 @@ public class MapsFragment extends Fragment {
     private RadioButton radioButtonPequeno, radioButtonMedio, radioButtonGrande;
     private ImageView imageViewLocalizacao;
     private String tamanhoEstabelecimento, tipoEstabelecimento;
-
+    FirebaseFirestore feed = FirebaseFirestore.getInstance();
 
     //private AppCompatButton btn_sucesso;
 
@@ -162,7 +165,7 @@ public class MapsFragment extends Fragment {
             Place place = Autocomplete.getPlaceFromIntent(data);
 
             estabelecimento = new Estabelecimento(place.getName(), place.getAddress(),
-                    0,"Teste" ,"place.getTypes()" ,"horaFeedback");
+                    "","Teste" ,"place.getTypes()" ,"horaFeedback");
             //editTextPesquisa.setText(place.getAddress());
             // Adicionando o marcador no local pesquisado
             mMap.clear();
@@ -275,7 +278,6 @@ public class MapsFragment extends Fragment {
                     textViewNomeFeedBack.setText(estabelecimento.getNome());
                     textViewEnderecoFeedBack.setText(estabelecimento.getEndereco());
 
-
                     //EVENTO DA SEEKBAR PARA MOSTRAR AO USUARIO (VAZIO, POUCO MOVIMENTADO...)
                     seekBar = bottomSheetView.findViewById(R.id.seekBar); //PEGANDO ID DA SEEKBAR PELO BOTTOMSHEET
                     textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimento);
@@ -327,7 +329,6 @@ public class MapsFragment extends Fragment {
                         }
                     });
 
-
                     //EVENTO DO BOTÃO QUE FICA DENTRO DO BOTTOM SHET
                     bottomSheetView.findViewById(R.id.buttonEnviar).setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -359,7 +360,6 @@ public class MapsFragment extends Fragment {
                                             if (textViewMovimentacao.getText().equals("Cheio")) {
                                                 numeroMovimentacao = 200;
                                             }
-
                                             break;
 
                                         case R.id.radioButtonMedio:
@@ -376,7 +376,6 @@ public class MapsFragment extends Fragment {
                                             if (textViewMovimentacao.getText().equals("Cheio")) {
                                                 numeroMovimentacao = 250;
                                             }
-
                                             break;
 
                                         case R.id.radioButtonGrande:
@@ -394,6 +393,7 @@ public class MapsFragment extends Fragment {
                                                 numeroMovimentacao = 400;
                                             }
                                             break;
+
                                     }
                                     break;
                                 case R.id.radioButtonMercado:
@@ -413,7 +413,6 @@ public class MapsFragment extends Fragment {
                                             if (textViewMovimentacao.getText().equals("Cheio")) {
                                                 numeroMovimentacao = 200;
                                             }
-
                                             break;
 
                                         case R.id.radioButtonMedio:
@@ -430,7 +429,6 @@ public class MapsFragment extends Fragment {
                                             if (textViewMovimentacao.getText().equals("Cheio")) {
                                                 numeroMovimentacao = 250;
                                             }
-
                                             break;
 
                                         case R.id.radioButtonGrande:
@@ -467,7 +465,6 @@ public class MapsFragment extends Fragment {
                                             if (textViewMovimentacao.getText().equals("Cheio")) {
                                                 numeroMovimentacao = 200;
                                             }
-
                                             break;
 
                                         case R.id.radioButtonMedio:
@@ -484,7 +481,6 @@ public class MapsFragment extends Fragment {
                                             if (textViewMovimentacao.getText().equals("Cheio")) {
                                                 numeroMovimentacao = 250;
                                             }
-
                                             break;
 
                                         case R.id.radioButtonGrande:
@@ -504,50 +500,28 @@ public class MapsFragment extends Fragment {
                                             break;
                                     }
                                     break;
+
                             }
-
-
-
                             radioButtonPequeno = bottomSheetView.findViewById(R.id.radioButtonPequeno);
                             radioButtonMedio = bottomSheetView.findViewById(R.id.radioButtonMedio);
                             radioButtonGrande = bottomSheetView.findViewById(R.id.radioButtonGrande);
 
                             if (radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked() ) {
-                                //Toast.makeText(view.getContext(), "TESTE BUTTON", Toast.LENGTH_SHORT).show();
                                 // CODIGO BANCO DE DADOS
-                                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                DatabaseReference myRef = database.getReference();
-                                String idRegistro = myRef.push().getKey() +  textViewNomeFeedBack.getText().toString();
+                               Feedback feedbackUsuario = new Feedback(estabelecimento.getNome(), Integer.toString(numeroMovimentacao), tipoEstabelecimento,
+                                       estabelecimento.getTamanhoEstabelecimento(), estabelecimento.getHora(), "Teste" );
 
-                                int radioIdBanco = radioGroupEstabelecimento.getCheckedRadioButtonId();
-                                switch (radioIdBanco) {
-                                    case R.id.radioButtonPequeno:
-                                        myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue("Pequeno");
-                                        break;
-                                    case R.id.radioButtonMedio:
-                                        myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue("Medio");
-                                        break;
-                                    case R.id.radioButtonGrande:
-                                        myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue("Grande");
-                                        break;
-                                }
-                                myRef.child(idRegistro ).child("Movimentação Estabelecimento").setValue(numeroMovimentacao);
-                                myRef.child(idRegistro).child("Nome Estabelecimento").setValue(textViewNomeFeedBack.getText().toString());
-                                myRef.child(idRegistro).child("Hora Feedback").setValue(estabelecimento.getHora());
-                                myRef.child(idRegistro).child("Tipo Estabelecimento").setValue("TESTE" );
-                                myRef.child(idRegistro).child("Tamanho Estabelecimento").setValue(estabelecimento.getTamanhoEstabelecimento());
-
-                                myRef.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        showAlertDialog(R.layout.dialog_sucesso_feedback);
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                        showAlertDialog(R.layout.dialog_erro_feedback);
-                                    }
-                                });
+                               feed.collection("Feedbacks").document().set(feedbackUsuario).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                   @Override
+                                   public void onSuccess(Void unused) {
+                                       showAlertDialog(R.layout.dialog_sucesso_feedback);
+                                   }
+                               }).addOnFailureListener(new OnFailureListener() {
+                                   @Override
+                                   public void onFailure(@NonNull Exception e) {
+                                  showAlertDialog((R.layout.dialog_erro_feedback));
+                                   }
+                               });
                                 bottomSheetDialog.dismiss();
                             } else {
                                 Toast.makeText(view.getContext(), "Por favor selecione o tamanho do estabelecimento para completar o seu feedback.", Toast.LENGTH_LONG).show();

@@ -7,12 +7,12 @@ import java.util.List;
 
 public class Estabelecimento {
     private String nome, endereco;
-    private int movimento;
+    private String movimento;
     private String tamanhoEstabelecimento;
     private String tipoEstabelecimento;
     private String hora;
 
-    public Estabelecimento(String nome, String endereco, int movimento, String tamanhoEstabelecimento, String tipoEstabelecimento, String hora) {
+    public Estabelecimento(String nome, String endereco, String movimento, String tamanhoEstabelecimento, String tipoEstabelecimento, String hora) {
         this.nome = nome;
         this.endereco = endereco;
         this.movimento = movimento;
@@ -29,16 +29,16 @@ public class Estabelecimento {
         return endereco;
     }
 
-    public int getMovimento() {
-        return movimento;
-    }
-
     public String getTamanhoEstabelecimento() {
         return tamanhoEstabelecimento;
     }
 
     public String getHora() {
         return hora;
+    }
+
+    public void setMovimento(String movimento) {
+        this.movimento = movimento;
     }
 
     public void setHora(String hora) { this.hora = hora; }
