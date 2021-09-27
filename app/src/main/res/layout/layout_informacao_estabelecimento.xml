@@ -149,11 +149,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
+            android:id="@+id/seek_bar_informacao"
             android:layout_width="322dp"
             android:layout_height="15dp"
             android:background="@drawable/seek_bar"
-            android:orientation="horizontal"
 
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

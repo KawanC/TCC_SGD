@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
@@ -62,8 +63,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -77,14 +81,21 @@ public class MapsFragment extends Fragment {
     private Button botaoinformacaodois;
     private SeekBar seekBar;
     private TextView textViewMovimentacao, textViewNomeInformacao, textViewEnderecoInformaco, textViewTipo,
-            textViewTamanhoInformacao, textViewNomeFeedBack, textViewEnderecoFeedBack;
+            textViewTamanhoInformacao, textViewNomeFeedBack, textViewEnderecoFeedBack, textViewHora, textViewMovientoInfo;
     private RadioGroup radioGroupEstabelecimento, radioGroupTipo;
     Estabelecimento estabelecimento;
     private int numeroMovimentacao;
     private RadioButton radioButtonPequeno, radioButtonMedio, radioButtonGrande;
     private ImageView imageViewLocalizacao;
     private String tamanhoEstabelecimento, tipoEstabelecimento;
+    private LinearLayout linearLayoutSeekBar;
+
+    //ATRIBUTOS UTILIZADOS PARA OS METODOS DO BANCO
     FirebaseFirestore feed = FirebaseFirestore.getInstance();
+    final int[] contador = {0};
+    ArrayList <String> listaRetorno = new ArrayList<>();
+    final String[] movimentacao = new String[4];
+    final int [] movimentacaoNumero = new int[1];
 
     //private AppCompatButton btn_sucesso;
 
@@ -164,8 +175,7 @@ public class MapsFragment extends Fragment {
             // Se deu certo, inicializamos o place
             Place place = Autocomplete.getPlaceFromIntent(data);
 
-            estabelecimento = new Estabelecimento(place.getName(), place.getAddress(),
-                    "","Teste" ,"place.getTypes()" ,"horaFeedback");
+            estabelecimento = new Estabelecimento(place.getName(), place.getAddress(),"horaFeedback");
             //editTextPesquisa.setText(place.getAddress());
             // Adicionando o marcador no local pesquisado
             mMap.clear();
@@ -509,7 +519,7 @@ public class MapsFragment extends Fragment {
                             if (radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked() ) {
                                 // CODIGO BANCO DE DADOS
                                Feedback feedbackUsuario = new Feedback(estabelecimento.getNome(), Integer.toString(numeroMovimentacao), tipoEstabelecimento,
-                                       estabelecimento.getTamanhoEstabelecimento(), estabelecimento.getHora(), "Teste" );
+                                       tamanhoEstabelecimento, estabelecimento.getHora(), "Teste" );
 
                                feed.collection("Feedbacks").document().set(feedbackUsuario).addOnSuccessListener(new OnSuccessListener<Void>() {
                                    @Override
@@ -580,20 +590,89 @@ public class MapsFragment extends Fragment {
                         );
 
                 if(estabelecimento != null) {
+                    //PEGANDO IDS
+                    textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimentoInfo);
+                    textViewNomeInformacao = bottomSheetView.findViewById(R.id.nomeEstabelecimentoInfo);
+                    textViewTipo = bottomSheetView.findViewById(R.id.tipoEstabelecimentoInfo);
+                    textViewEnderecoInformaco = bottomSheetView.findViewById(R.id.enderecoEstabelecimentoInfo);
+                    textViewTamanhoInformacao = bottomSheetView.findViewById(R.id.tamanhoEstabelecimentoInfo);
+                    textViewHora = bottomSheetView.findViewById(R.id.textViewVistoFeedBack);
+                    textViewMovientoInfo = bottomSheetView.findViewById(R.id.textViewMovimentoInfo);
+                    linearLayoutSeekBar = bottomSheetView.findViewById(R.id.seek_bar_informacao);
+
+                    contador[0] = 0;
+                    feed.collection("Feedbacks")
+                            .whereEqualTo("nomeEstabelecimento", estabelecimento.getNome())
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()){
+                                for (QueryDocumentSnapshot doc : task.getResult()){
+                                    contador[0]++;
+                                    movimentacaoNumero[0] += Integer.parseInt((String)doc.get("movimentoEstabelecimento"));
+                                    movimentacao[0] = (String) doc.get("tipoEstabelecimento");
+                                    movimentacao[1] = (String) doc.get("horaFeedBack");
+                                    movimentacao[2] = (String) doc.get("tamanhoEstabelecimento");
+                                    listaRetorno.add("1");
+                                }
+                                if (listaRetorno.size() != 0){
+                                    int media = movimentacaoNumero[0] / contador[0];
+                                    switch (movimentacao[0]){
+                                        case "Shopping":
+                                            if (media <= 50){
+                                                textViewMovientoInfo.setText("Pouco Movimentado " + "(aprox. " + media + " pess.)");
+                                                textViewMovientoInfo.setTextColor(Color.parseColor("#A1A1A1"));
+                                                linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                            }
+                                            if (media > 50 && media <= 100){
+                                                textViewMovientoInfo.setText("Movimentado " + "(aprox. " + media + " pess.)");
+                                                textViewMovientoInfo.setTextColor(Color.parseColor("#A1A1A1"));
+                                                linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                            }
+                                            if (media > 100){
+                                                textViewMovientoInfo.setText("Muito Movimentado " + "(aprox. " + media + " pess.)");
+                                                textViewMovientoInfo.setTextColor(Color.parseColor("#A1A1A1"));
+                                                linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                            }
+                                            break;
+                                        case "Restaurante":
+
+                                            break;
+                                        case "Mercado":
+
+                                            break;
+                                    }
+
+                                    textViewNomeInformacao.setText(estabelecimento.getNome());
+                                    textViewEnderecoInformaco.setText(estabelecimento.getEndereco());
+                                    textViewTamanhoInformacao.setText("Tamanho do estabelecimento: " + movimentacao[2]);
+                                    textViewHora.setText("Ultima atualização: " + movimentacao[1]);
+                                    textViewTipo.setText("Tipo do estabelecimento: " + movimentacao[0]);
+                                    listaRetorno.clear();
+
+                                }else{
+                                    // NENHUM FEEDBACK ENCONTRAO PARA ESTE ESTABELECIMENTO
+                                    textViewNomeInformacao.setText(estabelecimento.getNome());
+                                    textViewEnderecoInformaco.setText(estabelecimento.getEndereco());
+                                    textViewTamanhoInformacao.setText("Tamanho: Nenhum feedback nas ultimas 24 horas");
+                                    textViewTipo.setText("Tipo: Nenhum feedback nas ultimas 24 horas");
+                                    textViewHora.setText("Ultima atualização: Nenhuma nas ultimas 24 horas");
+
+                                    textViewMovientoInfo.setText("Nenhum feedback");
+                                    textViewMovientoInfo.setTextColor(Color.parseColor("#A1A1A1"));
+                                    linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar_nenhum));
+
+                                }
+                            }
+                        }
+                    });
+
+
+
 
                     bottomSheetDialog.setContentView(bottomSheetView);
                     bottomSheetDialog.show();
-
-                    textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimentoInfo);
-                    textViewNomeInformacao = bottomSheetView.findViewById(R.id.nomeEstabelecimentoInfo);
-                   textViewTipo = bottomSheetView.findViewById(R.id.tipoEstabelecimentoInfo);
-                    textViewEnderecoInformaco = bottomSheetView.findViewById(R.id.enderecoEstabelecimentoInfo);
-                    textViewTamanhoInformacao = bottomSheetView.findViewById(R.id.tamanhoEstabelecimentoInfo);
-
-                    textViewNomeInformacao.setText(estabelecimento.getNome());
-                    textViewEnderecoInformaco.setText(estabelecimento.getEndereco());
-                   // textViewTelefoneInformacao.setText("Telefone: " + estabelecimento.getTelefone());
-                    textViewTamanhoInformacao.setText("Tamanho do estabelecimento: " + estabelecimento.getTamanhoEstabelecimento());
                 } else Toast.makeText(view.getContext(), "Por favor pesquise um estabelecimento antes de clicar no botão de informações!", Toast.LENGTH_SHORT).show();
             }
         });
