@@ -7,15 +7,16 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class Feedback {
-    private String nomeEstabelecimento, movimentoEstabelecimento, tipoEstabelecimento, tamanhoEstabelecimento, horaFeedBack, idUsuario;
+    private String nomeEstabelecimento, movimentoEstabelecimento, tipoEstabelecimento, tamanhoEstabelecimento, horaFeedBack, idUsuario, enderecoLocal;
 
-    public Feedback(String nomeEstabelecimento, String movimentoEstabelecimento, String tipoEstabelecimento, String tamanhoEstabelecimento, String horaFeedBack, String idUsuario) {
+    public Feedback(String nomeEstabelecimento, String movimentoEstabelecimento, String tipoEstabelecimento, String tamanhoEstabelecimento, String horaFeedBack, String idUsuario, String enderecoLocal) {
         this.nomeEstabelecimento = nomeEstabelecimento;
         this.movimentoEstabelecimento = movimentoEstabelecimento;
         this.tipoEstabelecimento = tipoEstabelecimento;
         this.tamanhoEstabelecimento = tamanhoEstabelecimento;
         this.horaFeedBack = horaFeedBack;
         this.idUsuario = idUsuario;
+        this.enderecoLocal = enderecoLocal;
     }
 
     public String getNomeEstabelecimento() {
@@ -41,4 +42,6 @@ public class Feedback {
     public String getIdUsuario() {
         return idUsuario;
     }
+
+    public String getEnderecoLocal() { return enderecoLocal; }
 }

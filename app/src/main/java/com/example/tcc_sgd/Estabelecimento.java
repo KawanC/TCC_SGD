@@ -6,10 +6,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class Estabelecimento {
-    private String nome, endereco;
-    private String movimento;
-    private String tipoEstabelecimento;
-    private String hora;
+    private String nome, endereco,hora;
 
     public Estabelecimento(String nome, String endereco, String hora) {
         this.nome = nome;
