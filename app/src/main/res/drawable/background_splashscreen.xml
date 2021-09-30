@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/CorTopo"/>
+    <item>
+        <bitmap android:src="@drawable/sgd_sem_fundo"
+            android:gravity="center"></bitmap>
+    </item>
+</layer-list>

@@ -27,6 +27,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!--Style da Splash Screen-->
+    <style name="Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splashscreen</item>
+    </style>
+
     <style name="Theme.TCC_SGD.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.TCC_SGD.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
