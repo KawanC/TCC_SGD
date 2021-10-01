@@ -21,7 +21,21 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="204dp">
+        android:layout_height="269dp">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iconEstabelecimento"
+            android:layout_width="133dp"
+            android:layout_height="120dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sgd_sem_fundo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.11"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.110000014"
+            app:riv_corner_radius="10dp" />
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/imagemDuvida"
@@ -85,8 +99,8 @@
 
         <TextView
             android:id="@+id/nomeEstabelecimentoFeedback"
-            android:layout_width="242dp"
-            android:layout_height="60dp"
+            android:layout_width="243dp"
+            android:layout_height="68dp"
             android:gravity="center"
             android:text="Nome Estabelecimento"
             android:textColor="@color/colorPrimaryText"
@@ -94,20 +108,22 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.92"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.01999998" />
+            app:layout_constraintVertical_bias="0.13" />
 
         <TextView
             android:id="@+id/enderecoEstabelecimento"
             android:layout_width="237dp"
             android:layout_height="50dp"
-            android:gravity="center"
+            android:gravity="center|top"
             android:text="Endereço"
             android:textColor="@color/colorPrimaryText"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nomeEstabelecimentoFeedback"
             app:layout_constraintVertical_bias="0.0" />
@@ -145,144 +161,15 @@
         android:layout_marginBottom="10dp"
         android:background="@color/colorDuvider"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="82dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center_vertical">
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorDuvider"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center_horizontal"
-            android:text="Qual o tamanho do estabelecimento?"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/radioGroupTamanho"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.25" />
-
-        <RadioGroup
-            android:id="@+id/radioGroupTamanho"
-            android:layout_width="348dp"
-            android:layout_height="37dp"
-            android:backgroundTint="@color/colorAccent"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.68">
-
-            <RadioButton
-                android:id="@+id/radioButtonPequeno"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/colorAccent"
-                android:text="Pequeno"
-                android:textColor="@color/black" />
-
-            <RadioButton
-                android:id="@+id/radioButtonMedio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:buttonTint="@color/colorAccent"
-                android:text="Médio"
-                android:textColor="@color/black" />
-
-            <RadioButton
-                android:id="@+id/radioButtonGrande"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_weight="1"
-                android:buttonTint="@color/colorAccent"
-                android:text="Grande"
-                android:textColor="@color/black" />
-        </RadioGroup>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="102dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:fontFamily="sans-serif-black"
-            android:text="Como está a movimentação?"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textViewMovimento"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="34dp"
-            android:text="Vazio"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <SeekBar
-            android:id="@+id/seekBar"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="365dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:backgroundTint="@color/colorAccent"
-            android:max="3"
-            android:progress="0"
-            android:progressBackgroundTint="@color/black"
-            android:scrollbarStyle="insideInset"
-            android:thumbTint="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewMovimento"
-            app:layout_constraintVertical_bias="0.0" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <Button
-        android:id="@+id/buttonEnviar"
+        android:id="@+id/buttonProximo"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_background"
-        android:text="@string/enviar"
+        android:text="Próximo"
         android:textColor="@color/colorWhite"
         android:textSize="15sp" />
 
