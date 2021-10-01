@@ -15,6 +15,9 @@
         android:roundIcon="@mipmap/ic_sgd_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TCC_SGD">
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -37,9 +40,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-            android:theme="@style/Theme.TCC_SGD.NoActionBar">
-        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.TCC_SGD.NoActionBar" />
     </application>
 
 </manifest>
