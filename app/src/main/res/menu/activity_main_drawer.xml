@@ -22,6 +22,10 @@
             android:id="@+id/nav_feedback_app"
             android:icon="@drawable/ic_baseline_star_half_24"
             android:title="@string/menu_feedback_app" />
+        <item
+            android:id="@+id/nav_sair_app"
+            android:icon="@drawable/ic_baseline_logout_24"
+            android:title="@string/sair" />
 
 
     </group>

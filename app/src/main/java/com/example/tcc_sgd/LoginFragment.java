@@ -16,7 +16,7 @@ public class LoginFragment extends Fragment {
     View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View root = (ViewGroup) inflater.inflate(R.layout.login_fragment, container, false);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.login_fragment, container, false);
 
         float v = 0;
         EditText email = root.findViewById(R.id.email_login);
@@ -41,20 +41,13 @@ public class LoginFragment extends Fragment {
         login.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
 
 
-
-
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(root.getContext(), MainActivity.class);
+                Intent intent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(intent);
             }
         });
-
-
-
-
 
         return root;
     }

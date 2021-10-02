@@ -21,4 +21,5 @@
     <string name="lugar_favorito">Lugar favorito</string>
     <string name="compartilhe_o_local">Compartilhe o local</string>
     <string name="enviar">ENVIAR</string>
+    <string name="sair">Sair</string>
 </resources>
