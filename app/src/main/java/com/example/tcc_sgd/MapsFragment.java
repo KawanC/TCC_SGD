@@ -77,7 +77,7 @@ public class MapsFragment extends Fragment {
     private Button botaoinformacaodois;
     private SeekBar seekBar;
     private TextView textViewMovimentacao, textViewNomeInformacao, textViewEnderecoInformaco, textViewTipo,
-            textViewTamanhoInformacao, textViewNomeFeedBack, textViewEnderecoFeedBack, textViewHora, textViewMovientoInfo;
+            textViewTamanhoInformacao, textViewNomeFeedBack, textViewEnderecoFeedBack, textViewHora, textViewMovientoInfo, tituloProximo;
     private RadioGroup radioGroupEstabelecimento, radioGroupTipo;
     Estabelecimento estabelecimento;
     private int numeroMovimentacao;
@@ -274,15 +274,9 @@ public class MapsFragment extends Fragment {
                         R.layout.layout_bottom_sheet_etapa_2,
                         (LinearLayout) view.findViewById(R.id.bottomSheetContainer2)
                 );
-
         //EVENTO DA SEEKBAR PARA MOSTRAR AO USUARIO (VAZIO, POUCO MOVIMENTADO...)
         seekBar = bottomSheetView2.findViewById(R.id.seekBar); //PEGANDO ID DA SEEKBAR PELO BOTTOMSHEET
         textViewMovimentacao = bottomSheetView2.findViewById(R.id.textViewMovimento);
-
-        //RESOLVER ISSO JUNTO COM SEITCH CASEs
-        TextView titulo = bottomSheetView2.findViewById(R.id.textViewTitulo);
-        titulo.setText(" " +tipoEstabelecimento);
-
 
         // EVENTO LISTINER QUE "ESCUTA O MOVIMENTO" DA SEEK BAR
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -565,9 +559,13 @@ public class MapsFragment extends Fragment {
                         );
 
                 if(estabelecimento != null) {
-                    //SETANDO NOME E ENDEREÇO DOS ESTABELECIMENTOS PESQUISADOS
+
+
+                    tituloProximo = bottomSheetView2.findViewById(R.id.textViewTitulo);
                     textViewNomeFeedBack = bottomSheetView.findViewById(R.id.nomeEstabelecimentoFeedback);
                     textViewEnderecoFeedBack = bottomSheetView.findViewById(R.id.enderecoEstabelecimento);
+
+                    //SETANDO NOME E ENDEREÇO DOS ESTABELECIMENTOS PESQUISADOS
                     textViewNomeFeedBack.setText(estabelecimento.getNome());
                     textViewEnderecoFeedBack.setText(estabelecimento.getEndereco());
                     bottomSheetDialog.setContentView(bottomSheetView);
@@ -594,6 +592,10 @@ public class MapsFragment extends Fragment {
                                     tipoEstabelecimento = "Shopping";
                                     break;
                             }
+
+                            //RESOLVER ISSO JUNTO COM SEITCH CASE
+
+                            tituloProximo.setText("Tipo: " +tipoEstabelecimento);
                             bottomSheetDialog.cancel();
                             bottomSheetDialogEtapa2.setContentView(bottomSheetView2);
                             bottomSheetDialogEtapa2.show();
