@@ -600,7 +600,7 @@ public class MapsFragment extends Fragment {
                     //PEGANDO IDS
                     textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimentoInfo);
                     textViewNomeInformacao = bottomSheetView.findViewById(R.id.nomeEstabelecimentoInfo);
-                    textViewTipo = bottomSheetView.findViewById(R.id.tipoEstabelecimentoInfo);
+                   //NÃO ESTÁ SENDO MAIS USADO  textViewTipo = bottomSheetView.findViewById(R.id.tipoEstabelecimentoInfo);
                     textViewEnderecoInformaco = bottomSheetView.findViewById(R.id.enderecoEstabelecimentoInfo);
                     textViewTamanhoInformacao = bottomSheetView.findViewById(R.id.tamanhoEstabelecimentoInfo);
                     textViewHora = bottomSheetView.findViewById(R.id.textViewVistoFeedBack);
@@ -708,7 +708,7 @@ public class MapsFragment extends Fragment {
                                     textViewEnderecoInformaco.setText(estabelecimento.getEndereco());
                                     textViewTamanhoInformacao.setText("Tamanho do estabelecimento: " + movimentacao[2]);
                                     textViewHora.setText("Ultima atualização: " + movimentacao[1]);
-                                    textViewTipo.setText("Tipo do estabelecimento: " + movimentacao[0]);
+                               //     textViewTipo.setText("Tipo do estabelecimento: " + movimentacao[0]);
 
                                 }else{
                                     // NENHUM FEEDBACK ENCONTRAO PARA ESTE ESTABELECIMENTO
