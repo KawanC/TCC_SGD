@@ -279,7 +279,7 @@ public class MapsFragment extends Fragment {
         seekBar = bottomSheetView2.findViewById(R.id.seekBar); //PEGANDO ID DA SEEKBAR PELO BOTTOMSHEET
         textViewMovimentacao = bottomSheetView2.findViewById(R.id.textViewMovimento);
 
-        //RESOLVER ISSO JUNTO COM SEITCH CASE
+        //RESOLVER ISSO JUNTO COM SEITCH CASEs
         TextView titulo = bottomSheetView2.findViewById(R.id.textViewTitulo);
         titulo.setText(" " +tipoEstabelecimento);
 
