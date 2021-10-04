@@ -294,18 +294,21 @@ public class MapsFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         seekBar2.setEnabled(true);
+                        tipoEstabelecimento = "Pequeno";
                     }
                 });
                 radioButtonMedio.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         seekBar2.setEnabled(true);
+                        tipoEstabelecimento = "Médio";
                     }
                 });
                 radioButtonGrande.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         seekBar2.setEnabled(true);
+                        tipoEstabelecimento = "Grande";
                     }
                 });
                 if (radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked()) {
