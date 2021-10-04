@@ -75,13 +75,13 @@ public class MapsFragment extends Fragment {
     private EditText editTextPesquisa;
     private FloatingActionButton BotaoFeedback, BotaoInformacao;
     private Button botaoinformacaodois;
-    private SeekBar seekBar;
+    private SeekBar seekBar2;
     private TextView textViewMovimentacao, textViewNomeInformacao, textViewEnderecoInformaco, textViewTipo,
-            textViewTamanhoInformacao, textViewNomeFeedBack, textViewEnderecoFeedBack, textViewHora, textViewMovientoInfo, tituloProximo;
+            textViewTamanhoInformacao, textViewNomeFeedBack, textViewEnderecoFeedBack, textViewHora, textViewMovientoInfo, tituloProximo, textViewProgues;
     private RadioGroup radioGroupEstabelecimento, radioGroupTipo;
     Estabelecimento estabelecimento;
     private int numeroMovimentacao;
-    private RadioButton radioButtonPequeno, radioButtonMedio, radioButtonGrande;
+    private RadioButton radioButtonPequeno, radioButtonMedio, radioButtonGrande, radioButtonShop, radioButtonMercado, radioButtonRestaurante;
     private ImageView imageViewLocalizacao;
     private String tamanhoEstabelecimento, tipoEstabelecimento;
     private LinearLayout linearLayoutSeekBar;
@@ -275,43 +275,163 @@ public class MapsFragment extends Fragment {
                         (LinearLayout) view.findViewById(R.id.bottomSheetContainer2)
                 );
         //EVENTO DA SEEKBAR PARA MOSTRAR AO USUARIO (VAZIO, POUCO MOVIMENTADO...)
-        seekBar = bottomSheetView2.findViewById(R.id.seekBar); //PEGANDO ID DA SEEKBAR PELO BOTTOMSHEET
+        seekBar2 = bottomSheetView2.findViewById(R.id.seekBar); //PEGANDO ID DA SEEKBAR PELO BOTTOMSHEET
         textViewMovimentacao = bottomSheetView2.findViewById(R.id.textViewMovimento);
-
+        textViewProgues = bottomSheetView2.findViewById(R.id.textViewProgues);
+        radioButtonPequeno = bottomSheetView2.findViewById(R.id.radioButtonPequeno);
+        radioButtonMedio = bottomSheetView2.findViewById(R.id.radioButtonMedio);
+        radioButtonGrande = bottomSheetView2.findViewById(R.id.radioButtonGrande);
         // EVENTO LISTINER QUE "ESCUTA O MOVIMENTO" DA SEEK BAR
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
                 // NECESSÁRIO ESTAR AQUI DENTRO NOVAMENTE POIS SE NÃO O LISTINER NÃO "EXERGA" O TEXTVIEW
+                textViewProgues = bottomSheetView2.findViewById(R.id.textViewProgues);
                 textViewMovimentacao = bottomSheetView2.findViewById(R.id.textViewMovimento);
-                switch (progress) {
-                    //PROGRESS SÃO OS ESTAGIOS DA SEEKBAR, QUE VAI DE 0 A 3
-                    case 0:
-                        textViewMovimentacao.setText("Vazio (0)");
-                        textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                        seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
-                        seekBar.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
-                        break;
-                    case 1:
-                        textViewMovimentacao.setText("Pouco Movimentado");
-                        textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
-                        seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
-                        seekBar.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
-                        break;
-                    case 2:
-                        textViewMovimentacao.setText("Movimentado");
-                        textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
-                        seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
-                        seekBar.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
-                        break;
-                    case 3:
-                        textViewMovimentacao.setText("Cheio");
-                        textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
-                        seekBar.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
-                        seekBar.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
-                        break;
+                seekBar2 = bottomSheetView2.findViewById(R.id.seekBar); //PEGANDO ID DA SEEKBAR PELO BOTTOMSHEET
+                radioButtonPequeno.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        seekBar2.setEnabled(true);
+                    }
+                });
+                radioButtonMedio.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        seekBar2.setEnabled(true);
+                    }
+                });
+                radioButtonGrande.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        seekBar2.setEnabled(true);
+                    }
+                });
+                if (radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked()) {
+                    switch (tipoEstabelecimento) {
+                        case "Restaurante":
+                            //ESCALA PARA RESTAURANTE PEQUENO
+                            if (radioButtonPequeno.isChecked()) {
+                                seekBar2.setMax(100);
+
+                                if (progress == 0) {
+                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Vazio");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                                }
+                                if (progress > 0 && progress <= 50) {
+                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimento Tranquilo");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 50 && progress <= 75) {
+                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimentado");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 75 && progress <= 100) {
+                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Muito movimentado!");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                                }
+                            }
+                            if (radioButtonMedio.isChecked()) {
+                                //ESCALA RESTAURANTE MEDIO...
+                                seekBar2.setMax(200);
+                                if (progress == 0) {
+                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Vazio");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                                }
+                                if (progress > 0 && progress <= 100) {
+                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimento Tranquilo");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 100 && progress <= 150) {
+                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimentado");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 150 && progress <= 200) {
+                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Muito movimentado!");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                                }
+                            }
+                            if (radioButtonGrande.isChecked()) {
+                                //ESCALA RESTAURANTE GRANDE...
+                                seekBar2.setMax(400);
+                                if (progress == 0) {
+                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Vazio");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                                }
+                                if (progress > 0 && progress <= 175) {
+                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimento Tranquilo");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 175 && progress <= 300) {
+                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimentado");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 300 && progress <= 400) {
+                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Muito movimentado!");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                                }
+                            }
+                            break;
+                        case "Shopping":
+
+                            break;
+                        case "Mercado":
+
+                            break;
+                    }
+                } else {
+                    Toast.makeText(view.getContext(), "Por favor selecione o tamanho do Estabelecimento!", Toast.LENGTH_SHORT).show();
                 }
+                numeroMovimentacao = progress;
             }
 
             @Override
@@ -336,174 +456,10 @@ public class MapsFragment extends Fragment {
                 //ATUALIZANDO A HORA
                 String horaFeedback = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
                 estabelecimento.setHora(horaFeedback);
-                switch (radioId2){
-                    case R.id.radioButtonRestaurante:
-                        tipoEstabelecimento = "Restaurante";
-                        switch (radioId) {
-                            case R.id.radioButtonPequeno:
-                                tamanhoEstabelecimento = "Pequeno";
-                                if (textViewMovimentacao.getText().equals("Vazio")) {
-                                    numeroMovimentacao = 0;
-                                }
-                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
-                                    numeroMovimentacao = 50;
-                                }
-                                if (textViewMovimentacao.getText().equals("Movimentado")) {
-                                    numeroMovimentacao = 100;
-                                }
-                                if (textViewMovimentacao.getText().equals("Cheio")) {
-                                    numeroMovimentacao = 200;
-                                }
-                                break;
-
-                            case R.id.radioButtonMedio:
-                                tamanhoEstabelecimento = "Médio";
-                                if (textViewMovimentacao.getText().equals("Vazio")) {
-                                    numeroMovimentacao = 0;
-                                }
-                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
-                                    numeroMovimentacao = 75;
-                                }
-                                if (textViewMovimentacao.getText().equals("Movimentado")) {
-                                    numeroMovimentacao = 150;
-                                }
-                                if (textViewMovimentacao.getText().equals("Cheio")) {
-                                    numeroMovimentacao = 250;
-                                }
-                                break;
-
-                            case R.id.radioButtonGrande:
-                                tamanhoEstabelecimento = "Grande";
-                                if (textViewMovimentacao.getText().equals("Vazio")) {
-                                    numeroMovimentacao = 0;
-                                }
-                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
-                                    numeroMovimentacao = 100;
-                                }
-                                if (textViewMovimentacao.getText().equals("Movimentado")) {
-                                    numeroMovimentacao = 200;
-                                }
-                                if (textViewMovimentacao.getText().equals("Cheio")) {
-                                    numeroMovimentacao = 400;
-                                }
-                                break;
-
-                        }
-                        break;
-                    case R.id.radioButtonMercado:
-                        tipoEstabelecimento = "Mercado";
-                        switch (radioId) {
-                            case R.id.radioButtonPequeno:
-                                tamanhoEstabelecimento = "Pequeno";
-                                if (textViewMovimentacao.getText().equals("Vazio")) {
-                                    numeroMovimentacao = 0;
-                                }
-                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
-                                    numeroMovimentacao = 50;
-                                }
-                                if (textViewMovimentacao.getText().equals("Movimentado")) {
-                                    numeroMovimentacao = 100;
-                                }
-                                if (textViewMovimentacao.getText().equals("Cheio")) {
-                                    numeroMovimentacao = 200;
-                                }
-                                break;
-
-                            case R.id.radioButtonMedio:
-                                tamanhoEstabelecimento = "Médio";
-                                if (textViewMovimentacao.getText().equals("Vazio")) {
-                                    numeroMovimentacao = 0;
-                                }
-                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
-                                    numeroMovimentacao = 75;
-                                }
-                                if (textViewMovimentacao.getText().equals("Movimentado")) {
-                                    numeroMovimentacao = 150;
-                                }
-                                if (textViewMovimentacao.getText().equals("Cheio")) {
-                                    numeroMovimentacao = 250;
-                                }
-                                break;
-
-                            case R.id.radioButtonGrande:
-                                tamanhoEstabelecimento = "Grande";
-                                if (textViewMovimentacao.getText().equals("Vazio")) {
-                                    numeroMovimentacao = 0;
-                                }
-                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
-                                    numeroMovimentacao = 100;
-                                }
-                                if (textViewMovimentacao.getText().equals("Movimentado")) {
-                                    numeroMovimentacao = 200;
-                                }
-                                if (textViewMovimentacao.getText().equals("Cheio")) {
-                                    numeroMovimentacao = 400;
-                                }
-                                break;
-                        }
-                        break;
-                    case R.id.radioButtonShop:
-
-                        switch (radioId) {
-                            case R.id.radioButtonPequeno:
-                                tamanhoEstabelecimento = "Pequeno";
-                                if (textViewMovimentacao.getText().equals("Vazio")) {
-                                    numeroMovimentacao = 0;
-                                }
-                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
-                                    numeroMovimentacao = 50;
-                                }
-                                if (textViewMovimentacao.getText().equals("Movimentado")) {
-                                    numeroMovimentacao = 100;
-                                }
-                                if (textViewMovimentacao.getText().equals("Cheio")) {
-                                    numeroMovimentacao = 200;
-                                }
-                                break;
-
-                            case R.id.radioButtonMedio:
-                                tamanhoEstabelecimento = "Médio";
-                                if (textViewMovimentacao.getText().equals("Vazio")) {
-                                    numeroMovimentacao = 0;
-                                }
-                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
-                                    numeroMovimentacao = 75;
-                                }
-                                if (textViewMovimentacao.getText().equals("Movimentado")) {
-                                    numeroMovimentacao = 150;
-                                }
-                                if (textViewMovimentacao.getText().equals("Cheio")) {
-                                    numeroMovimentacao = 250;
-                                }
-                                break;
-
-                            case R.id.radioButtonGrande:
-                                tamanhoEstabelecimento = "Grande";
-                                if (textViewMovimentacao.getText().equals("Vazio")) {
-                                    numeroMovimentacao = 0;
-                                }
-                                if (textViewMovimentacao.getText().equals("Pouco Movimentado")) {
-                                    numeroMovimentacao = 100;
-                                }
-                                if (textViewMovimentacao.getText().equals("Movimentado")) {
-                                    numeroMovimentacao = 200;
-                                }
-                                if (textViewMovimentacao.getText().equals("Cheio")) {
-                                    numeroMovimentacao = 400;
-                                }
-                                break;
-                        }
-                        break;
-
-                }
-                radioButtonPequeno = bottomSheetView2.findViewById(R.id.radioButtonPequeno);
-                radioButtonMedio = bottomSheetView2.findViewById(R.id.radioButtonMedio);
-                radioButtonGrande = bottomSheetView2.findViewById(R.id.radioButtonGrande);
-
-                if (radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked() ) {
-                    // CODIGO BANCO DE DADOS
+                // CODIGO BANCO DE DADOS
+                if (radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked()) {
                     Feedback feedbackUsuario = new Feedback(estabelecimento.getNome(), Integer.toString(numeroMovimentacao), tipoEstabelecimento,
-                            tamanhoEstabelecimento, estabelecimento.getHora(), "Teste" , estabelecimento.getEndereco());
+                            tamanhoEstabelecimento, estabelecimento.getHora(), "Teste", estabelecimento.getEndereco());
 
                     feed.collection("Feedbacks").document(estabelecimento.getNome() + estabelecimento.getHora()).set(feedbackUsuario).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -517,8 +473,8 @@ public class MapsFragment extends Fragment {
                         }
                     });
                     bottomSheetDialogEtapa2.dismiss();
-                } else {
-                    Toast.makeText(view.getContext(), "Por favor selecione o tamanho do estabelecimento para completar o seu feedback.", Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(view.getContext(), "Por favor selecione o tamanho do Estabelecimento!", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -564,6 +520,9 @@ public class MapsFragment extends Fragment {
                     tituloProximo = bottomSheetView2.findViewById(R.id.textViewTitulo);
                     textViewNomeFeedBack = bottomSheetView.findViewById(R.id.nomeEstabelecimentoFeedback);
                     textViewEnderecoFeedBack = bottomSheetView.findViewById(R.id.enderecoEstabelecimento);
+                    radioButtonMercado = bottomSheetView.findViewById(R.id.radioButtonMercado);
+                    radioButtonShop = bottomSheetView.findViewById(R.id.radioButtonShop);
+                    radioButtonRestaurante = bottomSheetView.findViewById(R.id.radioButtonRestaurante);
 
                     //SETANDO NOME E ENDEREÇO DOS ESTABELECIMENTOS PESQUISADOS
                     textViewNomeFeedBack.setText(estabelecimento.getNome());
@@ -576,29 +535,33 @@ public class MapsFragment extends Fragment {
                         @Override
                         public void onClick(View view) {
 
-                            //PEGANDO ID DO RADIO NUTTON SELECIONADO
-                            radioGroupTipo = bottomSheetView.findViewById(R.id.radioGroupTipo);
-                            radioId2 = radioGroupTipo.getCheckedRadioButtonId();
+                            if(radioButtonMercado.isChecked() || radioButtonShop.isChecked() || radioButtonRestaurante.isChecked()){
+                                //PEGANDO ID DO RADIO NUTTON SELECIONADO
+                                radioGroupTipo = bottomSheetView.findViewById(R.id.radioGroupTipo);
+                                radioId2 = radioGroupTipo.getCheckedRadioButtonId();
 
-                            //SETANDO TEXTO DO TIPO DE ESTABELECIMENTO
-                            switch (radioId2){
-                                case  R.id.radioButtonRestaurante:
-                                    tipoEstabelecimento = "Restaurante";
-                                    break;
-                                case R.id.radioButtonMercado:
-                                    tipoEstabelecimento = "Mercado";
-                                    break;
-                                case R.id.radioButtonShop:
-                                    tipoEstabelecimento = "Shopping";
-                                    break;
+                                //SETANDO TEXTO DO TIPO DE ESTABELECIMENTO
+                                switch (radioId2){
+                                    case  R.id.radioButtonRestaurante:
+                                        tipoEstabelecimento = "Restaurante";
+                                        break;
+                                    case R.id.radioButtonMercado:
+                                        tipoEstabelecimento = "Mercado";
+                                        break;
+                                    case R.id.radioButtonShop:
+                                        tipoEstabelecimento = "Shopping";
+                                        break;
+                                }
+
+                                //RESOLVER ISSO JUNTO COM SEITCH CASE
+
+                                tituloProximo.setText("Tipo: " +tipoEstabelecimento);
+                                bottomSheetDialog.cancel();
+                                bottomSheetDialogEtapa2.setContentView(bottomSheetView2);
+                                bottomSheetDialogEtapa2.show();
+                            } else {
+                                Toast.makeText(bottomSheetView.getContext(), "Por favor selecione o tipo de estabelecimento!", Toast.LENGTH_SHORT).show();
                             }
-
-                            //RESOLVER ISSO JUNTO COM SEITCH CASE
-
-                            tituloProximo.setText("Tipo: " +tipoEstabelecimento);
-                            bottomSheetDialog.cancel();
-                            bottomSheetDialogEtapa2.setContentView(bottomSheetView2);
-                            bottomSheetDialogEtapa2.show();
                         }
                     });
                 }else{
