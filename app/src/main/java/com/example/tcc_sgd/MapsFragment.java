@@ -265,7 +265,7 @@ public class MapsFragment extends Fragment {
     }
 
     private void metodoBotoes(){
-        //CRIANDO BOTAO SHET
+        //CRIANDO BOTAO SHETs
         final BottomSheetDialog bottomSheetDialogEtapa2 = new BottomSheetDialog(
                 view.getContext(), R.style.BottomSheetDialogTheme
         );
