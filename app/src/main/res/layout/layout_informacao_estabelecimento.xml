@@ -156,12 +156,13 @@
             android:layout_width="322dp"
             android:layout_height="15dp"
 
+            android:layout_marginBottom="48dp"
             android:background="@drawable/seek_bar_nenhum"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/textViewMovimentoInfo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="65dp" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textViewVistoFeedBack"
