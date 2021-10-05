@@ -65,7 +65,9 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 if(documentSnapshot != null){
+                    nome = getActivity().findViewById(R.id.nome_Usuario);
                     nome.setText(documentSnapshot.getString("nome"));
+                    email = getActivity().findViewById(R.id.textViewEmailUsuario);
                     email.setText(documentSnapshot.getString("email"));
                 }
             }

@@ -21,6 +21,7 @@
         android:src="@drawable/sgd_sem_fundo_nome"></ImageView>
 
     <TextView
+        android:id="@+id/nome_Usuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
