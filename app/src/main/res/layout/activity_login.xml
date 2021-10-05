@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="185dp"
+        android:layout_width="wrap_content"
         android:layout_height="82dp"
         android:scaleType="centerCrop"
         android:src="@drawable/sgd_sem_fundo_nome"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1">
 
-        <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -51,7 +51,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintVertical_bias="0" >
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItemLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LOGIN" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItemCadastrar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CADASTRAR" />
+        </com.google.android.material.tabs.TabLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -30,11 +30,6 @@
         <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_1/app/src/main/res/drawable/button_background.xml" value="0.3828125" />
         <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_1/app/src/main/res/layout/layout_bottom_sheet.xml" value="0.5" />
         <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_1/app/src/main/res/layout/layout_informacao_estabelecimento.xml" value="0.23703703703703705" />
-        <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_11/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_11/app/src/main/res/layout/fragment_feedback_app.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_11/app/src/main/res/layout/layout_bottom_sheet.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_11/app/src/main/res/layout/layout_bottom_sheet_etapa_2.xml" value="0.5" />
-        <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_11/app/src/main/res/layout/layout_informacao_estabelecimento.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_22/app/src/main/res/drawable/ic_baseline_help_24.xml" value="0.3828125" />
         <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_22/app/src/main/res/layout/layout_bottom_sheet.xml" value="0.5" />
         <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_22/app/src/main/res/layout/layout_informacao_estabelecimento.xml" value="0.35408022130013833" />
@@ -55,9 +50,12 @@
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.3828125" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/drawable/ic_search.xml" value="0.3828125" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/drawable/seek_bar.xml" value="0.25277777777777777" />
-        <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/activity_login_usuario.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/app_bar_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/cadastrar_fragment.xml" value="0.5" />
+        <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/content_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/fragment_como_usar.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/fragment_feedback_app.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/fragment_maps.xml" value="0.36666666666666664" />
@@ -65,6 +63,8 @@
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/layout_bottom_sheet.xml" value="0.67" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/layout_informacao_estabelecimento.xml" value="0.5" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/login_fragment.xml" value="0.67" />
+        <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/nav_header_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD_final_1/app/src/main/res/layout/fragment_feedback_app.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD_final_1/app/src/main/res/layout/layout_bottom_sheet.xml" value="0.67" />
         <entry key="..\:/Users/aluno/StudioProjects/SGD/app/src/main/res/drawable/borda_branca.xml" value="0.3828125" />

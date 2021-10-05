@@ -3,6 +3,7 @@ package com.example.tcc_sgd;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -20,10 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private SearchView searchView;
-
-
-    @Override
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -42,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
     }
-
 
     @Override
     public boolean onSupportNavigateUp() {

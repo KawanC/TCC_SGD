@@ -1,7 +1,9 @@
 package com.example.tcc_sgd;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,34 +15,50 @@ import com.google.android.material.tabs.TabLayout;
 
 public class LoginActivity extends AppCompatActivity {
 
+    float v = 0;
+    TabLayout tabLayout;
+    ViewPager2 viewPager2;
+    FragmentAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        float v = 0;
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        tabLayout = findViewById(R.id.tab_layout);
+        viewPager2 = findViewById(R.id.view_pager);
 
+        FragmentManager fm = getSupportFragmentManager();
+        adapter = new FragmentAdapter(fm, getLifecycle());
+        viewPager2.setAdapter(adapter);
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager2.setCurrentItem(tab.getPosition());
+            }
 
-        tabLayout.addTab(tabLayout.newTab().setText("Login"));
-        tabLayout.addTab(tabLayout.newTab().setText("Cadastrar-se"));
-        tabLayout.setTabGravity(tabLayout.GRAVITY_FILL);
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-        final LoginAdapter adapter = new LoginAdapter(getSupportFragmentManager(), this,tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
+            }
 
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                tabLayout.selectTab(tabLayout.getTabAt(position));
+            }
+        });
 
         tabLayout.setTranslationY(300);
-
         tabLayout.setAlpha(v);
-
-        tabLayout.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(100).start();
-
-
-
+        tabLayout.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
 
     }
 }
