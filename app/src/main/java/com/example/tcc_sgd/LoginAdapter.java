@@ -23,6 +23,7 @@ public class LoginAdapter extends FragmentPagerAdapter {
         return total;
     }
 
+    @Override
     public Fragment getItem(int posicao){
         switch (posicao){
             case 0:

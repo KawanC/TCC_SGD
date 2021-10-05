@@ -281,6 +281,41 @@ public class MapsFragment extends Fragment {
         radioButtonPequeno = bottomSheetView2.findViewById(R.id.radioButtonPequeno);
         radioButtonMedio = bottomSheetView2.findViewById(R.id.radioButtonMedio);
         radioButtonGrande = bottomSheetView2.findViewById(R.id.radioButtonGrande);
+        radioGroupEstabelecimento = bottomSheetView2.findViewById(R.id.radioGroupTamanho);
+        int radioId = radioGroupEstabelecimento.getCheckedRadioButtonId(); //pegando id do botão selecionado
+        radioButtonPequeno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                seekBar2.setEnabled(true);
+                tamanhoEstabelecimento = "Pequeno";
+            }
+        });
+        radioButtonMedio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                seekBar2.setEnabled(true);
+                tamanhoEstabelecimento = "Médio";
+            }
+        });
+        radioButtonGrande.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                seekBar2.setEnabled(true);
+                tamanhoEstabelecimento = "Grande";
+            }
+        });
+        if (radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked()) {
+            seekBar2.setEnabled(true);
+        }else {
+            seekBar2.setEnabled(false);
+            seekBar2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(view.getContext(), "Por favor Selecione o tamanho do estabelecimento", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
         // EVENTO LISTINER QUE "ESCUTA O MOVIMENTO" DA SEEK BAR
         seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -290,36 +325,15 @@ public class MapsFragment extends Fragment {
                 textViewProgues = bottomSheetView2.findViewById(R.id.textViewProgues);
                 textViewMovimentacao = bottomSheetView2.findViewById(R.id.textViewMovimento);
                 seekBar2 = bottomSheetView2.findViewById(R.id.seekBar); //PEGANDO ID DA SEEKBAR PELO BOTTOMSHEET
-                radioButtonPequeno.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        seekBar2.setEnabled(true);
-                        tipoEstabelecimento = "Pequeno";
-                    }
-                });
-                radioButtonMedio.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        seekBar2.setEnabled(true);
-                        tipoEstabelecimento = "Médio";
-                    }
-                });
-                radioButtonGrande.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        seekBar2.setEnabled(true);
-                        tipoEstabelecimento = "Grande";
-                    }
-                });
-                if (radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked()) {
-                    switch (tipoEstabelecimento) {
+
+                      switch (tipoEstabelecimento) {
                         case "Restaurante":
                             //ESCALA PARA RESTAURANTE PEQUENO
                             if (radioButtonPequeno.isChecked()) {
                                 seekBar2.setMax(100);
 
                                 if (progress == 0) {
-                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
                                     textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
                                     textViewMovimentacao.setText("Vazio");
                                     textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
@@ -327,7 +341,7 @@ public class MapsFragment extends Fragment {
                                     seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                                 }
                                 if (progress > 0 && progress <= 50) {
-                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
                                     textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
                                     textViewMovimentacao.setText("Movimento Tranquilo");
                                     textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
@@ -335,7 +349,7 @@ public class MapsFragment extends Fragment {
                                     seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
                                 }
                                 if (progress > 50 && progress <= 75) {
-                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
                                     textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
                                     textViewMovimentacao.setText("Movimentado");
                                     textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
@@ -343,7 +357,7 @@ public class MapsFragment extends Fragment {
                                     seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
                                 }
                                 if (progress > 75 && progress <= 100) {
-                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
                                     textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
                                     textViewMovimentacao.setText("Muito movimentado!");
                                     textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
@@ -355,7 +369,7 @@ public class MapsFragment extends Fragment {
                                 //ESCALA RESTAURANTE MEDIO...
                                 seekBar2.setMax(200);
                                 if (progress == 0) {
-                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
                                     textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
                                     textViewMovimentacao.setText("Vazio");
                                     textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
@@ -363,7 +377,7 @@ public class MapsFragment extends Fragment {
                                     seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                                 }
                                 if (progress > 0 && progress <= 100) {
-                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
                                     textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
                                     textViewMovimentacao.setText("Movimento Tranquilo");
                                     textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
@@ -371,7 +385,7 @@ public class MapsFragment extends Fragment {
                                     seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
                                 }
                                 if (progress > 100 && progress <= 150) {
-                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
                                     textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
                                     textViewMovimentacao.setText("Movimentado");
                                     textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
@@ -379,7 +393,7 @@ public class MapsFragment extends Fragment {
                                     seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
                                 }
                                 if (progress > 150 && progress <= 200) {
-                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
                                     textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
                                     textViewMovimentacao.setText("Muito movimentado!");
                                     textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
@@ -391,7 +405,7 @@ public class MapsFragment extends Fragment {
                                 //ESCALA RESTAURANTE GRANDE...
                                 seekBar2.setMax(400);
                                 if (progress == 0) {
-                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
                                     textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
                                     textViewMovimentacao.setText("Vazio");
                                     textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
@@ -399,7 +413,7 @@ public class MapsFragment extends Fragment {
                                     seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                                 }
                                 if (progress > 0 && progress <= 175) {
-                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
                                     textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
                                     textViewMovimentacao.setText("Movimento Tranquilo");
                                     textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
@@ -407,7 +421,7 @@ public class MapsFragment extends Fragment {
                                     seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
                                 }
                                 if (progress > 175 && progress <= 300) {
-                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
                                     textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
                                     textViewMovimentacao.setText("Movimentado");
                                     textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
@@ -415,7 +429,7 @@ public class MapsFragment extends Fragment {
                                     seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
                                 }
                                 if (progress > 300 && progress <= 400) {
-                                    textViewProgues.setText(" " + (progress));
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
                                     textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
                                     textViewMovimentacao.setText("Muito movimentado!");
                                     textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
@@ -425,15 +439,230 @@ public class MapsFragment extends Fragment {
                             }
                             break;
                         case "Shopping":
+                            //ESCALA PARA RESTAURANTE PEQUENO
+                            if (radioButtonPequeno.isChecked()) {
+                                seekBar2.setMax(4000);
+
+                                if (progress == 0) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Vazio");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                                }
+                                if (progress > 0 && progress <= 1000) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimento Tranquilo");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 1000 && progress <= 3000) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimentado");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 3000 && progress <= 4000) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Muito movimentado!");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                                }
+                            }
+                            if (radioButtonMedio.isChecked()) {
+                                //ESCALA RESTAURANTE MEDIO...
+                                seekBar2.setMax(6000);
+                                if (progress == 0) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Vazio");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                                }
+                                if (progress > 0 && progress <= 2500) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimento Tranquilo");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 2500 && progress <= 5000) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimentado");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 5000 && progress <= 7000) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Muito movimentado!");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                                }
+                            }
+                            if (radioButtonGrande.isChecked()) {
+                                //ESCALA RESTAURANTE GRANDE...
+                                seekBar2.setMax(15000);
+                                if (progress == 0) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Vazio");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                                }
+                                if (progress > 0 && progress <= 3000) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimento Tranquilo");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 3000 && progress <= 7500) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimentado");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 7500 && progress <= 15000) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Muito movimentado!");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                                }
+                            }
 
                             break;
                         case "Mercado":
+                            //ESCALA PARA RESTAURANTE PEQUENO
+                            if (radioButtonPequeno.isChecked()) {
+                                seekBar2.setMax(500);
+
+                                if (progress == 0) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Vazio");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                                }
+                                if (progress > 0 && progress <= 100) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimento Tranquilo");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 100 && progress <= 300) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimentado");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 300 && progress <= 500) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Muito movimentado!");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                                }
+                            }
+                            if (radioButtonMedio.isChecked()) {
+                                //ESCALA RESTAURANTE MEDIO...
+                                seekBar2.setMax(1500);
+                                if (progress == 0) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Vazio");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                                }
+                                if (progress > 0 && progress <= 500) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimento Tranquilo");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 500 && progress <= 750) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimentado");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 750 && progress <= 1500) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Muito movimentado!");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                                }
+                            }
+                            if (radioButtonGrande.isChecked()) {
+                                //ESCALA RESTAURANTE GRANDE...
+                                seekBar2.setMax(3500);
+                                if (progress == 0) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Vazio");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                                }
+                                if (progress > 0 && progress <= 750) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimento Tranquilo");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 750 && progress <= 1500) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Movimentado");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                                }
+                                if (progress > 1500 && progress <= 3500) {
+                                    textViewProgues.setText(progress + " Pessoas aprox.");
+                                    textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                                    textViewMovimentacao.setText("Muito movimentado!");
+                                    textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                                    seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                                    seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                                }
+                            }
 
                             break;
-                    }
-                } else {
-                    Toast.makeText(view.getContext(), "Por favor selecione o tamanho do Estabelecimento!", Toast.LENGTH_SHORT).show();
-                }
+                      }
                 numeroMovimentacao = progress;
             }
 
@@ -452,10 +681,6 @@ public class MapsFragment extends Fragment {
         bottomSheetView2.findViewById(R.id.buttonEnviar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                radioGroupEstabelecimento = bottomSheetView2.findViewById(R.id.radioGroupTamanho);
-                textViewMovimentacao = bottomSheetView2.findViewById(R.id.textViewMovimento);
-                int radioId = radioGroupEstabelecimento.getCheckedRadioButtonId(); //pegando id do botão selecionado
                 //ATUALIZANDO A HORA
                 String horaFeedback = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
                 estabelecimento.setHora(horaFeedback);
@@ -472,6 +697,8 @@ public class MapsFragment extends Fragment {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                             e.printStackTrace();
+                            Toast.makeText(view.getContext(), "ERRO" + e.getMessage() , Toast.LENGTH_SHORT).show();
                             showAlertDialog((R.layout.dialog_erro_feedback));
                         }
                     });
@@ -501,8 +728,6 @@ public class MapsFragment extends Fragment {
             }
         });
 
-        // ----------------------------------------------------------------
-
         // Metodo do botão do feedback.
         BotaoFeedback = view.findViewById(R.id.ButtonFeedback);
         BotaoFeedback.setOnClickListener(new View.OnClickListener() {
@@ -518,8 +743,6 @@ public class MapsFragment extends Fragment {
                         );
 
                 if(estabelecimento != null) {
-
-
                     tituloProximo = bottomSheetView2.findViewById(R.id.textViewTitulo);
                     textViewNomeFeedBack = bottomSheetView.findViewById(R.id.nomeEstabelecimentoFeedback);
                     textViewEnderecoFeedBack = bottomSheetView.findViewById(R.id.enderecoEstabelecimento);
@@ -556,12 +779,10 @@ public class MapsFragment extends Fragment {
                                         break;
                                 }
 
-                                //RESOLVER ISSO JUNTO COM SEITCH CASE
-
                                 tituloProximo.setText("Tipo: " +tipoEstabelecimento);
-                                bottomSheetDialog.cancel();
+                                bottomSheetDialog.cancel(); //FECHANDO BUTTOM SHEET
                                 bottomSheetDialogEtapa2.setContentView(bottomSheetView2);
-                                bottomSheetDialogEtapa2.show();
+                                bottomSheetDialogEtapa2.show(); //ABRINDO SEGUNDA ETAPA
                             } else {
                                 Toast.makeText(bottomSheetView.getContext(), "Por favor selecione o tipo de estabelecimento!", Toast.LENGTH_SHORT).show();
                             }
