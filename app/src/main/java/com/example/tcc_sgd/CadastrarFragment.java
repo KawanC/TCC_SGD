@@ -44,7 +44,7 @@ public class CadastrarFragment extends Fragment {
       cadastrar.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               if(!nome.getText().toString().isEmpty() || email.getText().toString().isEmpty() || senha.getText().toString().isEmpty()) {
+               if(!nome.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !senha.getText().toString().isEmpty() && !senhaConfirmar.getText().toString().isEmpty())  {
                    if (senhaConfirmar.getText().toString().equals(senha.getText().toString())) {
                        CadastrarValores cadastro = new CadastrarValores(email.getText().toString(), senha.getText().toString(), nome.getText().toString());
 
@@ -83,7 +83,7 @@ public class CadastrarFragment extends Fragment {
                    }else{
                        Toast.makeText(view.getContext(), "Sua senha precisa ser a mesma", Toast.LENGTH_SHORT).show();
                    }
-               }
+               } else Toast.makeText(view.getContext(), "Preencha todos os campos", Toast.LENGTH_SHORT).show();
             }
 
        });
@@ -106,6 +106,7 @@ public class CadastrarFragment extends Fragment {
             public void onClick(View v) {
                 // Desabilitando o dialog
                 alertDialog.dismiss();
+
             }
         });
     }

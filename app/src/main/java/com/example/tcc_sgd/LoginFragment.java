@@ -68,13 +68,16 @@ View view;
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                                Intent intent = new Intent(getContext(), MainActivity.class);
                                 startActivity(intent);
+                                email.getText().clear();
+                                senha.getText().clear();
+                                getActivity().finish();
                             } else {
                                 try {
                                     throw task.getException();
                                 } catch (Exception erro) {
-                                    Toast.makeText(view.getContext(), "Erro ao logar" + erro, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(view.getContext(), "Email ou senha incorretos", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }

@@ -1,14 +1,25 @@
 package com.example.tcc_sgd;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,6 +30,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
+    String usuarioID, nomeMenu, emailMenu;
+    FirebaseFirestore feed = FirebaseFirestore.getInstance();
+    private TextView email, nome;
+
 
     private AppBarConfiguration mAppBarConfiguration;
         @Override
@@ -27,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -47,5 +61,34 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        try {
+                usuarioID = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                DocumentReference documentReference = feed.collection("Usuarios").document(usuarioID);
+                documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                        if(documentSnapshot != null){
+                            try {
+                                nome = findViewById(R.id.nome_Usuario);
+                                email = findViewById(R.id.textViewEmailUsuario);
+                                nomeMenu =  documentSnapshot.getString("nome");
+                                emailMenu = documentSnapshot.getString("email");
+                                nome.setText(nomeMenu);
+                                email.setText(emailMenu);
+                            } catch (Exception e){
+                                Toast.makeText(MainActivity.this, "ERRO", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+
+        } catch (Exception e){
+            finish();
+        }
     }
 }
