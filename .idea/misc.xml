@@ -56,6 +56,8 @@
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/app_bar_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/cadastrar_fragment.xml" value="0.5" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/content_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/dialog_cadastrar_conta_usuario.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/dialog_sair_app.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/fragment_como_usar.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/fragment_feedback_app.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/aluno/Documents/TCC_SGD/app/src/main/res/layout/fragment_maps.xml" value="0.36666666666666664" />
@@ -92,7 +94,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

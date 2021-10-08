@@ -58,8 +58,14 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -93,7 +99,9 @@ public class MapsFragment extends Fragment {
     final int [] movimentacaoNumero = new int[1];
     int radioId2;
 
-    //private AppCompatButton btn_sucesso;
+    //TEXT
+    private TextView email, nome;
+    String usuarioID, usuarioLogado, nomeMenu, emailMenu;
 
     AlertDialog.Builder builderDialog;
     AlertDialog alertDialog;
@@ -983,4 +991,35 @@ public class MapsFragment extends Fragment {
         }
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser usuarioLogado = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (usuarioLogado != null){
+            usuarioID = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            DocumentReference documentReference = feed.collection("Usuarios").document(usuarioID);
+            documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+
+                    if(documentSnapshot != null){
+                        try {
+                            nome = getActivity().findViewById(R.id.nome_Usuario);
+                            email = getActivity().findViewById(R.id.textViewEmailUsuario);
+                            nomeMenu =  documentSnapshot.getString("nome");
+                            emailMenu = documentSnapshot.getString("email");
+                            nome.setText(nomeMenu);
+                            email.setText(emailMenu);
+
+                        } catch (Exception e){
+                            onStart();
+                        }
+                    }
+                }
+            });
+
+        } else getActivity().finish();
+    }
 }

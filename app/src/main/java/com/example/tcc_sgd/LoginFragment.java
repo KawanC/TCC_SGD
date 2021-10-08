@@ -23,7 +23,7 @@ public class LoginFragment extends Fragment {
 View view;
 
     float v = 0;
-    EditText email;
+    EditText email, emailTela, nomeTela;
     EditText senha;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -97,6 +97,7 @@ View view;
         if(usuarioLogado != null){
             Intent intent = new Intent(getContext(), MainActivity.class);
             startActivity(intent);
+            getActivity().finish();
         }
     }
 }

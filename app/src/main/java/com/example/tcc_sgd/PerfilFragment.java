@@ -24,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class PerfilFragment extends Fragment {
 
-    private TextView email, nome;
+    private TextView email, nome, nomeTela, emailTela;
     private Button deslogar;
     View view;
     FirebaseFirestore feed = FirebaseFirestore.getInstance();
@@ -70,6 +70,10 @@ public class PerfilFragment extends Fragment {
         deslogar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                nomeTela = getActivity().findViewById(R.id.nome_Usuario);
+                emailTela = getActivity().findViewById(R.id.textViewEmailUsuario);
+                nomeTela.setText("Saiu");
+                emailTela.setText("Saiu");
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(view.getContext(), LoginActivity.class);
                 startActivity(intent);

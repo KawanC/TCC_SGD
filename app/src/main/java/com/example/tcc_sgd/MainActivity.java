@@ -1,5 +1,6 @@
 package com.example.tcc_sgd;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.Group;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -30,9 +32,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
-    String usuarioID, nomeMenu, emailMenu;
     FirebaseFirestore feed = FirebaseFirestore.getInstance();
-    private TextView email, nome;
+
 
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -48,12 +49,13 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_mapa,R.id.nav_perfil, R.id.nav_como_usar, R.id.nav_feedback_app)
+                R.id.nav_mapa,R.id.nav_perfil, R.id.nav_como_usar)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
     }
 
     @Override
@@ -63,31 +65,15 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+
     @Override
     public void onStart() {
         super.onStart();
-        try {
-                usuarioID = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                DocumentReference documentReference = feed.collection("Usuarios").document(usuarioID);
-                documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                        if(documentSnapshot != null){
-                            try {
-                                nome = findViewById(R.id.nome_Usuario);
-                                email = findViewById(R.id.textViewEmailUsuario);
-                                nomeMenu =  documentSnapshot.getString("nome");
-                                emailMenu = documentSnapshot.getString("email");
-                                nome.setText(nomeMenu);
-                                email.setText(emailMenu);
-                            } catch (Exception e){
-                                Toast.makeText(MainActivity.this, "ERRO", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                });
 
-        } catch (Exception e){
+        FirebaseUser usuarioLogado = FirebaseAuth.getInstance().getCurrentUser();
+        if(usuarioLogado != null){
+
+        }else {
             finish();
         }
     }
