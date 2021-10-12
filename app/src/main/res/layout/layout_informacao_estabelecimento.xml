@@ -9,26 +9,31 @@
     android:layout_height="wrap_content">
 
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="15dp"
-        android:text="Informações do Estabelecimento"
-        android:textColor="@color/colorPrimaryText"
-        android:textSize="18dp"
-        android:textStyle="bold" />
+        android:layout_height="52dp">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="18dp"
-        android:background="@color/colorDuvider"/>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="Informações do Estabelecimento"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
+        android:layout_height="250dp"
+        android:background="@color/CorTudo"
         android:orientation="horizontal"
         android:padding="5dp">
 
@@ -44,170 +49,216 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.04000002"
             app:riv_corner_radius="10dp" />
 
         <TextView
             android:id="@+id/nomeEstabelecimentoInfo"
-            android:layout_width="301dp"
-            android:layout_height="35dp"
+            android:layout_width="297dp"
+            android:layout_height="57dp"
             android:gravity="center"
             android:text="Nome do Estabelecimento"
-            android:textColor="@color/colorPrimaryText"
+            android:textColor="#4682B4"
             android:textSize="19sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iconEstabelecimentoInfo"
-            app:layout_constraintVertical_bias="0.00999999" />
+            app:layout_constraintVertical_bias="0.060000002" />
 
         <TextView
             android:id="@+id/enderecoEstabelecimentoInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:gravity="center"
             android:maxWidth="300dp"
-            android:text="endereço"
-            android:textColor="@color/black"
+            android:text="Endereço"
+            android:textColor="#4682B4"
             android:textSize="16sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toTopOf="@+id/textview1234"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nomeEstabelecimentoInfo" />
+            app:layout_constraintTop_toBottomOf="@+id/nomeEstabelecimentoInfo"
+            app:layout_constraintVertical_bias="0.41000003" />
+
+        <TextView
+            android:id="@+id/textview1234"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="Tamanho estabelecimento:"
+            android:textColor="#4682B4"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.36"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tamanhoEstabelecimentoInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Tamanho estabelecimento"
+            android:text="TextView"
             android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/textview1234"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enderecoEstabelecimentoInfo" />
+            app:layout_constraintHorizontal_bias="0.04"
+            app:layout_constraintStart_toEndOf="@+id/textview1234"
+            app:layout_constraintTop_toTopOf="@+id/textview1234" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/colorDuvider"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="193dp"
-        android:background="?android:attr/selectableItemBackground"
+        android:layout_height="150dp"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/textViewMovimentoInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cheio!"
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/seek_bar_informacao"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent" />
 
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="sans-serif-black"
-            android:text="Média de movimentação diaria:"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView7"
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
+            android:layout_width="412dp"
+            android:layout_height="120dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/seek_bar_informacao"
-            android:layout_width="322dp"
-            android:layout_height="15dp"
-            android:layout_marginBottom="20dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
 
-            android:background="@drawable/seek_bar"
-            android:orientation="horizontal"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="844dp"
+                    android:layout_height="120dp">
+
+                    <TextView
+                        android:id="@+id/textViewVistoFeedBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Ultima atualização:"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/seek_bar_inf_atual"
+                        app:layout_constraintStart_toStartOf="@+id/seek_bar_inf_atual"
+                        app:layout_constraintTop_toBottomOf="@+id/seek_bar_inf_atual" />
+
+                    <LinearLayout
+                        android:id="@+id/seek_bar_inf_atual"
+                        android:layout_width="322dp"
+                        android:layout_height="15dp"
+
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/seek_bar_nenhum"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="@+id/textView2"
+                        app:layout_constraintStart_toStartOf="@+id/textView2"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewMovimentoAtual">
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="144dp"
+                        android:layout_height="26dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-black"
+                        android:gravity="center"
+                        android:text="Movimentação"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:text="Média da movimentação de hoje"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guideline2"
+                        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+                    <TextView
+                        android:id="@+id/textViewMovimentoInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Cheio!"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/textView9"
+                        app:layout_constraintStart_toStartOf="@+id/textView9"
+                        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+                    <TextView
+                        android:id="@+id/textViewMovimentoAtual"
+                        android:layout_width="106dp"
+                        android:layout_height="23dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="Movimentado"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@+id/textView2"
+                        app:layout_constraintStart_toStartOf="@+id/textView2"
+                        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+                    <LinearLayout
+                        android:id="@+id/seek_bar_informacao"
+                        android:layout_width="322dp"
+                        android:layout_height="15dp"
+
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/seek_bar"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="@+id/textView9"
+                        app:layout_constraintStart_toStartOf="@+id/textView9"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewMovimentoInfo">
+
+                    </LinearLayout>
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="Araste para o lado para mais Informações >>>"
+            android:textColor="@color/places_autocomplete_search_hint"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"></LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/seek_bar_inf_2"
-            android:layout_width="322dp"
-            android:layout_height="15dp"
-
-            android:layout_marginBottom="48dp"
-            android:background="@drawable/seek_bar_nenhum"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/textViewMovimentoInfo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/textViewVistoFeedBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ultima atualização:"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.785"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.977" />
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Movimentado"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/seek_bar_inf_2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="sans-serif-black"
-            android:text="Média de movimentação atual:"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textViewMovimentoInfo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/seek_bar_inf_2" />
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
         <!--
        <SeekBar
