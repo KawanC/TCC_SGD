@@ -68,6 +68,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/senha_login" />
 
+    <ImageView
+        android:id="@+id/imageViewSenha_Login"
+        android:layout_width="32dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/senha_login"
+        app:layout_constraintEnd_toEndOf="@+id/senha_login"
+        app:layout_constraintTop_toTopOf="@+id/senha_login"
+        app:layout_constraintVertical_bias="0.578"
+        app:srcCompat="@drawable/ic_senha_mostrar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,12 +2,14 @@ package com.example.tcc_sgd;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,8 +31,12 @@ public class CadastrarFragment extends Fragment {
     AlertDialog.Builder builderDialog;
     AlertDialog alertDialog;
     ViewGroup root;
-    FirebaseFirestore feed = FirebaseFirestore.getInstance();
     EditText email, senha, nome, senhaConfirmar;
+    ImageView mostrarSenha_Cadastrar1, mostrarSenha_Cadastrar2;
+    int mostrarSenha_Cadastrar_contador = 0;
+
+
+    FirebaseFirestore feed = FirebaseFirestore.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -40,6 +46,47 @@ public class CadastrarFragment extends Fragment {
         senha = root.findViewById(R.id.senha_cadastrar);
         senhaConfirmar = root.findViewById(R.id.confsenha_cadastrar);
         Button cadastrar = root.findViewById(R.id.BotaoCadastrar);
+        mostrarSenha_Cadastrar1 = root.findViewById(R.id.imageViewSenha_Cadastrar1);
+        mostrarSenha_Cadastrar2 = root.findViewById(R.id.imageViewSenha_Cadastrar2);
+
+
+
+        mostrarSenha_Cadastrar1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (mostrarSenha_Cadastrar_contador) {
+                    case 0:
+                        senha.setTransformationMethod(android.text.method.HideReturnsTransformationMethod.getInstance());
+                        mostrarSenha_Cadastrar1.setImageResource(R.drawable.ic_senha_esconder);
+                        mostrarSenha_Cadastrar_contador++;
+                        break;
+                    case 1:
+                        senha.setTransformationMethod(android.text.method.PasswordTransformationMethod.getInstance());
+                        mostrarSenha_Cadastrar1.setImageResource(R.drawable.ic_senha_mostrar);
+
+                        mostrarSenha_Cadastrar_contador--;
+                        break;
+                }
+            }
+        });
+
+        mostrarSenha_Cadastrar2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (mostrarSenha_Cadastrar_contador){
+                    case 0:
+                    senhaConfirmar.setTransformationMethod(android.text.method.HideReturnsTransformationMethod.getInstance());
+                    mostrarSenha_Cadastrar2.setImageResource(R.drawable.ic_senha_esconder);
+                    mostrarSenha_Cadastrar_contador++;
+                    break;
+                    case 1:
+                        senhaConfirmar.setTransformationMethod(android.text.method.PasswordTransformationMethod.getInstance());
+                        mostrarSenha_Cadastrar2.setImageResource(R.drawable.ic_senha_mostrar);
+                        mostrarSenha_Cadastrar_contador--;
+                        break;
+                }
+            }
+        });
 
       cadastrar.setOnClickListener(new View.OnClickListener() {
            @Override

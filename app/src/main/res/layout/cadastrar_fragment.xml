@@ -43,7 +43,7 @@
         android:id="@+id/senha_cadastrar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/edit_text_bg"
         android:hint="Senha"
         android:inputType="textPassword"
@@ -52,7 +52,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="@+id/nome_cadastrar"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/nome_cadastrar"
         app:layout_constraintTop_toBottomOf="@+id/nome_cadastrar"
         app:layout_constraintWidth_percent=".8" />
@@ -89,4 +89,26 @@
         app:layout_constraintStart_toStartOf="@+id/confsenha_cadastrar"
         app:layout_constraintTop_toBottomOf="@+id/confsenha_cadastrar"
         app:layout_constraintWidth_percent=".8" />
+
+    <ImageView
+        android:id="@+id/imageViewSenha_Cadastrar2"
+        android:layout_width="27dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/confsenha_cadastrar"
+        app:layout_constraintEnd_toEndOf="@+id/confsenha_cadastrar"
+        app:layout_constraintTop_toTopOf="@+id/confsenha_cadastrar"
+        app:layout_constraintVertical_bias="0.458"
+        app:srcCompat="@drawable/ic_senha_mostrar" />
+
+    <ImageView
+        android:id="@+id/imageViewSenha_Cadastrar1"
+        android:layout_width="27dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/senha_cadastrar"
+        app:layout_constraintEnd_toEndOf="@+id/senha_cadastrar"
+        app:layout_constraintTop_toTopOf="@+id/senha_cadastrar"
+        app:layout_constraintVertical_bias="0.526"
+        app:srcCompat="@drawable/ic_senha_mostrar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
