@@ -1,8 +1,6 @@
 package com.example.tcc_sgd;
 
 import android.app.AlertDialog;
-import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +29,7 @@ public class CadastrarFragment extends Fragment {
     AlertDialog.Builder builderDialog;
     AlertDialog alertDialog;
     ViewGroup root;
-    EditText email, senha, nome, senhaConfirmar;
+    EditText email, senha, nome, senhaConfirmar, telefone, data_nasc, sobrenome;
     ImageView mostrarSenha_Cadastrar1, mostrarSenha_Cadastrar2;
     int mostrarSenha_Cadastrar_contador = 0;
 
@@ -44,6 +42,9 @@ public class CadastrarFragment extends Fragment {
         nome = root.findViewById(R.id.nome_cadastrar);
         email = root.findViewById(R.id.email_cadastrar);
         senha = root.findViewById(R.id.senha_cadastrar);
+        telefone = root.findViewById(R.id.telefone_cadastrar);
+        sobrenome = root.findViewById(R.id.sobrenome_cadastrar);
+        data_nasc = root.findViewById(R.id.data_nascimento_cadastrar);
         senhaConfirmar = root.findViewById(R.id.confsenha_cadastrar);
         Button cadastrar = root.findViewById(R.id.BotaoCadastrar);
         mostrarSenha_Cadastrar1 = root.findViewById(R.id.imageViewSenha_Cadastrar1);
@@ -63,7 +64,6 @@ public class CadastrarFragment extends Fragment {
                     case 1:
                         senha.setTransformationMethod(android.text.method.PasswordTransformationMethod.getInstance());
                         mostrarSenha_Cadastrar1.setImageResource(R.drawable.ic_senha_mostrar);
-
                         mostrarSenha_Cadastrar_contador--;
                         break;
                 }
@@ -91,9 +91,13 @@ public class CadastrarFragment extends Fragment {
       cadastrar.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
+               String nomeCompleto = nome.getText().toString() + " " + sobrenome.getText().toString();
+
                if(!nome.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !senha.getText().toString().isEmpty() && !senhaConfirmar.getText().toString().isEmpty())  {
                    if (senhaConfirmar.getText().toString().equals(senha.getText().toString())) {
-                       CadastrarValores cadastro = new CadastrarValores(email.getText().toString(), senha.getText().toString(), nome.getText().toString());
+                       CadastrarUsuario_Valores cadastro = new CadastrarUsuario_Valores(nomeCompleto,
+                               email.getText().toString(), data_nasc.getText().toString(),
+                               telefone.getText().toString(), senha.getText().toString());
 
                        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.getText().toString(), senha.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                            @Override
@@ -104,7 +108,10 @@ public class CadastrarFragment extends Fragment {
                                        public void onSuccess(Void unused) {
                                            showAlertDialog(R.layout.dialog_cadastrar_conta_usuario);
                                            nome.getText().clear();
+                                           sobrenome.getText().clear();
                                            email.getText().clear();
+                                           data_nasc.getText().clear();
+                                           telefone.getText().clear();
                                            senha.getText().clear();
                                            senhaConfirmar.getText().clear();
                                        }

@@ -5,110 +5,197 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <EditText
-        android:id="@+id/email_cadastrar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_bg"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+    <ScrollView
+        android:layout_width="411dp"
+        android:layout_height="500dp"
+        android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".8" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/nome_cadastrar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_bg"
-        android:hint="Nome"
-        android:minHeight="48dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/email_cadastrar"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/email_cadastrar"
-        app:layout_constraintTop_toBottomOf="@+id/email_cadastrar"
-        app:layout_constraintWidth_percent=".8" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/senha_cadastrar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/edit_text_bg"
-        android:hint="Senha"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/nome_cadastrar"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/nome_cadastrar"
-        app:layout_constraintTop_toBottomOf="@+id/nome_cadastrar"
-        app:layout_constraintWidth_percent=".8" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="650dp">
 
-    <EditText
-        android:id="@+id/confsenha_cadastrar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_bg"
-        android:hint="Confirme sua senha"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/senha_cadastrar"
-        app:layout_constraintStart_toStartOf="@+id/senha_cadastrar"
-        app:layout_constraintTop_toBottomOf="@+id/senha_cadastrar"
-        app:layout_constraintWidth_percent=".8" />
+                <EditText
+                    android:id="@+id/email_cadastrar"
+                    android:layout_width="328dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="80dp"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:minHeight="48dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.56"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".8" />
 
-    <Button
-        android:id="@+id/BotaoCadastrar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="@color/purple_200"
-        android:text="CADASTRAR"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/confsenha_cadastrar"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/confsenha_cadastrar"
-        app:layout_constraintTop_toBottomOf="@+id/confsenha_cadastrar"
-        app:layout_constraintWidth_percent=".8" />
+                <EditText
+                    android:id="@+id/data_nascimento_cadastrar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="Data de Nascimento"
+                    android:inputType="date"
+                    android:minHeight="48dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    app:layout_constraintEnd_toEndOf="@+id/telefone_cadastrar"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/telefone_cadastrar"
+                    app:layout_constraintTop_toBottomOf="@+id/telefone_cadastrar"
+                    app:layout_constraintWidth_percent=".8" />
 
-    <ImageView
-        android:id="@+id/imageViewSenha_Cadastrar2"
-        android:layout_width="27dp"
-        android:layout_height="29dp"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/confsenha_cadastrar"
-        app:layout_constraintEnd_toEndOf="@+id/confsenha_cadastrar"
-        app:layout_constraintTop_toTopOf="@+id/confsenha_cadastrar"
-        app:layout_constraintVertical_bias="0.458"
-        app:srcCompat="@drawable/ic_senha_mostrar" />
+                <EditText
+                    android:id="@+id/telefone_cadastrar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="Telefone"
+                    android:inputType="phone"
+                    android:minHeight="48dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    app:layout_constraintEnd_toEndOf="@+id/email_cadastrar"
+                    app:layout_constraintStart_toStartOf="@+id/email_cadastrar"
+                    app:layout_constraintTop_toBottomOf="@+id/email_cadastrar"
+                    app:layout_constraintWidth_percent=".8" />
 
-    <ImageView
-        android:id="@+id/imageViewSenha_Cadastrar1"
-        android:layout_width="27dp"
-        android:layout_height="29dp"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/senha_cadastrar"
-        app:layout_constraintEnd_toEndOf="@+id/senha_cadastrar"
-        app:layout_constraintTop_toTopOf="@+id/senha_cadastrar"
-        app:layout_constraintVertical_bias="0.526"
-        app:srcCompat="@drawable/ic_senha_mostrar" />
+                <EditText
+                    android:id="@+id/sobrenome_cadastrar"
+                    android:layout_width="172dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="27dp"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="Sobrenome"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/nome_cadastrar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".8" />
+
+                <ImageView
+                    android:id="@+id/imageViewEmail"
+                    android:layout_width="48dp"
+                    android:layout_height="31dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/email_cadastrar"
+                    app:layout_constraintEnd_toEndOf="@+id/email_cadastrar"
+                    app:layout_constraintTop_toTopOf="@+id/email_cadastrar"
+                    app:layout_constraintVertical_bias="0.47"
+                    app:srcCompat="@drawable/ic_email_cadastrar" />
+
+                <EditText
+                    android:id="@+id/senha_cadastrar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="Senha"
+                    android:inputType="textPassword"
+                    android:minHeight="48dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    app:layout_constraintEnd_toEndOf="@+id/data_nascimento_cadastrar"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/data_nascimento_cadastrar"
+                    app:layout_constraintTop_toBottomOf="@+id/data_nascimento_cadastrar"
+                    app:layout_constraintWidth_percent=".8" />
+
+                <Button
+                    android:id="@+id/BotaoCadastrar"
+                    android:layout_width="328dp"
+                    android:layout_height="61dp"
+                    android:layout_marginStart="46dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="36dp"
+                    android:backgroundTint="@color/purple_200"
+                    android:text="CADASTRAR"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/confsenha_cadastrar"
+                    app:layout_constraintWidth_percent=".8" />
+
+                <EditText
+                    android:id="@+id/confsenha_cadastrar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="Confirme sua senha"
+                    android:inputType="textPassword"
+                    android:minHeight="48dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    app:layout_constraintEnd_toEndOf="@+id/senha_cadastrar"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="@+id/senha_cadastrar"
+                    app:layout_constraintTop_toBottomOf="@+id/senha_cadastrar"
+                    app:layout_constraintWidth_percent=".8" />
+
+                <EditText
+                    android:id="@+id/nome_cadastrar"
+                    android:layout_width="172dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="38dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="Nome"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    app:layout_constraintEnd_toStartOf="@+id/sobrenome_cadastrar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".8" />
+
+                <ImageView
+                    android:id="@+id/imageViewSenha_Cadastrar1"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/senha_cadastrar"
+                    app:layout_constraintEnd_toEndOf="@+id/senha_cadastrar"
+                    app:layout_constraintTop_toTopOf="@+id/senha_cadastrar"
+                    app:srcCompat="@drawable/ic_senha_mostrar" />
+
+                <ImageView
+                    android:id="@+id/imageViewSenha_Cadastrar2"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/confsenha_cadastrar"
+                    app:layout_constraintEnd_toEndOf="@+id/confsenha_cadastrar"
+                    app:layout_constraintTop_toTopOf="@+id/confsenha_cadastrar"
+                    app:srcCompat="@drawable/ic_senha_mostrar" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,33 +16,67 @@
             android:id="@+id/textViewNome"
             android:layout_width="260dp"
             android:layout_height="35dp"
-            android:layout_marginStart="82dp"
-            android:layout_marginTop="86dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="23dp"
             android:layout_marginEnd="69dp"
-            android:hint="Nome"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.781"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
         <TextView
             android:id="@+id/textViewEmail"
             android:layout_width="260dp"
             android:layout_height="35dp"
-            android:layout_marginTop="27dp"
-            android:hint="Email"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="@+id/textViewNome"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textViewNome"
             app:layout_constraintTop_toBottomOf="@+id/textViewNome" />
+
+
+        <TextView
+            android:id="@+id/textViewDataNascimento"
+            android:layout_width="260dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/textViewEmail"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textViewEmail"
+            app:layout_constraintTop_toBottomOf="@+id/textViewEmail" />
+
+        <TextView
+            android:id="@+id/telefone"
+            android:layout_width="260dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/textViewDataNascimento"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textViewDataNascimento"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDataNascimento" />
 
         <Button
             android:id="@+id/buttonDeslogar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="38dp"
+            android:layout_marginTop="132dp"
             android:text="Deslogar"
             app:layout_constraintEnd_toEndOf="@+id/textViewEmail"
+            app:layout_constraintHorizontal_bias="0.448"
             app:layout_constraintStart_toStartOf="@+id/textViewEmail"
             app:layout_constraintTop_toBottomOf="@+id/textViewEmail" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="339dp"
+            android:layout_height="206dp"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="36dp"
+            android:src="@drawable/sgdbottomsheet"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

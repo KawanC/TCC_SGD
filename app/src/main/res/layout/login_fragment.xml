@@ -70,8 +70,8 @@
 
     <ImageView
         android:id="@+id/imageViewSenha_Login"
-        android:layout_width="32dp"
-        android:layout_height="25dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginEnd="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/senha_login"
         app:layout_constraintEnd_toEndOf="@+id/senha_login"
