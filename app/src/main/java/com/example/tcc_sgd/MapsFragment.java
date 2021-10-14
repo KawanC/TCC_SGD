@@ -84,7 +84,7 @@ public class MapsFragment extends Fragment {
     private SeekBar seekBar2;
     private TextView textViewMovimentacao, textViewNomeInformacao, textViewEnderecoInformaco,
             textViewTamanhoInformacao, textViewNomeFeedBack, textViewEnderecoFeedBack, textViewHora,
-            textViewMovientoInfo, tituloProximo, textViewProgues, textViewMovimentoAtual;
+            textViewMovientoInfo, tituloProximo, textViewProgues, textViewMovimentoAtual, textViewMediaHoje, textViewFeedAnalisados;
     private RadioGroup radioGroupEstabelecimento, radioGroupTipo;
     Estabelecimento estabelecimento;
     private int numeroMovimentacao;
@@ -451,7 +451,7 @@ public class MapsFragment extends Fragment {
                             //ESCALA PARA RESTAURANTE PEQUENO
                             if (radioButtonPequeno.isChecked()) {
                                 seekBar2.setMax(4000);
-
+                                //ESCALA SHOPING PEQUENO
                                 if (progress == 0) {
                                     textViewProgues.setText(progress + " Pessoas aprox.");
                                     textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
@@ -486,7 +486,7 @@ public class MapsFragment extends Fragment {
                                 }
                             }
                             if (radioButtonMedio.isChecked()) {
-                                //ESCALA RESTAURANTE MEDIO...
+                                //ESCALA SHOPING MEDIO
                                 seekBar2.setMax(6000);
                                 if (progress == 0) {
                                     textViewProgues.setText(progress + " Pessoas aprox.");
@@ -522,7 +522,7 @@ public class MapsFragment extends Fragment {
                                 }
                             }
                             if (radioButtonGrande.isChecked()) {
-                                //ESCALA RESTAURANTE GRANDE...
+                                //ESCALA SHOPING GRANDE
                                 seekBar2.setMax(15000);
                                 if (progress == 0) {
                                     textViewProgues.setText(progress + " Pessoas aprox.");
@@ -560,7 +560,6 @@ public class MapsFragment extends Fragment {
 
                             break;
                         case "Mercado":
-                            //ESCALA PARA RESTAURANTE PEQUENO
                             if (radioButtonPequeno.isChecked()) {
                                 seekBar2.setMax(500);
 
@@ -830,15 +829,17 @@ public class MapsFragment extends Fragment {
                     //PEGANDO IDS
                     textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimentoInfo);
                     textViewNomeInformacao = bottomSheetView.findViewById(R.id.nomeEstabelecimentoInfo);
-                   //NÃO ESTÁ SENDO MAIS USADO  textViewTipo = bottomSheetView.findViewById(R.id.tipoEstabelecimentoInfo);
                     textViewEnderecoInformaco = bottomSheetView.findViewById(R.id.enderecoEstabelecimentoInfo);
                     textViewTamanhoInformacao = bottomSheetView.findViewById(R.id.tamanhoEstabelecimentoInfo);
                     textViewHora = bottomSheetView.findViewById(R.id.textViewVistoFeedBack);
                     textViewMovimentoAtual = bottomSheetView.findViewById(R.id.textViewMovimentoAtual);
                     textViewMovientoInfo = bottomSheetView.findViewById(R.id.textViewMovimentoInfo);
+                    textViewFeedAnalisados = bottomSheetView.findViewById(R.id.textViewNumeroDeFeedBacks);
+                    textViewMediaHoje = bottomSheetView.findViewById(R.id.textViewMediaHoje);
                     linearLayoutSeekBar = bottomSheetView.findViewById(R.id.seek_bar_informacao);
                     linearLayoutSeekBarAtual = bottomSheetView.findViewById(R.id.seek_bar_inf_atual);
 
+                    String diaAtual = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
                     CollectionReference colection = feed.collection("Feedbacks");
                     colection.whereEqualTo("enderecoLocal", estabelecimento.getEndereco())
                             .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -856,28 +857,196 @@ public class MapsFragment extends Fragment {
                                     movimentacao[2] = (String) doc.get("tamanhoEstabelecimento"); // ARMAZENA O TAMANHO DO ESTABELECIMENTO
 
                                 }
+                                textViewMediaHoje.setText("Média da movimentação no dia de hoje\n (" + diaAtual + ")");
                                 if (contador[0] != 0){
                                     int media = movimentacaoNumero[0] /(contador[0]);
                                     switch (movimentacao[0]){
                                         //TESTANDO O TIPO DO ESTABELECIMENTO DE ACORDO COM OS FEEDBACKS
                                         case "Shopping":
+                                            switch (movimentacao[2]){
+                                                case "Pequeno":
+                                                    //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
+                                                    if (movimentacaoNumero[1] == 0){
+                                                        textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                                    }
+
+                                                    if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 1000){
+                                                        textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                                    }
+                                                    if (movimentacaoNumero[1] > 1000 && movimentacaoNumero[1] <= 3000){
+                                                        textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                                    }
+
+                                                    if (movimentacaoNumero[1] > 3000){
+                                                        textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                                    }
+
+                                                    //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
+                                                    if(media == 0){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                                    }
+
+                                                    if (media > 0 && media <= 1000){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                                    }
+
+                                                    if (media > 1000 && media <= 3000){
+
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                                    }
+
+                                                    if (media > 3000){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                                    }
+                                                    break;
+                                                case "Médio":
+                                                    //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
+                                                    if (movimentacaoNumero[1] == 0){
+                                                        textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                                    }
+
+                                                    if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 2500){
+                                                        textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                                    }
+                                                    if (movimentacaoNumero[1] > 2500 && movimentacaoNumero[1] <= 5000){
+                                                        textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                                    }
+
+                                                    if (movimentacaoNumero[1] > 5000){
+                                                        textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                                    }
+
+                                                    //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
+                                                    if(media == 0){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                                    }
+
+                                                    if (media > 0 && media <= 2500){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                                    }
+
+                                                    if (media > 2500 && media <= 5000){
+
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                                    }
+
+                                                    if (media > 5000){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                                    }
+                                                    break;
+                                                case "Grande":
+                                                    //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
+                                                    if (movimentacaoNumero[1] == 0){
+                                                        textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                                    }
+
+                                                    if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 3000){
+                                                        textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                                    }
+                                                    if (movimentacaoNumero[1] > 3000 && movimentacaoNumero[1] <= 7500){
+                                                        textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                                    }
+
+                                                    if (movimentacaoNumero[1] > 7500){
+                                                        textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                                    }
+
+                                                    //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
+                                                    if(media == 0){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                                    }
+
+                                                    if (media > 0 && media <= 175){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                                    }
+
+                                                    if (media > 175 && media <= 300){
+
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                                    }
+
+                                                    if (media > 300){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                                    }
+                                                    break;
+                                            }
+
+                                            break;
+
+                                        case "Restaurante":
                                             //TERSTANDO O TAMANHO DO ESTABELECIMENTO DE ACORDO COM OS FEEDBACKS
                                             switch (movimentacao[2]){
                                                 case "Pequeno":
                                                     //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
                                                     if (movimentacaoNumero[1] == 0){
-
+                                                        textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
                                                     }
 
                                                     if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 50){
-
+                                                        textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
                                                     }
                                                     if (movimentacaoNumero[1] > 50 && movimentacaoNumero[1] <= 100){
-
+                                                        textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
                                                     }
 
                                                     if (movimentacaoNumero[1] > 100){
-
+                                                        textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
                                                     }
 
                                                     //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
@@ -907,103 +1076,297 @@ public class MapsFragment extends Fragment {
                                                     }
                                                     break;
                                                 case "Médio":
+                                                    //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
                                                     if (movimentacaoNumero[1] == 0){
-
+                                                        textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
                                                     }
 
-                                                    if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 50){
-
+                                                    if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 100){
+                                                        textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
                                                     }
-                                                    if (movimentacaoNumero[1] > 50 && movimentacaoNumero[1] <= 100){
-
+                                                    if (movimentacaoNumero[1] > 100 && movimentacaoNumero[1] <= 150){
+                                                        textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
                                                     }
 
-                                                    if (movimentacaoNumero[1] > 100){
+                                                    if (movimentacaoNumero[1] > 150){
+                                                        textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                                    }
 
+                                                    //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
+                                                    if(media == 0){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                                    }
+
+                                                    if (media > 0 && media <= 100){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                                    }
+
+                                                    if (media > 100 && media <= 150){
+
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                                    }
+
+                                                    if (media > 150){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
                                                     }
                                                     break;
                                                 case "Grande":
+                                                    //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
                                                     if (movimentacaoNumero[1] == 0){
-
+                                                        textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
                                                     }
 
-                                                    if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 50){
-
+                                                    if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 175){
+                                                        textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
                                                     }
-                                                    if (movimentacaoNumero[1] > 50 && movimentacaoNumero[1] <= 100){
-
+                                                    if (movimentacaoNumero[1] > 175 && movimentacaoNumero[1] <= 300){
+                                                        textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
                                                     }
 
-                                                    if (movimentacaoNumero[1] > 100){
+                                                    if (movimentacaoNumero[1] > 300){
+                                                        textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                                    }
 
+                                                    //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
+                                                    if(media == 0){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                                    }
+
+                                                    if (media > 0 && media <= 175){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                                    }
+
+                                                    if (media > 175 && media <= 300){
+
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                                    }
+
+                                                    if (media > 300){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
                                                     }
                                                     break;
                                             }
 
                                             break;
-                                        case "Restaurante":
-                                            if(media == 0){
-                                                textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                                textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
-                                                linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                            }
-
-                                            if (media > 0 && media <= 50){
-                                                textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                                textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
-                                                linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                            }
-
-                                            if (media > 50 && media <= 100){
-                                                textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                                textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
-                                                linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                            }
-
-                                            if (media > 100){
-                                                textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                                textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
-                                                linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                            }
-                                            break;
                                         case "Mercado":
-                                            if(media == 0){
-                                                textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                                textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
-                                                linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                            //TERSTANDO O TAMANHO DO ESTABELECIMENTO DE ACORDO COM OS FEEDBACKS
+                                            switch (movimentacao[2]){
+                                                case "Pequeno":
+                                                    //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
+                                                    if (movimentacaoNumero[1] == 0){
+                                                        textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                                    }
+
+                                                    if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 100){
+                                                        textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                                    }
+                                                    if (movimentacaoNumero[1] > 100 && movimentacaoNumero[1] <= 300){
+                                                        textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                                    }
+
+                                                    if (movimentacaoNumero[1] > 300){
+                                                        textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                                    }
+
+                                                    //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
+                                                    if(media == 0){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                                    }
+
+                                                    if (media > 0 && media <= 100){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                                    }
+
+                                                    if (media > 100 && media <= 300){
+
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                                    }
+
+                                                    if (media > 300){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                                    }
+                                                    break;
+                                                case "Médio":
+                                                    //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
+                                                    if (movimentacaoNumero[1] == 0){
+                                                        textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                                    }
+
+                                                    if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 500){
+                                                        textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                                    }
+                                                    if (movimentacaoNumero[1] > 500 && movimentacaoNumero[1] <= 750){
+                                                        textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                                    }
+
+                                                    if (movimentacaoNumero[1] > 750){
+                                                        textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                                    }
+
+                                                    //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
+                                                    if(media == 0){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                                    }
+
+                                                    if (media > 0 && media <= 500){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                                    }
+
+                                                    if (media > 500 && media <= 750){
+
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                                    }
+
+                                                    if (media > 750){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                                    }
+                                                    break;
+                                                case "Grande":
+                                                    //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
+                                                    if (movimentacaoNumero[1] == 0){
+                                                        textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                                    }
+
+                                                    if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 3000){
+                                                        textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                                    }
+                                                    if (movimentacaoNumero[1] > 3000 && movimentacaoNumero[1] <= 7500){
+                                                        textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                                    }
+
+                                                    if (movimentacaoNumero[1] > 7500){
+                                                        textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
+                                                        textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                                    }
+
+                                                    //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
+                                                    if(media == 0){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
+                                                    }
+
+                                                    if (media > 0 && media <= 3000){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
+                                                    }
+
+                                                    if (media > 3000 && media <= 7500){
+
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
+                                                    }
+
+                                                    if (media > 7500){
+                                                        textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
+                                                        textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
+                                                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
+                                                    }
+                                                    break;
                                             }
 
-                                            if (media > 0 && media <= 50){
-                                                textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                                textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
-                                                linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                            }
-
-                                            if (media > 50 && media <= 100){
-                                                textViewMovientoInfo.setText( "Aproximadamente " + media + " pess.");
-                                                textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
-                                                linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                            }
-
-                                            if (media > 100){
-                                                textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                                textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
-                                                linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                            }
                                             break;
                                     }
 
+                                    //INFORMAÇ~OES DO ESTABELECIMENTO
                                     textViewNomeInformacao.setText(estabelecimento.getNome());
                                     textViewEnderecoInformaco.setText(estabelecimento.getEndereco());
                                     textViewTamanhoInformacao.setText(" " + movimentacao[2]);
+
+                                    //PRIMERIA PARTE
                                     textViewHora.setText("Ultima atualização: " + movimentacao[1]);
+
+                                    //SEGUNDA PARTE
+                                    textViewFeedAnalisados.setText("Numero de FeedBacks Analisados: " + contador[0]);
 
                                 }else{
                                     // NENHUM FEEDBACK ENCONTRAO PARA ESTE ESTABELECIMENTO
+
+                                    //INFORMAÇÕES DO ESTABELECIMENTO
                                     textViewNomeInformacao.setText(estabelecimento.getNome());
                                     textViewEnderecoInformaco.setText(estabelecimento.getEndereco());
                                     textViewTamanhoInformacao.setText(" ");
+
+                                    //PRIMEIRA PARTE
+                                    textViewMovimentoAtual.setText("Nenhum feedback");
+                                    textViewMovimentoAtual.setTextColor(Color.parseColor("#A1A1A1"));
+                                    linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar_nenhum));
                                     textViewHora.setText("Ultima atualização: Nenhuma nas ultimas 24 horas");
+
+                                    //SEGUNDA PARTE
                                     textViewMovientoInfo.setText("Nenhum feedback");
                                     textViewMovientoInfo.setTextColor(Color.parseColor("#A1A1A1"));
                                     linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar_nenhum));

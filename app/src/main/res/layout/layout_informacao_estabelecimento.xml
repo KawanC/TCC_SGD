@@ -151,6 +151,7 @@
                         android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="@+id/seek_bar_inf_atual"
+                        app:layout_constraintHorizontal_bias="0.86"
                         app:layout_constraintStart_toStartOf="@+id/seek_bar_inf_atual"
                         app:layout_constraintTop_toBottomOf="@+id/seek_bar_inf_atual" />
 
@@ -170,27 +171,28 @@
 
                     <TextView
                         android:id="@+id/textView2"
-                        android:layout_width="144dp"
-                        android:layout_height="26dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:fontFamily="sans-serif-black"
                         android:gravity="center"
                         android:text="Movimentação"
                         android:textColor="@color/black"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toStartOf="@+id/guideline2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/textViewMediaHoje"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-black"
+                        android:gravity="center"
                         android:text="Média da movimentação de hoje"
                         android:textColor="@color/black"
-                        android:textSize="20sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -203,21 +205,21 @@
                         android:layout_marginTop="10dp"
                         android:text="Cheio!"
                         android:textColor="@color/colorAccent"
-                        android:textSize="16sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="@+id/textView9"
-                        app:layout_constraintStart_toStartOf="@+id/textView9"
-                        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                        app:layout_constraintEnd_toEndOf="@+id/textViewMediaHoje"
+                        app:layout_constraintStart_toStartOf="@+id/textViewMediaHoje"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewMediaHoje" />
 
                     <TextView
                         android:id="@+id/textViewMovimentoAtual"
-                        android:layout_width="106dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="23dp"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="Movimentado"
                         android:textColor="@color/colorAccent"
-                        android:textSize="16sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="@+id/textView2"
                         app:layout_constraintStart_toStartOf="@+id/textView2"
@@ -231,8 +233,8 @@
                         android:layout_marginTop="5dp"
                         android:background="@drawable/seek_bar"
                         android:orientation="horizontal"
-                        app:layout_constraintEnd_toEndOf="@+id/textView9"
-                        app:layout_constraintStart_toStartOf="@+id/textView9"
+                        app:layout_constraintEnd_toEndOf="@+id/textViewMediaHoje"
+                        app:layout_constraintStart_toStartOf="@+id/textViewMediaHoje"
                         app:layout_constraintTop_toBottomOf="@+id/textViewMovimentoInfo">
 
                     </LinearLayout>
@@ -241,8 +243,20 @@
                         android:id="@+id/guideline2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/black"
                         android:orientation="vertical"
                         app:layout_constraintGuide_percent="0.5" />
+
+                    <TextView
+                        android:id="@+id/textViewNumeroDeFeedBacks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Numero de FeedBacks Analisados:"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/seek_bar_informacao"
+                        app:layout_constraintTop_toBottomOf="@+id/seek_bar_informacao" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

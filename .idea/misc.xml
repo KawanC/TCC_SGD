@@ -46,6 +46,7 @@
         <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_22/app/src/main/res/drawable/ic_baseline_help_24.xml" value="0.3828125" />
         <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_22/app/src/main/res/layout/layout_bottom_sheet.xml" value="0.5" />
         <entry key="..\:/Users/aluno/AndroidStudioProjects/TCC_SGD_22/app/src/main/res/layout/layout_informacao_estabelecimento.xml" value="0.35408022130013833" />
+        <entry key="..\:/Users/aluno/AppData/Local/Android/Sdk/platforms/android-31/data/res/drawable/editbox_background.xml" value="0.3828125" />
         <entry key="..\:/Users/aluno/Documents/SGD_2409/app/src/main/res/layout/dialog_informacao_estabelecimento.xml" value="0.34782608695652173" />
         <entry key="..\:/Users/aluno/Documents/SGD_2409/app/src/main/res/layout/dialog_sucesso_feedback.xml" value="0.34782608695652173" />
         <entry key="..\:/Users/aluno/Documents/SGD_2409/app/src/main/res/layout/fragment_feedback_app.xml" value="0.34782608695652173" />
@@ -94,8 +95,14 @@
         <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
         <entry key="..\:/Users/aluno/TCC_SGD/app/src/main/res/menu/main.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/aluno/TCC_SGD2/app/src/main/res/layout/fragment_maps.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/aluno/TCC_SGD_1212/app/src/main/res/drawable/bottom_sheet_background.xml" value="0.3828125" />
+        <entry key="..\:/Users/aluno/TCC_SGD_1212/app/src/main/res/drawable/circulo_lupa.xml" value="0.3828125" />
+        <entry key="..\:/Users/aluno/TCC_SGD_1212/app/src/main/res/drawable/ic_search.xml" value="0.3828125" />
         <entry key="..\:/Users/aluno/TCC_SGD_1212/app/src/main/res/layout/activity_main.xml" value="0.3625" />
         <entry key="..\:/Users/aluno/TCC_SGD_1212/app/src/main/res/layout/app_bar_main.xml" value="0.3625" />
+        <entry key="..\:/Users/aluno/TCC_SGD_1212/app/src/main/res/layout/content_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/aluno/TCC_SGD_1212/app/src/main/res/layout/fragment_maps.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/aluno/TCC_SGD_1212/app/src/main/res/layout/layout_informacao_estabelecimento.xml" value="0.5" />
         <entry key="..\:/Users/aluno/TCC_SGD_1212/app/src/main/res/menu/activity_main_drawer.xml" value="0.33" />
       </map>
     </option>
