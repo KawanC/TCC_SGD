@@ -43,24 +43,6 @@ View view;
         auth = FirebaseAuth.getInstance();
         mostrarSenha_Login = root.findViewById(R.id.imageViewSenha_Login);
 
-
-        email.setTranslationX(800);
-        senha.setTranslationX(800);
-        redefinir_senha.setTranslationX(800);
-        login.setTranslationX(800);
-
-        email.setAlpha(v);
-        senha.setAlpha(v);
-        redefinir_senha.setAlpha(v);
-        login.setAlpha(v);
-
-        email.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        senha.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
-        redefinir_senha.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
-        login.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
-
-
-
         redefinir_senha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
