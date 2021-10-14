@@ -14,11 +14,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="95dp"
+        android:layout_height="98dp"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@drawable/sgd_sem_fundo_nome"></ImageView>
+        android:src="@drawable/sgd_sem_fundo"></ImageView>
 
     <TextView
         android:id="@+id/nome_Usuario"

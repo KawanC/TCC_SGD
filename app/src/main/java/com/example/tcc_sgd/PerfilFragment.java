@@ -24,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class PerfilFragment extends Fragment {
 
-    private TextView email, nome, nomeTela, emailTela;
+    private TextView email, nome, nomeTela, emailTela, telefone, data_nasc;
     private Button deslogar;
     View view;
     FirebaseFirestore feed = FirebaseFirestore.getInstance();
@@ -42,6 +42,8 @@ public class PerfilFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_perfil, container, false);
        email = view.findViewById(R.id.textViewEmail);
        nome = view.findViewById(R.id.textViewNome);
+       telefone = view.findViewById(R.id.textViewtelefone);
+       data_nasc = view.findViewById(R.id.textViewDataNascimento);
         deslogar = view.findViewById(R.id.buttonDeslogar);
 
         try {
@@ -54,8 +56,12 @@ public class PerfilFragment extends Fragment {
                         try {
                             nome = view.findViewById(R.id.textViewNome);
                             email = view.findViewById(R.id.textViewEmail);
+                            telefone = view.findViewById(R.id.textViewtelefone);
+                            data_nasc = view.findViewById(R.id.textViewDataNascimento);
                             nome.setText(documentSnapshot.getString("nome"));
                             email.setText(documentSnapshot.getString("email"));
+                            data_nasc.setText(documentSnapshot.getString("data_nasc"));
+                            telefone.setText(documentSnapshot.getString("telefone"));
                         } catch (Exception e){
                             Toast.makeText(view.getContext(), "ERRO", Toast.LENGTH_SHORT).show();
                         }

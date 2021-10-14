@@ -103,7 +103,8 @@ public class CadastrarFragment extends Fragment {
                            @Override
                            public void onComplete(@NonNull Task<AuthResult> task) {
                                if (task.isSuccessful()) {
-                                   feed.collection("Usuarios").document(email.getText().toString()).set(cadastro).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                   feed.collection("Usuarios").document(email.getText().toString())
+                                           .set(cadastro).addOnSuccessListener(new OnSuccessListener<Void>() {
                                        @Override
                                        public void onSuccess(Void unused) {
                                            showAlertDialog(R.layout.dialog_cadastrar_conta_usuario);
