@@ -22,8 +22,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.w3c.dom.Text;
-
 public class LoginFragment extends Fragment {
 View view;
 
@@ -35,7 +33,7 @@ View view;
     int mostrarSenha_Login_contador = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.login_fragment, container, false);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_login, container, false);
 
 
         email = root.findViewById(R.id.email_login);

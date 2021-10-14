@@ -13,6 +13,7 @@
         android:background="@drawable/edit_text_bg"
         android:hint="Email"
         android:inputType="textEmailAddress"
+        android:minHeight="48dp"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -29,6 +30,7 @@
         android:background="@drawable/edit_text_bg"
         android:hint="Senha"
         android:inputType="textPassword"
+        android:minHeight="48dp"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -72,12 +74,22 @@
         android:id="@+id/imageViewSenha_Login"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/senha_login"
         app:layout_constraintEnd_toEndOf="@+id/senha_login"
         app:layout_constraintTop_toTopOf="@+id/senha_login"
         app:layout_constraintVertical_bias="0.578"
-        app:srcCompat="@drawable/ic_senha_mostrar" />
+        app:srcCompat="@drawable/ic_senha_esconder" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/email_login"
+        app:layout_constraintEnd_toEndOf="@+id/email_login"
+        app:layout_constraintTop_toTopOf="@+id/email_login"
+        app:srcCompat="@drawable/ic_email_cadastrar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

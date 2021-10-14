@@ -26,7 +26,7 @@
         android:layout_width="268dp"
         android:layout_height="27dp"
         android:layout_marginTop="4dp"
-        android:text="Bem vindo ao SGD"
+        android:text="Bem vindo, usuário"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView2"

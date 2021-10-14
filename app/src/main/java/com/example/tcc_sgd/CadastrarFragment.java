@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -51,6 +53,19 @@ public class CadastrarFragment extends Fragment {
         mostrarSenha_Cadastrar2 = root.findViewById(R.id.imageViewSenha_Cadastrar2);
 
 
+        //Criando a maskara para o campo cadastro de celular
+        SimpleMaskFormatter cell = new SimpleMaskFormatter("(NN)NNNNNN-NNNN");
+        MaskTextWatcher mtw = new MaskTextWatcher(telefone, cell);
+        telefone.addTextChangedListener(mtw);
+        //Fim da mascara do telefone
+
+        //Criando a maskara da data
+        SimpleMaskFormatter data = new SimpleMaskFormatter("NN/NN/NNNN");
+        MaskTextWatcher stw = new MaskTextWatcher(data_nasc, data);
+        data_nasc.addTextChangedListener(stw);
+        //Fim da mascara da data
+
+
 
         mostrarSenha_Cadastrar1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,12 +73,12 @@ public class CadastrarFragment extends Fragment {
                 switch (mostrarSenha_Cadastrar_contador) {
                     case 0:
                         senha.setTransformationMethod(android.text.method.HideReturnsTransformationMethod.getInstance());
-                        mostrarSenha_Cadastrar1.setImageResource(R.drawable.ic_senha_esconder);
+                        mostrarSenha_Cadastrar1.setImageResource(R.drawable.ic_senha_mostrar);
                         mostrarSenha_Cadastrar_contador++;
                         break;
                     case 1:
                         senha.setTransformationMethod(android.text.method.PasswordTransformationMethod.getInstance());
-                        mostrarSenha_Cadastrar1.setImageResource(R.drawable.ic_senha_mostrar);
+                        mostrarSenha_Cadastrar1.setImageResource(R.drawable.ic_senha_esconder);
                         mostrarSenha_Cadastrar_contador--;
                         break;
                 }
@@ -76,12 +91,12 @@ public class CadastrarFragment extends Fragment {
                 switch (mostrarSenha_Cadastrar_contador){
                     case 0:
                     senhaConfirmar.setTransformationMethod(android.text.method.HideReturnsTransformationMethod.getInstance());
-                    mostrarSenha_Cadastrar2.setImageResource(R.drawable.ic_senha_esconder);
+                    mostrarSenha_Cadastrar2.setImageResource(R.drawable.ic_senha_mostrar);
                     mostrarSenha_Cadastrar_contador++;
                     break;
                     case 1:
                         senhaConfirmar.setTransformationMethod(android.text.method.PasswordTransformationMethod.getInstance());
-                        mostrarSenha_Cadastrar2.setImageResource(R.drawable.ic_senha_mostrar);
+                        mostrarSenha_Cadastrar2.setImageResource(R.drawable.ic_senha_esconder);
                         mostrarSenha_Cadastrar_contador--;
                         break;
                 }

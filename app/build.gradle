@@ -1,4 +1,4 @@
-plugins {
+ plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
 
@@ -56,4 +56,7 @@ dependencies {
 
     // Google Places implementation
     implementation 'com.google.android.libraries.places:places:2.4.0'
+
+    //Maskara cadastrar
+    implementation 'com.github.rtoshiro.mflibrary:mflibrary:1.0.0'
 }
