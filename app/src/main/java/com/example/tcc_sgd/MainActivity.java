@@ -1,5 +1,6 @@
 package com.example.tcc_sgd;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.SearchView;
 import androidx.constraintlayout.widget.Group;
 import androidx.core.view.GravityCompat;
@@ -36,7 +38,8 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
     FirebaseFirestore feed = FirebaseFirestore.getInstance();
-
+    AlertDialog.Builder builderDialog;
+    AlertDialog alertDialog;
 
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -59,16 +62,15 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+
+
         //FUNÇÃO DO BOTÃO SAIR
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_sair_app:
-                        FirebaseAuth.getInstance().signOut();
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
+                        showAlertDialog(R.layout.dialog_confirmacao_sair);
                         break;
                 }
 
@@ -106,5 +108,39 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    // Metodo do custom dialog.
+    public void showAlertDialog(int layoutDialog) {
+        builderDialog = new AlertDialog.Builder(MainActivity.this);
+        View LayoutView = getLayoutInflater().inflate(layoutDialog, null);
+        AppCompatButton dialogButtomSair = LayoutView.findViewById(R.id.botao_sair_dialog);
+        AppCompatButton dialogButtonCancelar = LayoutView.findViewById(R.id.botao_cancelar_dialog);
+        builderDialog.setView(LayoutView);
+        alertDialog = builderDialog.create();
+        alertDialog.show();
+
+        // Quando clicado no botão de "Ok" no custom dialog
+        dialogButtomSair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Desabilitando o dialog
+                //Deslogando da conta e indo para o Login
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                alertDialog.dismiss();
+
+
+            }
+        });
+
+        dialogButtonCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Desabilitando o dialog
+                alertDialog.dismiss();
+            }
+        });
+    };
 
 }

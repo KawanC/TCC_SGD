@@ -65,6 +65,18 @@ public class CadastrarFragment extends Fragment {
         data_nasc.addTextChangedListener(stw);
         //Fim da mascara da data
 
+        //Criando a maskara do nome
+        SimpleMaskFormatter nomeP = new SimpleMaskFormatter("LLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+        MaskTextWatcher ttw = new MaskTextWatcher(nome, nomeP);
+        nome.addTextChangedListener(ttw);
+        //Fim da maskara do nome
+
+        //Criando a maskara do sobrenome
+        SimpleMaskFormatter nomeS = new SimpleMaskFormatter("LLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+        MaskTextWatcher rtw = new MaskTextWatcher(sobrenome, nomeS);
+        sobrenome.addTextChangedListener(rtw);
+        //Fim da maskara do sobrenome
+
 
 
         mostrarSenha_Cadastrar1.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +120,9 @@ public class CadastrarFragment extends Fragment {
            public void onClick(View view) {
                String nomeCompleto = nome.getText().toString() + " " + sobrenome.getText().toString();
 
-               if(!nome.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !senha.getText().toString().isEmpty() && !senhaConfirmar.getText().toString().isEmpty())  {
+               if(!nome.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !senha.getText().toString().isEmpty()
+                       && !senhaConfirmar.getText().toString().isEmpty() && !sobrenome.getText().toString().isEmpty() && !data_nasc.getText().toString().isEmpty()
+               && !telefone.getText().toString().isEmpty())  {
                    if (senhaConfirmar.getText().toString().equals(senha.getText().toString())) {
                        CadastrarUsuario_Valores cadastro = new CadastrarUsuario_Valores(nomeCompleto,
                                email.getText().toString(), data_nasc.getText().toString(),
