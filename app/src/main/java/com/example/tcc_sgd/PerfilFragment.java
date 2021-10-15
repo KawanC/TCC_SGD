@@ -1,9 +1,11 @@
 package com.example.tcc_sgd;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -29,6 +31,8 @@ public class PerfilFragment extends Fragment {
     View view;
     FirebaseFirestore feed = FirebaseFirestore.getInstance();
     String usuarioID;
+    AlertDialog.Builder builderDialog;
+    AlertDialog alertDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,20 +80,45 @@ public class PerfilFragment extends Fragment {
         deslogar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nomeTela = getActivity().findViewById(R.id.nome_Usuario);
-                emailTela = getActivity().findViewById(R.id.textViewEmailUsuario);
-                nomeTela.setText("Saiu");
-                emailTela.setText("Saiu");
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(view.getContext(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-
+                showAlertDialog(R.layout.dialog_confirmacao_sair);
             }
         });
         return view;
 
     }
+
+    // Metodo do custom dialog.
+    public void showAlertDialog(int layoutDialog) {
+        builderDialog = new AlertDialog.Builder(view.getContext());
+        View LayoutView = getLayoutInflater().inflate(layoutDialog, null);
+        AppCompatButton dialogButtomSair = LayoutView.findViewById(R.id.botao_sair_dialog);
+        AppCompatButton dialogButtonCancelar = LayoutView.findViewById(R.id.botao_cancelar_dialog);
+        builderDialog.setView(LayoutView);
+        alertDialog = builderDialog.create();
+        alertDialog.show();
+
+        // Quando clicado no botão de "Ok" no custom dialog
+        dialogButtomSair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Desabilitando o dialog
+                //Deslogando da conta e indo para o Login
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                startActivity(intent);
+                alertDialog.dismiss();
+            }
+        });
+
+        dialogButtonCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Desabilitando o dialog
+                alertDialog.dismiss();
+            }
+        });
+    };
+
 
     @Override
     public void onStart() {
