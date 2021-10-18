@@ -66,13 +66,13 @@ public class CadastrarFragment extends Fragment {
         //Fim da mascara da data
 
         //Criando a maskara do nome
-        SimpleMaskFormatter nomeP = new SimpleMaskFormatter("LLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+        SimpleMaskFormatter nomeP = new SimpleMaskFormatter("LLLLLLLLLL");
         MaskTextWatcher ttw = new MaskTextWatcher(nome, nomeP);
         nome.addTextChangedListener(ttw);
         //Fim da maskara do nome
 
         //Criando a maskara do sobrenome
-        SimpleMaskFormatter nomeS = new SimpleMaskFormatter("LLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+        SimpleMaskFormatter nomeS = new SimpleMaskFormatter("LLLLLLLLLL");
         MaskTextWatcher rtw = new MaskTextWatcher(sobrenome, nomeS);
         sobrenome.addTextChangedListener(rtw);
         //Fim da maskara do sobrenome

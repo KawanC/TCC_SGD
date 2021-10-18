@@ -104,8 +104,8 @@ public class MapsFragment extends Fragment {
     private TextView email, nome;
     String usuarioID, usuarioLogado, nomeMenu, emailMenu;
 
-    AlertDialog.Builder builderDialog;
-    AlertDialog alertDialog;
+    AlertDialog.Builder builderDialog, builderDialog2 ;
+    AlertDialog alertDialog, alertDialogDenuncia ;
 
     // A classe FusedLocationProviderCliente irá fornecer os métodos para interagir com o GPS
     private FusedLocationProviderClient servicoLocalizacao;
@@ -839,21 +839,21 @@ public class MapsFragment extends Fragment {
                     bottomSheetDialog.setContentView(bottomSheetView);
                     bottomSheetDialog.show();
                     pesquisarMovimento(bottomSheetDialog);
+                    imageViewAtualizar.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            bottomSheetDialog.cancel();
+                            pesquisarMovimento(bottomSheetDialog);
+                            bottomSheetDialog.show();
+                        }
+                    });
+                    imageViewDenuncia.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showAlertDialogDenuncia(R.layout.dialog_denuncia_informacao);
+                        }
+                    });
                 } else Toast.makeText(view.getContext(), "Por favor pesquise um estabelecimento antes de clicar no botão de informações!", Toast.LENGTH_SHORT).show();
-               imageViewAtualizar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        bottomSheetDialog.cancel();
-                        pesquisarMovimento(bottomSheetDialog);
-                        bottomSheetDialog.show();
-                    }
-                });
-               imageViewDenuncia.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View view) {
-                       showAlertDialogDenuncia(R.layout.dialog_denuncia_informacao);
-                   }
-               });
             }
         });
 
@@ -1416,16 +1416,17 @@ public class MapsFragment extends Fragment {
 
     }
 
-    private void showAlertDialogDenuncia(int dialog_informacao_estabelecimento) {
-        builderDialog = new AlertDialog.Builder(view.getContext());
-        View LayoutView = getLayoutInflater().inflate(dialog_informacao_estabelecimento, null);
-        AppCompatButton dialogButtom = LayoutView.findViewById(R.id.botao_ok_dialog);
-        builderDialog.setView(LayoutView);
-        alertDialog = builderDialog.create();
-        alertDialog.show();
+    private void showAlertDialogDenuncia(int dialog_informacao_denuncia) {
+        builderDialog2 = new AlertDialog.Builder(view.getContext());
+        View LayoutView = getLayoutInflater().inflate(dialog_informacao_denuncia, null);
+        AppCompatButton dialogButtomEnviar = LayoutView.findViewById(R.id.botao_enviar_dialog);
+        AppCompatButton dialogButtomCancelar = LayoutView.findViewById(R.id.botao_cancelar_denuncia);
+        builderDialog2.setView(LayoutView);
+        alertDialogDenuncia = builderDialog2.create();
+        alertDialogDenuncia.show();
 
         // Quando clicado no botão de "Ok" no custom dialog
-        dialogButtom.setOnClickListener(new View.OnClickListener() {
+        dialogButtomEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Desabilitando o dialog

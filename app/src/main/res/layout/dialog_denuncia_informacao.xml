@@ -21,125 +21,138 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="0dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="450dp">
 
-            <TextView
-                android:id="@+id/texto_aviso_sair"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:text="Reportar informação incorreta"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-                android:textColor="@color/black"
-                android:textSize="26dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></TextView>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/texto_sair"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="start"
-                android:text="Qual tipo de informação precisa ser corrigida?"
-                android:textAlignment="gravity"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="18dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/texto_aviso_sair">
-
-            </TextView>
-
-            <RadioGroup
-                android:id="@+id/radioGroupReportarErro"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/texto_sair">
-
-                <RadioButton
-                    android:id="@+id/radioButtonCorrigirTamanho"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Tamanho do Estabelecimento" />
+                    android:layout_height="550dp"
+                    android:padding="10dp">
 
-                <RadioButton
-                    android:id="@+id/radioButtonCorrigirMovimentacao"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Movimentação atual" />
+                    <TextView
+                        android:id="@+id/texto_aviso_sair"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:text="Reportar informação incorreta"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+                        android:textColor="@color/black"
+                        android:textSize="26dp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"></TextView>
 
-                <RadioButton
-                    android:id="@+id/radioButtonCorrigirMedia"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    android:text="Média do dia" />
-            </RadioGroup>
+                    <TextView
+                        android:id="@+id/texto_sair"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="start"
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/botao_sair_dialog"
-                android:layout_width="144dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/button_background_sucesso"
-                android:text="ENVIAR"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintHorizontal_bias="0.548"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"></androidx.appcompat.widget.AppCompatButton>
+                        android:text="Qual tipo de informação precisa ser corrigida?"
+                        android:textAlignment="gravity"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:textSize="18dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/texto_aviso_sair">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/botao_cancelar_dialog"
-                android:layout_width="144dp"
-                android:layout_height="48dp"
-                android:layout_gravity="right"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/button_background_sucesso"
-                android:text="CANCELAR"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.475"
-                app:layout_constraintStart_toStartOf="@+id/guideline3"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"></androidx.appcompat.widget.AppCompatButton>
+                    </TextView>
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.50121653" />
+                    <RadioGroup
+                        android:id="@+id/radioGroupReportarErro"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/texto_sair">
 
-            <EditText
-                android:id="@+id/editTextTextPersonName"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:background="@drawable/edit_text_bg"
-                android:ems="10"
-                android:gravity="start|top"
-                android:hint="Use esse espaço para detalhar a informação incorreta..."
-                android:inputType="textImeMultiLine"
-                android:paddingLeft="10dp"
-                android:paddingTop="5dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroupReportarErro" />
+                        <RadioButton
+                            android:id="@+id/radioButtonCorrigirTamanho"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tamanho do Estabelecimento" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <RadioButton
+                            android:id="@+id/radioButtonCorrigirMovimentacao"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Movimentação atual" />
+
+                        <RadioButton
+                            android:id="@+id/radioButtonCorrigirMedia"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="48dp"
+                            android:text="Média do dia" />
+                    </RadioGroup>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/botao_enviar_dialog"
+                        android:layout_width="144dp"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/button_background_sucesso"
+                        android:text="ENVIAR"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                        app:layout_constraintHorizontal_bias="0.548"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"></androidx.appcompat.widget.AppCompatButton>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/botao_cancelar_denuncia"
+                        android:layout_width="144dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/button_background_sucesso"
+                        android:text="CANCELAR"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.475"
+                        app:layout_constraintStart_toStartOf="@+id/guideline3"
+                        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"></androidx.appcompat.widget.AppCompatButton>
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.50121653" />
+
+                    <EditText
+                        android:id="@+id/editTextTextPersonName"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:background="@drawable/edit_text_bg"
+                        android:ems="10"
+                        android:gravity="start|top"
+                        android:hint="Use esse espaço para detalhar a informação incorreta..."
+                        android:inputType="textMultiLine"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/radioGroupReportarErro" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </ScrollView>
 
 
     </LinearLayout>
