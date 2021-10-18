@@ -44,6 +44,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -201,6 +202,8 @@ public class MapsFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
+            MapStyleOptions estiloMapa = MapStyleOptions.loadRawResourceStyle(view.getContext(), R.raw.places_keep);
+            googleMap.setMapStyle(estiloMapa);
             recuperarPosicaoAtual();
             metodoBotoes();
             adicionaComponentesVisuais();
