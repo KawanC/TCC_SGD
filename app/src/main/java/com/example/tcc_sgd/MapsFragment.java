@@ -90,7 +90,7 @@ public class MapsFragment extends Fragment {
     Estabelecimento estabelecimento;
     private int numeroMovimentacao;
     private RadioButton radioButtonPequeno, radioButtonMedio, radioButtonGrande, radioButtonShop, radioButtonMercado, radioButtonRestaurante;
-    private ImageView imageViewLocalizacao, imageViewDenuncia, imageViewAtualizar;
+    private ImageView imageViewLocalizacao, imageViewDenuncia, imageViewAtualizar, imageViewIconEstabelecimentoInfo;
     private String tamanhoEstabelecimento, tipoEstabelecimento;
     private LinearLayout linearLayoutSeekBar, linearLayoutSeekBarAtual;
     String tipoProblema;
@@ -895,6 +895,21 @@ public class MapsFragment extends Fragment {
         });
     }
 
+    public void mudancaImagem(String tipo, BottomSheetDialog view){
+        imageViewIconEstabelecimentoInfo = view.findViewById(R.id.iconEstabelecimentoInfo);
+switch (tipo){
+    case "Mercado":
+        imageViewIconEstabelecimentoInfo.setImageResource(R.drawable.ic_mercado_info);
+        break;
+    case "Restaurante":
+        imageViewIconEstabelecimentoInfo.setImageResource(R.drawable.ic_restaurante_info);
+        break;
+    case "Shopping":
+        imageViewIconEstabelecimentoInfo.setImageResource(R.drawable.ic__shopping);
+        break;
+}
+    }
+
     public void pesquisarMovimento(BottomSheetDialog bottomSheetView){
         //PEGANDO IDS
         textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimentoInfo);
@@ -910,6 +925,7 @@ public class MapsFragment extends Fragment {
         imageViewDenuncia = bottomSheetView.findViewById(R.id.botaoDenuncia);
         linearLayoutSeekBar = bottomSheetView.findViewById(R.id.seek_bar_informacao);
         linearLayoutSeekBarAtual = bottomSheetView.findViewById(R.id.seek_bar_inf_atual);
+        imageViewIconEstabelecimentoInfo = bottomSheetView.findViewById(R.id.iconEstabelecimentoInfo);
 
         String diaAtual = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
         CollectionReference colection = feed.collection("Feedbacks");
@@ -931,6 +947,7 @@ public class MapsFragment extends Fragment {
                     }
                     textViewMediaHoje.setText("Média da movimentação no dia de hoje\n (" + diaAtual + ")");
                     if (contador[0] != 0){
+                        mudancaImagem(movimentacao[0], bottomSheetView);
                         int media = movimentacaoNumero[0] /(contador[0]);
                         switch (movimentacao[0]){
                             //TESTANDO O TIPO DO ESTABELECIMENTO DE ACORDO COM OS FEEDBACKS
@@ -1437,6 +1454,9 @@ public class MapsFragment extends Fragment {
                         textViewMovimentoAtual.setTextColor(Color.parseColor("#A1A1A1"));
                         linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar_nenhum));
                         textViewHora.setText("Ultima atualização: Nenhuma nas ultimas 24 horas");
+
+
+                         imageViewIconEstabelecimentoInfo.setImageResource(R.drawable.ic_nenhumfeedback);
 
                         //SEGUNDA PARTE
                         textViewMovientoInfo.setText("Nenhum feedback");
