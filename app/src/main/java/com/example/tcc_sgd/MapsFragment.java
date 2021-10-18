@@ -203,7 +203,7 @@ public class MapsFragment extends Fragment {
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
             MapStyleOptions estiloMapa = MapStyleOptions.loadRawResourceStyle(view.getContext(), R.raw.places_keep);
-            googleMap.setMapStyle(estiloMapa);
+            googleMap.setMapStyle(estiloMapa); //COLOCANDO O ESTILO DO MAPA
             recuperarPosicaoAtual();
             metodoBotoes();
             adicionaComponentesVisuais();
