@@ -92,6 +92,7 @@ public class MapsFragment extends Fragment {
     private ImageView imageViewLocalizacao, imageViewDenuncia, imageViewAtualizar;
     private String tamanhoEstabelecimento, tipoEstabelecimento;
     private LinearLayout linearLayoutSeekBar, linearLayoutSeekBarAtual;
+    String tipoProblema;
 
     //ATRIBUTOS UTILIZADOS PARA OS METODOS DO BANCO
     FirebaseFirestore feed = FirebaseFirestore.getInstance();
@@ -298,7 +299,6 @@ public class MapsFragment extends Fragment {
         radioButtonMedio = bottomSheetView2.findViewById(R.id.radioButtonMedio);
         radioButtonGrande = bottomSheetView2.findViewById(R.id.radioButtonGrande);
         radioGroupEstabelecimento = bottomSheetView2.findViewById(R.id.radioGroupTamanho);
-        int radioId = radioGroupEstabelecimento.getCheckedRadioButtonId(); //pegando id do botão selecionado
         radioButtonPequeno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -723,6 +723,7 @@ public class MapsFragment extends Fragment {
                 }
             }
 
+
             // Metodo do custom dialog.
             public void showAlertDialog(int layoutDialog) {
                 builderDialog = new AlertDialog.Builder(view.getContext());
@@ -839,6 +840,8 @@ public class MapsFragment extends Fragment {
                     bottomSheetDialog.setContentView(bottomSheetView);
                     bottomSheetDialog.show();
                     pesquisarMovimento(bottomSheetDialog);
+
+
                     imageViewAtualizar.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -858,6 +861,35 @@ public class MapsFragment extends Fragment {
         });
 
 
+    }
+
+    private void showAlertDialogDenuncia(int dialog_informacao_denuncia) {
+        builderDialog2 = new AlertDialog.Builder(view.getContext());
+        View LayoutView = getLayoutInflater().inflate(dialog_informacao_denuncia, null);
+        AppCompatButton dialogButtomEnviar = LayoutView.findViewById(R.id.botao_enviar_dialog);
+        AppCompatButton dialogButtomCancelar = LayoutView.findViewById(R.id.botao_cancelar_denuncia);
+        builderDialog2.setView(LayoutView);
+        alertDialogDenuncia = builderDialog2.create();
+        alertDialogDenuncia.show();
+
+        // Quando clicado no botão de "Ok" no custom dialog
+        dialogButtomEnviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    EnviarDenuncia enviarDenuncia = new EnviarDenuncia("tipoProblema", "idUsuario", "nomeEstabelecimento", "enderecoEstabelecimento","textoDescricao" );
+                    enviarDenuncia.enviarDenuncia(LayoutView, usuarioID, estabelecimento.getNome() , estabelecimento.getEndereco(),getContext());
+                    alertDialogDenuncia.dismiss();
+                }
+        });
+
+
+        dialogButtomCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialogDenuncia.dismiss();
+            }
+        });
     }
 
     public void pesquisarMovimento(BottomSheetDialog bottomSheetView){
@@ -1416,24 +1448,6 @@ public class MapsFragment extends Fragment {
 
     }
 
-    private void showAlertDialogDenuncia(int dialog_informacao_denuncia) {
-        builderDialog2 = new AlertDialog.Builder(view.getContext());
-        View LayoutView = getLayoutInflater().inflate(dialog_informacao_denuncia, null);
-        AppCompatButton dialogButtomEnviar = LayoutView.findViewById(R.id.botao_enviar_dialog);
-        AppCompatButton dialogButtomCancelar = LayoutView.findViewById(R.id.botao_cancelar_denuncia);
-        builderDialog2.setView(LayoutView);
-        alertDialogDenuncia = builderDialog2.create();
-        alertDialogDenuncia.show();
-
-        // Quando clicado no botão de "Ok" no custom dialog
-        dialogButtomEnviar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Desabilitando o dialog
-                alertDialog.dismiss();
-            }
-        });
-    }
 
     private void showAlertDialogDois(int dialog_informacao_estabelecimento) {
         builderDialog = new AlertDialog.Builder(view.getContext());
@@ -1462,6 +1476,8 @@ public class MapsFragment extends Fragment {
             mapFragment.getMapAsync(callback);
         }
     }
+
+
 
 
     @Override
