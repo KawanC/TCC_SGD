@@ -25,4 +25,9 @@
     <color name="buttom_location">#FFFFFF</color>
     <color name="CorBotao">#1E90FF</color>
 
+    <color name="colorItem1">#424549</color>
+    <color name="colorItem2">#1976D2</color>
+    <color name="colorItem3">#424549</color>
+    <color name="colorItem4">#1976D2</color>
+
 </resources>
