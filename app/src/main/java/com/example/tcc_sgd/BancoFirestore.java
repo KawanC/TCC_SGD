@@ -89,8 +89,6 @@ public class BancoFirestore {
                 Toast.makeText(view.getContext(), "Sua senha precisa ser a mesma", Toast.LENGTH_SHORT).show();
             }
         } else Toast.makeText(view.getContext(), "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-
-
     }
 
     public void loginUsuario(View view, Context context, EditText emailLogin, EditText senhaLogin, Activity activity){
