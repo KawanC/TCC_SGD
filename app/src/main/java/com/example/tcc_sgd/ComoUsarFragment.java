@@ -33,15 +33,14 @@ public class ComoUsarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_como_usar, container, false);
 
         comecar = view.findViewById(R.id.btnNext);
         models = new ArrayList<>();
         models.add(new Model(R.drawable.sgd_sem_fundo_nome, "Como usar o Aplicativo SGD?", "Siga os passos para aprender."));
-        models.add(new Model(R.drawable.search, "Passo 1:", "Pesquisei por um estabelecimento no campo de busca"));
-        models.add(new Model(R.drawable.feedback, "Passo 2:", "Envie um feedback sobre o estabelecimento pesquisado"));
-        models.add(new Model(R.drawable.info, "Passo 3:", "Veja as informações do estabelecimento pesquisado através de outros feedbacks enviados."));
+        models.add(new Model(R.drawable.botaolupaof, "Passo 1:", "Pesquise por um estabelecimento no campo de busca."));
+        models.add(new Model(R.drawable.botaofeedofc, "Passo 2:", "Envie um feedback sobre o estabelecimento pesquisado."));
+        models.add(new Model(R.drawable.botaoinfoof, "Passo 3:", "Veja as informações do estabelecimento pesquisado através de outros feedbacks enviados."));
         adapter = new Adapter(models, view.getContext());
         viewPager = view.findViewById(R.id.viewPagerComoUsar);
         viewPager.setAdapter(adapter);
