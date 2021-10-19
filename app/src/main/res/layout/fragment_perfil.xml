@@ -77,9 +77,9 @@
                     android:paddingLeft="10dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView4"
-                    app:layout_constraintStart_toStartOf="@+id/imageView4"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+                    app:layout_constraintEnd_toEndOf="@+id/imageViewPerfil"
+                    app:layout_constraintStart_toStartOf="@+id/imageViewPerfil"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewPerfil" />
 
                 <TextView
                     android:id="@+id/textView12"
@@ -111,15 +111,17 @@
                     app:layout_constraintBottom_toTopOf="@+id/textViewDataNascimento"
                     app:layout_constraintStart_toStartOf="@+id/textViewDataNascimento" />
 
-                <ImageView
-                    android:id="@+id/imageView4"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageViewPerfil"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/sgdbottomsheet"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:civ_border_width="2dp" />
+
 
                 <Button
                     android:id="@+id/buttonDeslogar"
@@ -132,7 +134,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textViewtelefone" />
 
                 <Button
-                    android:id="@+id/buttonAtualizar"
+                    android:id="@+id/buttonAtualizarImagemPerfil"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -180,7 +182,9 @@
                     app:layout_constraintBottom_toBottomOf="@+id/textViewDataNascimento"
                     app:layout_constraintEnd_toEndOf="@+id/textViewDataNascimento"
                     app:layout_constraintTop_toTopOf="@+id/textViewDataNascimento" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
     </ScrollView>
 
