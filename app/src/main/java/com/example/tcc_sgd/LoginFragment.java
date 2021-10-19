@@ -23,14 +23,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginFragment extends Fragment {
-View view;
-
-    float v = 0;
-    EditText email, emailTela, nomeTela, senha;
+    //Atributos
+    EditText email, senha;
     TextView redefinir_senha;
-    FirebaseAuth auth;
     ImageView mostrarSenha_Login;
     int mostrarSenha_Login_contador = 0;
+    //Banco de dados
+    BancoFirestore metodoBanco = new BancoFirestore();
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_login, container, false);
@@ -40,31 +41,13 @@ View view;
         senha = root.findViewById(R.id.senha_login);
         Button login = root.findViewById(R.id.login);
         redefinir_senha = root.findViewById(R.id.esqueci_senha);
-        auth = FirebaseAuth.getInstance();
         mostrarSenha_Login = root.findViewById(R.id.imageViewSenha_Login);
 
         redefinir_senha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String emailLogin = email.getText().toString();
-
-                if(emailLogin.isEmpty()){
-                    Toast.makeText(view.getContext(), "Ensira ao menos o seu email para recuperar a senha!", Toast.LENGTH_SHORT).show();
-
-                }else{
-                    email.getText();
-                    auth.sendPasswordResetEmail(emailLogin).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            Toast.makeText(view.getContext(), "Enviamos uma MSG para o seu email com um link para você redefinir a sua senha!", Toast.LENGTH_LONG).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(view.getContext(), "Erro ao enviar o Email", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }}
+                metodoBanco.redfinirSenha(email, root);
+            }
         });
 
         mostrarSenha_Login.setOnClickListener(new View.OnClickListener() {
@@ -86,38 +69,10 @@ View view;
             }
         });
 
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String emailChecar = email.getText().toString();
-                String senhaChegar = senha.getText().toString();
-
-                if(emailChecar.isEmpty() || senhaChegar.isEmpty()){
-                    Toast.makeText(view.getContext(), "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-
-                }else{
-
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(emailChecar, senhaChegar).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Intent intent = new Intent(getContext(), MainActivity.class);
-                                startActivity(intent);
-                                email.getText().clear();
-                                senha.getText().clear();
-                                getActivity().finish();
-                            } else {
-                                try {
-                                    throw task.getException();
-                                } catch (Exception erro) {
-                                    Toast.makeText(view.getContext(), "Email ou senha incorretos", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }
-                    });
-                }
+                metodoBanco.loginUsuario(root, root.getContext(),email, senha, getActivity());
             }
         });
 
@@ -127,7 +82,6 @@ View view;
     @Override
     public void onStart() {
         super.onStart();
-
         FirebaseUser usuarioLogado = FirebaseAuth.getInstance().getCurrentUser();
         if(usuarioLogado != null){
             Intent intent = new Intent(getContext(), MainActivity.class);

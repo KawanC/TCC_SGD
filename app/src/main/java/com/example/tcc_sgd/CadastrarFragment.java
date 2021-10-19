@@ -1,6 +1,7 @@
 package com.example.tcc_sgd;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,19 +29,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CadastrarFragment extends Fragment {
 
-    AlertDialog.Builder builderDialog;
-    AlertDialog alertDialog;
+
     ViewGroup root;
     EditText email, senha, nome, senhaConfirmar, telefone, data_nasc, sobrenome;
     ImageView mostrarSenha_Cadastrar1, mostrarSenha_Cadastrar2;
     int mostrarSenha_Cadastrar_contador = 0;
 
 
-    FirebaseFirestore feed = FirebaseFirestore.getInstance();
+    BancoFirestore metodoBanco = new BancoFirestore();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         root = (ViewGroup) inflater.inflate(R.layout.cadastrar_fragment, container, false);
+
+        //Pegando Ids dos componentes da tela
         nome = root.findViewById(R.id.nome_cadastrar);
         email = root.findViewById(R.id.email_cadastrar);
         senha = root.findViewById(R.id.senha_cadastrar);
@@ -51,7 +54,6 @@ public class CadastrarFragment extends Fragment {
         Button cadastrar = root.findViewById(R.id.BotaoCadastrar);
         mostrarSenha_Cadastrar1 = root.findViewById(R.id.imageViewSenha_Cadastrar1);
         mostrarSenha_Cadastrar2 = root.findViewById(R.id.imageViewSenha_Cadastrar2);
-
 
         //Criando a maskara para o campo cadastro de celular
         SimpleMaskFormatter cell = new SimpleMaskFormatter("(NN)NNNNNN-NNNN");
@@ -77,8 +79,7 @@ public class CadastrarFragment extends Fragment {
         sobrenome.addTextChangedListener(rtw);
         //Fim da maskara do sobrenome
 
-
-
+        //Metodo para mostrar a senha para o usuario
         mostrarSenha_Cadastrar1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +97,7 @@ public class CadastrarFragment extends Fragment {
                 }
             }
         });
-
+        //Metodo para mostrar a senha ocnfirmada para o usuario
         mostrarSenha_Cadastrar2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,80 +119,16 @@ public class CadastrarFragment extends Fragment {
       cadastrar.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               String nomeCompleto = nome.getText().toString() + " " + sobrenome.getText().toString();
-
-               if(!nome.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !senha.getText().toString().isEmpty()
-                       && !senhaConfirmar.getText().toString().isEmpty() && !sobrenome.getText().toString().isEmpty() && !data_nasc.getText().toString().isEmpty()
-               && !telefone.getText().toString().isEmpty())  {
-                   if (senhaConfirmar.getText().toString().equals(senha.getText().toString())) {
-                       CadastrarUsuario_Valores cadastro = new CadastrarUsuario_Valores(nomeCompleto,
-                               email.getText().toString(), data_nasc.getText().toString(),
-                               telefone.getText().toString(), senha.getText().toString());
-
-                       FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.getText().toString(), senha.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                           @Override
-                           public void onComplete(@NonNull Task<AuthResult> task) {
-                               if (task.isSuccessful()) {
-                                   feed.collection("Usuarios").document(email.getText().toString())
-                                           .set(cadastro).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                       @Override
-                                       public void onSuccess(Void unused) {
-                                           showAlertDialog(R.layout.dialog_cadastrar_conta_usuario);
-                                           nome.getText().clear();
-                                           sobrenome.getText().clear();
-                                           email.getText().clear();
-                                           data_nasc.getText().clear();
-                                           telefone.getText().clear();
-                                           senha.getText().clear();
-                                           senhaConfirmar.getText().clear();
-                                       }
-                                   });
-
-                               } else {
-                                   try {
-                                       throw task.getException();
-                                   } catch (FirebaseAuthWeakPasswordException e) {
-                                       Toast.makeText(view.getContext(), "Digite uma senha de no mínimo 6 caracteres", Toast.LENGTH_SHORT).show();
-                                   } catch (FirebaseAuthUserCollisionException e) {
-                                       Toast.makeText(view.getContext(), "Conta já cadastrada com esse email", Toast.LENGTH_SHORT).show();
-                                   } catch (FirebaseAuthInvalidCredentialsException e) {
-                                       Toast.makeText(view.getContext(), "Email inválido", Toast.LENGTH_SHORT).show();
-                                   } catch (Exception e) {
-                                       Toast.makeText(view.getContext(), "Erro loco " + e, Toast.LENGTH_SHORT).show();
-                                   }
-                               }
-                               ;
-                           }
-                       });
-
-                   }else{
-                       Toast.makeText(view.getContext(), "Sua senha precisa ser a mesma", Toast.LENGTH_SHORT).show();
-                   }
-               } else Toast.makeText(view.getContext(), "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                metodoBanco.cadastrarUsuario(email, senha, nome, senhaConfirmar, telefone, data_nasc, sobrenome, root, root.getContext(), getActivity());
             }
-
        });
         return root;
 
 
     }
 
-   public void showAlertDialog(int layoutDialog) {
-        builderDialog = new AlertDialog.Builder(root.getContext());
-        View LayoutView = getLayoutInflater().inflate(layoutDialog, null);
-        AppCompatButton dialogButtom = LayoutView.findViewById(R.id.botao_ok_dialog);
-        builderDialog.setView(LayoutView);
-        alertDialog = builderDialog.create();
-        alertDialog.show();
 
-        // Quando clicado no botão de "Ok" no custom dialog
-        dialogButtom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Desabilitando o dialog
-                alertDialog.dismiss();
 
-            }
-        });
-    }
+
+
 }

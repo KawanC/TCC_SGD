@@ -76,10 +76,6 @@ public class EnviarDenuncia {
         return texto;
     }
 
-    public  String setTexto(){
-        return texto;
-    }
-
     public String getTipoProblema() {
         return tipoProblema;
     }
