@@ -96,6 +96,7 @@ public class MapsFragment extends Fragment {
     String tipoProblema;
 
     //ATRIBUTOS UTILIZADOS PARA OS METODOS DO BANCO
+    BancoFirestore metodoBanco = new BancoFirestore();
     FirebaseFirestore feed = FirebaseFirestore.getInstance();
     final int[] contador = {0};
     final String[] movimentacao = new String[3];
@@ -279,12 +280,12 @@ public class MapsFragment extends Fragment {
 
     private void metodoBotoes(){
         // Metodo do botão da informação
-        metodoBootomShetEtapa2();
+        metodoBootomShetEtapa1();
         // Metodo do botão da informação do estabelecimento
         metodoBootomShetInformacao();
     }
 
-    public void metodoBootomShetEtapa2(){
+    public void metodoBootomShetEtapa1(){
         //CRIANDO BOTAO SHETs
         final BottomSheetDialog bottomSheetDialogEtapa2 = new BottomSheetDialog(
                 view.getContext(), R.style.BottomSheetDialogTheme
@@ -699,52 +700,11 @@ public class MapsFragment extends Fragment {
         bottomSheetView2.findViewById(R.id.buttonEnviar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ATUALIZANDO A HORA
-                String horaFeedback = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
-                estabelecimento.setHora(horaFeedback);
-                // CODIGO BANCO DE DADOS
-                if (radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked()) {
-                    Feedback feedbackUsuario = new Feedback(estabelecimento.getNome(), Integer.toString(numeroMovimentacao), tipoEstabelecimento,
-                            tamanhoEstabelecimento, estabelecimento.getHora(), usuarioID, estabelecimento.getEndereco());
-
-                    feed.collection("Feedbacks").document(estabelecimento.getNome() + estabelecimento.getHora()).set(feedbackUsuario).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            showAlertDialog(R.layout.dialog_sucesso_feedback);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            e.printStackTrace();
-                            Toast.makeText(view.getContext(), "ERRO" + e.getMessage() , Toast.LENGTH_SHORT).show();
-                            showAlertDialog((R.layout.dialog_erro_feedback));
-                        }
-                    });
-                    bottomSheetDialogEtapa2.dismiss();
-                }else {
-                    Toast.makeText(view.getContext(), "Por favor selecione o tamanho do Estabelecimento!", Toast.LENGTH_SHORT).show();
-                }
+                metodoBanco.enviarFeedBack(estabelecimento, tamanhoEstabelecimento, numeroMovimentacao, tipoEstabelecimento, usuarioID, radioButtonPequeno,
+                        radioButtonMedio, radioButtonGrande, bottomSheetDialogEtapa2, view, getActivity());
             }
 
 
-            // Metodo do custom dialog.
-            public void showAlertDialog(int layoutDialog) {
-                builderDialog = new AlertDialog.Builder(view.getContext());
-                View LayoutView = getLayoutInflater().inflate(layoutDialog, null);
-                AppCompatButton dialogButtom = LayoutView.findViewById(R.id.botao_ok_dialog);
-                builderDialog.setView(LayoutView);
-                alertDialog = builderDialog.create();
-                alertDialog.show();
-
-                // Quando clicado no botão de "Ok" no custom dialog
-                dialogButtom.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Desabilitando o dialog
-                        alertDialog.dismiss();
-                    }
-                });
-            }
         });
 
         //ETAPA 1 BOOTOM SHHET
@@ -1471,7 +1431,6 @@ switch (tipo){
 
     }
 
-
     private void showAlertDialogDois(int dialog_informacao_estabelecimento) {
         builderDialog = new AlertDialog.Builder(view.getContext());
         View LayoutView = getLayoutInflater().inflate(dialog_informacao_estabelecimento, null);
@@ -1499,9 +1458,6 @@ switch (tipo){
             mapFragment.getMapAsync(callback);
         }
     }
-
-
-
 
     @Override
     public void onStart() {

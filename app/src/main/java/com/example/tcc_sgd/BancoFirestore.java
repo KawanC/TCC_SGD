@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,12 +16,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class BancoFirestore {
     //Atributos
@@ -29,8 +34,33 @@ public class BancoFirestore {
     FirebaseFirestore bancoDeDados = FirebaseFirestore.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
 
-    public void enviarFeedBack(){
+    public void enviarFeedBack(Estabelecimento estabelecimento, String tamanhoEstabelecimento, int numeroMovimentacao, String tipoEstabelecimento, String usuarioID,
+                               RadioButton radioButtonPequeno,RadioButton radioButtonMedio, RadioButton radioButtonGrande , BottomSheetDialog bottomSheetDialogEtapa2, View view, Activity activity){
+        //ATUALIZANDO A HORA
+        String horaFeedback = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+        estabelecimento.setHora(horaFeedback);
+        // CODIGO BANCO DE DADOS
+        if (radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked()) {
+            Feedback feedbackUsuario = new Feedback(estabelecimento.getNome(), Integer.toString(numeroMovimentacao), tipoEstabelecimento,
+                    tamanhoEstabelecimento, estabelecimento.getHora(), usuarioID, estabelecimento.getEndereco());
 
+            bancoDeDados.collection("Feedbacks").document(estabelecimento.getNome() + estabelecimento.getHora()).set(feedbackUsuario).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    showAlertDialogFeedback(R.layout.dialog_sucesso_feedback, view, activity);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(view.getContext(), "ERRO" + e.getMessage() , Toast.LENGTH_SHORT).show();
+                    showAlertDialogFeedback(R.layout.dialog_erro_feedback, view, activity);
+                }
+            });
+            bottomSheetDialogEtapa2.dismiss();
+        }else {
+            Toast.makeText(view.getContext(), "Por favor selecione o tamanho do Estabelecimento!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void pesquisarInformacao(){
@@ -57,7 +87,7 @@ public class BancoFirestore {
                                     .set(cadastro).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-                                    showAlertDialog(R.layout.dialog_cadastrar_conta_usuario, contexto,activity);
+                                    showAlertDialogCadastro(R.layout.dialog_cadastrar_conta_usuario, contexto,activity);
                                     nome.getText().clear();
                                     sobrenome.getText().clear();
                                     email.getText().clear();
@@ -136,8 +166,28 @@ public class BancoFirestore {
         }
     }
 
+    //ALERT DIALOG DE CONFIRMAR FEEDBACK
+    // Metodo do custom dialog.
+    public void showAlertDialogFeedback(int layoutDialog, View view, Activity activity) {
+        builderDialog = new AlertDialog.Builder(view.getContext());
+        View LayoutView = activity.getLayoutInflater().inflate(layoutDialog, null);
+        AppCompatButton dialogButtom = LayoutView.findViewById(R.id.botao_ok_dialog);
+        builderDialog.setView(LayoutView);
+        alertDialog = builderDialog.create();
+        alertDialog.show();
+
+        // Quando clicado no botão de "Ok" no custom dialog
+        dialogButtom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Desabilitando o dialog
+                alertDialog.dismiss();
+            }
+        });
+    }
+
     //ALERT DIALOG DE CONFIRMAR CADASTRO
-    public void showAlertDialog(int layoutDialog, Context contexto, Activity activity) {
+    public void showAlertDialogCadastro(int layoutDialog, Context contexto, Activity activity) {
         builderDialog = new AlertDialog.Builder(contexto);
         View LayoutView = activity.getLayoutInflater().inflate(layoutDialog, null);
         AppCompatButton dialogButtom = LayoutView.findViewById(R.id.botao_ok_dialog);
