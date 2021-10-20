@@ -1,5 +1,6 @@
 package com.example.tcc_sgd;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Intent;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore feed = FirebaseFirestore.getInstance();
     AlertDialog.Builder builderDialog;
     AlertDialog alertDialog;
-
+    BancoFirestore metodoBanco = new BancoFirestore();
 
     private AppBarConfiguration mAppBarConfiguration;
         @Override
@@ -93,20 +94,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-
-        FirebaseUser usuarioLogado = FirebaseAuth.getInstance().getCurrentUser();
-        if(usuarioLogado != null){
-
-        }else {
-            finish();
-        }
-    }
-
-    public void onClique(View v){
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+     metodoBanco.verificaLogin(MainActivity.this);
     }
 
     // Metodo do custom dialog.
@@ -125,9 +113,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Desabilitando o dialog
                 //Deslogando da conta e indo para o Login
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                metodoBanco.deslogarApp(MainActivity.this, MainActivity.this);
                 alertDialog.dismiss();
             }
         });

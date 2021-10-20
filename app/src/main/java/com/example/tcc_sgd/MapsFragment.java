@@ -90,7 +90,7 @@ public class MapsFragment extends Fragment {
     Estabelecimento estabelecimento;
     private int numeroMovimentacao;
     private RadioButton radioButtonPequeno, radioButtonMedio, radioButtonGrande, radioButtonShop, radioButtonMercado, radioButtonRestaurante;
-    private ImageView imageViewLocalizacao, imageViewDenuncia, imageViewAtualizar, imageViewIconEstabelecimentoInfo;
+    private ImageView imageViewLocalizacao, imageViewIconEstabelecimentoInfo, imageViewDenuncia, imageViewAtualizar;
     private String tamanhoEstabelecimento, tipoEstabelecimento;
     private LinearLayout linearLayoutSeekBar, linearLayoutSeekBarAtual;
     String tipoProblema;
@@ -303,6 +303,8 @@ public class MapsFragment extends Fragment {
         radioButtonMedio = bottomSheetView2.findViewById(R.id.radioButtonMedio);
         radioButtonGrande = bottomSheetView2.findViewById(R.id.radioButtonGrande);
         radioGroupEstabelecimento = bottomSheetView2.findViewById(R.id.radioGroupTamanho);
+
+        //EVENTO AO CLICAR NO RADIO BUTTON
         radioButtonPequeno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -324,6 +326,7 @@ public class MapsFragment extends Fragment {
                 tamanhoEstabelecimento = "Grande";
             }
         });
+
         if (radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked()) {
             seekBar2.setEnabled(true);
         }else {
@@ -345,343 +348,7 @@ public class MapsFragment extends Fragment {
                 textViewProgues = bottomSheetView2.findViewById(R.id.textViewProgues);
                 textViewMovimentacao = bottomSheetView2.findViewById(R.id.textViewMovimento);
                 seekBar2 = bottomSheetView2.findViewById(R.id.seekBar); //PEGANDO ID DA SEEKBAR PELO BOTTOMSHEET
-
-                switch (tipoEstabelecimento) {
-                    case "Restaurante":
-                        //ESCALA PARA RESTAURANTE PEQUENO
-                        if (radioButtonPequeno.isChecked()) {
-                            seekBar2.setMax(100);
-
-                            if (progress == 0) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Vazio");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
-                            }
-                            if (progress > 0 && progress <= 50) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimento Tranquilo");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 50 && progress <= 75) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimentado");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 75 && progress <= 100) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Muito movimentado!");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
-                            }
-                        }
-                        if (radioButtonMedio.isChecked()) {
-                            //ESCALA RESTAURANTE MEDIO...
-                            seekBar2.setMax(200);
-                            if (progress == 0) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Vazio");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
-                            }
-                            if (progress > 0 && progress <= 100) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimento Tranquilo");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 100 && progress <= 150) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimentado");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 150 && progress <= 200) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Muito movimentado!");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
-                            }
-                        }
-                        if (radioButtonGrande.isChecked()) {
-                            //ESCALA RESTAURANTE GRANDE...
-                            seekBar2.setMax(400);
-                            if (progress == 0) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Vazio");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
-                            }
-                            if (progress > 0 && progress <= 175) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimento Tranquilo");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 175 && progress <= 300) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimentado");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 300 && progress <= 400) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Muito movimentado!");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
-                            }
-                        }
-                        break;
-                    case "Shopping":
-                        //ESCALA PARA RESTAURANTE PEQUENO
-                        if (radioButtonPequeno.isChecked()) {
-                            seekBar2.setMax(4000);
-                            //ESCALA SHOPING PEQUENO
-                            if (progress == 0) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Vazio");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
-                            }
-                            if (progress > 0 && progress <= 1000) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimento Tranquilo");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 1000 && progress <= 3000) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimentado");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 3000 && progress <= 4000) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Muito movimentado!");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
-                            }
-                        }
-                        if (radioButtonMedio.isChecked()) {
-                            //ESCALA SHOPING MEDIO
-                            seekBar2.setMax(6000);
-                            if (progress == 0) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Vazio");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
-                            }
-                            if (progress > 0 && progress <= 2500) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimento Tranquilo");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 2500 && progress <= 5000) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimentado");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 5000 && progress <= 7000) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Muito movimentado!");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
-                            }
-                        }
-                        if (radioButtonGrande.isChecked()) {
-                            //ESCALA SHOPING GRANDE
-                            seekBar2.setMax(15000);
-                            if (progress == 0) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Vazio");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
-                            }
-                            if (progress > 0 && progress <= 3000) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimento Tranquilo");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 3000 && progress <= 7500) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimentado");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 7500 && progress <= 15000) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Muito movimentado!");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
-                            }
-                        }
-
-                        break;
-                    case "Mercado":
-                        if (radioButtonPequeno.isChecked()) {
-                            seekBar2.setMax(500);
-
-                            if (progress == 0) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Vazio");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
-                            }
-                            if (progress > 0 && progress <= 100) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimento Tranquilo");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 100 && progress <= 300) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimentado");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 300 && progress <= 500) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Muito movimentado!");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
-                            }
-                        }
-                        if (radioButtonMedio.isChecked()) {
-                            //ESCALA RESTAURANTE MEDIO...
-                            seekBar2.setMax(1500);
-                            if (progress == 0) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Vazio");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
-                            }
-                            if (progress > 0 && progress <= 500) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimento Tranquilo");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 500 && progress <= 750) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimentado");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 750 && progress <= 1500) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Muito movimentado!");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
-                            }
-                        }
-                        if (radioButtonGrande.isChecked()) {
-                            //ESCALA RESTAURANTE GRANDE...
-                            seekBar2.setMax(3500);
-                            if (progress == 0) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Vazio");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
-                            }
-                            if (progress > 0 && progress <= 750) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimento Tranquilo");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 750 && progress <= 1500) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Movimentado");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
-                            }
-                            if (progress > 1500 && progress <= 3500) {
-                                textViewProgues.setText(progress + " Pessoas aprox.");
-                                textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
-                                textViewMovimentacao.setText("Muito movimentado!");
-                                textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
-                                seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
-                                seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
-                            }
-                        }
-
-                        break;
-                }
+                seekBarMudarCor(progress);
                 numeroMovimentacao = progress;
             }
 
@@ -708,7 +375,6 @@ public class MapsFragment extends Fragment {
         });
 
         //ETAPA 1 BOOTOM SHHET
-
         // Metodo do botão do feedback.
         BotaoFeedback = view.findViewById(R.id.ButtonFeedback);
         BotaoFeedback.setOnClickListener(new View.OnClickListener() {
@@ -730,6 +396,8 @@ public class MapsFragment extends Fragment {
                     radioButtonMercado = bottomSheetView.findViewById(R.id.radioButtonMercado);
                     radioButtonShop = bottomSheetView.findViewById(R.id.radioButtonShop);
                     radioButtonRestaurante = bottomSheetView.findViewById(R.id.radioButtonRestaurante);
+                    imageViewDenuncia = bottomSheetView.findViewById(R.id.botaoDenuncia);
+                    imageViewAtualizar = bottomSheetView.findViewById(R.id.botaoAtualizar);
 
                     //SETANDO NOME E ENDEREÇO DOS ESTABELECIMENTOS PESQUISADOS
                     textViewNomeFeedBack.setText(estabelecimento.getNome());
@@ -772,7 +440,7 @@ public class MapsFragment extends Fragment {
                 }else{
                     Toast.makeText(view.getContext(), "Por favor pesquise um estabelecimento antes de clicar no botão de FeedBack!", Toast.LENGTH_SHORT).show();
                 }
-
+                //METODO DA IMAGEM DE DUVIDA
                 imageViewLocalizacao = bottomSheetView.findViewById(R.id.imagemDuvida);
                 imageViewLocalizacao.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -800,12 +468,13 @@ public class MapsFragment extends Fragment {
                         );
 
                 if(estabelecimento != null) {
+
                     bottomSheetDialog.setContentView(bottomSheetView);
                     bottomSheetDialog.show();
                     pesquisarMovimento(bottomSheetDialog);
 
-
-                    imageViewAtualizar.setOnClickListener(new View.OnClickListener() {
+                    //METODO DO BOTÃO DE ATUALIZAR
+                   imageViewAtualizar.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             bottomSheetDialog.cancel();
@@ -813,61 +482,18 @@ public class MapsFragment extends Fragment {
                             bottomSheetDialog.show();
                         }
                     });
-                    imageViewDenuncia.setOnClickListener(new View.OnClickListener() {
+
+                    //METODO DO BOTÃO DE DENUNCIA
+                   imageViewDenuncia.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             showAlertDialogDenuncia(R.layout.dialog_denuncia_informacao);
                         }
                     });
+
                 } else Toast.makeText(view.getContext(), "Por favor pesquise um estabelecimento antes de clicar no botão de informações!", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-    }
-
-    private void showAlertDialogDenuncia(int dialog_informacao_denuncia) {
-        builderDialog2 = new AlertDialog.Builder(view.getContext());
-        View LayoutView = getLayoutInflater().inflate(dialog_informacao_denuncia, null);
-        AppCompatButton dialogButtomEnviar = LayoutView.findViewById(R.id.botao_enviar_dialog);
-        AppCompatButton dialogButtomCancelar = LayoutView.findViewById(R.id.botao_cancelar_denuncia);
-        builderDialog2.setView(LayoutView);
-        alertDialogDenuncia = builderDialog2.create();
-        alertDialogDenuncia.show();
-
-        // Quando clicado no botão de "Ok" no custom dialog
-        dialogButtomEnviar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                    EnviarDenuncia enviarDenuncia = new EnviarDenuncia("tipoProblema", "idUsuario", "nomeEstabelecimento", "enderecoEstabelecimento","textoDescricao" );
-                    enviarDenuncia.enviarDenuncia(LayoutView, usuarioID, estabelecimento.getNome() , estabelecimento.getEndereco(),getContext());
-                    alertDialogDenuncia.dismiss();
-                }
-        });
-
-
-        dialogButtomCancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialogDenuncia.dismiss();
-            }
-        });
-    }
-
-    public void mudancaImagem(String tipo, BottomSheetDialog view){
-        imageViewIconEstabelecimentoInfo = view.findViewById(R.id.iconEstabelecimentoInfo);
-switch (tipo){
-    case "Mercado":
-        imageViewIconEstabelecimentoInfo.setImageResource(R.drawable.ic_mercado_info);
-        break;
-    case "Restaurante":
-        imageViewIconEstabelecimentoInfo.setImageResource(R.drawable.ic_restaurante_info);
-        break;
-    case "Shopping":
-        imageViewIconEstabelecimentoInfo.setImageResource(R.drawable.ic__shopping);
-        break;
-}
     }
 
     public void pesquisarMovimento(BottomSheetDialog bottomSheetView){
@@ -887,548 +513,377 @@ switch (tipo){
         linearLayoutSeekBarAtual = bottomSheetView.findViewById(R.id.seek_bar_inf_atual);
         imageViewIconEstabelecimentoInfo = bottomSheetView.findViewById(R.id.iconEstabelecimentoInfo);
 
-        String diaAtual = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
-        CollectionReference colection = feed.collection("Feedbacks");
-        colection.whereEqualTo("enderecoLocal", estabelecimento.getEndereco())
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()){
-                    contador[0] = 0;
-                    movimentacaoNumero[0] = 0;
-                    for (QueryDocumentSnapshot doc : task.getResult()){
-                        contador[0]++;
-                        movimentacaoNumero[0] += Integer.parseInt((String)doc.get("movimentoEstabelecimento")); // SOMA PARA DEPOIS SER EFETUADA A MEDIA
-                        movimentacaoNumero[1] = Integer.parseInt((String)doc.get("movimentoEstabelecimento")); //APENAS ARMAZENA O ULTIMO NUMERO DA MOVIMENTAÇÃO
-                        movimentacao[0] = (String) doc.get("tipoEstabelecimento"); // ARMAZENA O TIPO DO ESTABELECIMENTO
-                        movimentacao[1] = (String) doc.get("horaFeedBack"); // PEGA A HORA DO ULTIMO FEDDBACK
-                        movimentacao[2] = (String) doc.get("tamanhoEstabelecimento"); // ARMAZENA O TAMANHO DO ESTABELECIMENTO
+        metodoBanco.confereDiaEHora(view.getContext());
+        metodoBanco.pesquisarMovimento(estabelecimento, textViewMediaHoje, textViewNomeInformacao, textViewEnderecoInformaco, textViewTamanhoInformacao,
+                textViewHora, textViewFeedAnalisados, textViewMovimentoAtual, textViewMovientoInfo, linearLayoutSeekBarAtual, linearLayoutSeekBar, imageViewIconEstabelecimentoInfo,
+                contador, movimentacaoNumero, movimentacao, view, bottomSheetView);
+    }
 
+    public void seekBarMudarCor(int progress){
+        switch (tipoEstabelecimento) {
+            case "Restaurante":
+                //ESCALA PARA RESTAURANTE PEQUENO
+                if (radioButtonPequeno.isChecked()) {
+                    seekBar2.setMax(100);
+
+                    if (progress == 0) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Vazio");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                     }
-                    textViewMediaHoje.setText("Média da movimentação no dia de hoje\n (" + diaAtual + ")");
-                    if (contador[0] != 0){
-                        mudancaImagem(movimentacao[0], bottomSheetView);
-                        int media = movimentacaoNumero[0] /(contador[0]);
-                        switch (movimentacao[0]){
-                            //TESTANDO O TIPO DO ESTABELECIMENTO DE ACORDO COM OS FEEDBACKS
-                            case "Shopping":
-                                switch (movimentacao[2]){
-                                    case "Pequeno":
-                                        //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
-                                        if (movimentacaoNumero[1] == 0){
-                                            textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 1000){
-                                            textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-                                        if (movimentacaoNumero[1] > 1000 && movimentacaoNumero[1] <= 3000){
-                                            textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 3000){
-                                            textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-
-                                        //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
-                                        if(media == 0){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (media > 0 && media <= 1000){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-
-                                        if (media > 1000 && media <= 3000){
-
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (media > 3000){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-                                        break;
-                                    case "Médio":
-                                        //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
-                                        if (movimentacaoNumero[1] == 0){
-                                            textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 2500){
-                                            textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-                                        if (movimentacaoNumero[1] > 2500 && movimentacaoNumero[1] <= 5000){
-                                            textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 5000){
-                                            textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-
-                                        //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
-                                        if(media == 0){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (media > 0 && media <= 2500){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-
-                                        if (media > 2500 && media <= 5000){
-
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (media > 5000){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-                                        break;
-                                    case "Grande":
-                                        //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
-                                        if (movimentacaoNumero[1] == 0){
-                                            textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 3000){
-                                            textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-                                        if (movimentacaoNumero[1] > 3000 && movimentacaoNumero[1] <= 7500){
-                                            textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 7500){
-                                            textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-
-                                        //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
-                                        if(media == 0){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (media > 0 && media <= 175){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-
-                                        if (media > 175 && media <= 300){
-
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (media > 300){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-                                        break;
-                                }
-
-                                break;
-
-                            case "Restaurante":
-                                //TERSTANDO O TAMANHO DO ESTABELECIMENTO DE ACORDO COM OS FEEDBACKS
-                                switch (movimentacao[2]){
-                                    case "Pequeno":
-                                        //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
-                                        if (movimentacaoNumero[1] == 0){
-                                            textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 50){
-                                            textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-                                        if (movimentacaoNumero[1] > 50 && movimentacaoNumero[1] <= 100){
-                                            textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 100){
-                                            textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-
-                                        //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
-                                        if(media == 0){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (media > 0 && media <= 50){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-
-                                        if (media > 50 && media <= 100){
-
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (media > 100){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-                                        break;
-                                    case "Médio":
-                                        //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
-                                        if (movimentacaoNumero[1] == 0){
-                                            textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 100){
-                                            textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-                                        if (movimentacaoNumero[1] > 100 && movimentacaoNumero[1] <= 150){
-                                            textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 150){
-                                            textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-
-                                        //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
-                                        if(media == 0){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (media > 0 && media <= 100){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-
-                                        if (media > 100 && media <= 150){
-
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (media > 150){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-                                        break;
-                                    case "Grande":
-                                        //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
-                                        if (movimentacaoNumero[1] == 0){
-                                            textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 175){
-                                            textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-                                        if (movimentacaoNumero[1] > 175 && movimentacaoNumero[1] <= 300){
-                                            textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 300){
-                                            textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-
-                                        //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
-                                        if(media == 0){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (media > 0 && media <= 175){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-
-                                        if (media > 175 && media <= 300){
-
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (media > 300){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-                                        break;
-                                }
-
-                                break;
-                            case "Mercado":
-                                //TERSTANDO O TAMANHO DO ESTABELECIMENTO DE ACORDO COM OS FEEDBACKS
-                                switch (movimentacao[2]){
-                                    case "Pequeno":
-                                        //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
-                                        if (movimentacaoNumero[1] == 0){
-                                            textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 100){
-                                            textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-                                        if (movimentacaoNumero[1] > 100 && movimentacaoNumero[1] <= 300){
-                                            textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 300){
-                                            textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-
-                                        //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
-                                        if(media == 0){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (media > 0 && media <= 100){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-
-                                        if (media > 100 && media <= 300){
-
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (media > 300){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-                                        break;
-                                    case "Médio":
-                                        //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
-                                        if (movimentacaoNumero[1] == 0){
-                                            textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 500){
-                                            textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-                                        if (movimentacaoNumero[1] > 500 && movimentacaoNumero[1] <= 750){
-                                            textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 750){
-                                            textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-
-                                        //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
-                                        if(media == 0){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (media > 0 && media <= 500){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-
-                                        if (media > 500 && media <= 750){
-
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (media > 750){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-                                        break;
-                                    case "Grande":
-                                        //IFs PARA TESTAR EM QUAL ESCALA SE ENCAIXA O ULTIMO FEDEBACKS
-                                        if (movimentacaoNumero[1] == 0){
-                                            textViewMovimentoAtual.setText("Vazio (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 0 && movimentacaoNumero[1] <= 3000){
-                                            textViewMovimentoAtual.setText("Pouco Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-                                        if (movimentacaoNumero[1] > 3000 && movimentacaoNumero[1] <= 7500){
-                                            textViewMovimentoAtual.setText("Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (movimentacaoNumero[1] > 7500){
-                                            textViewMovimentoAtual.setText("Muito Movimentado (Aprox. " + movimentacaoNumero[1] + " pess.)");
-                                            textViewMovimentoAtual.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-
-                                        //IFs PARA TESTAR A MEDIA E ESTABELECER AS CORES APARENTES AO USUARIO
-                                        if(media == 0){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#000000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_vazio));
-                                        }
-
-                                        if (media > 0 && media <= 3000){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#4CAF50"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_pouco_movimentado));
-                                        }
-
-                                        if (media > 3000 && media <= 7500){
-
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FFFB18"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.sek_bar_movimentado));
-                                        }
-
-                                        if (media > 7500){
-                                            textViewMovientoInfo.setText("Aproximadamente " + media + " pess.");
-                                            textViewMovientoInfo.setTextColor(Color.parseColor("#FF0000"));
-                                            linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar));
-                                        }
-                                        break;
-                                }
-
-                                break;
-                        }
-
-                        //INFORMAÇ~OES DO ESTABELECIMENTO
-                        textViewNomeInformacao.setText(estabelecimento.getNome());
-                        textViewEnderecoInformaco.setText(estabelecimento.getEndereco());
-                        textViewTamanhoInformacao.setText(" " + movimentacao[2]);
-
-                        //PRIMERIA PARTE
-                        textViewHora.setText("Ultima atualização: " + movimentacao[1]);
-
-                        //SEGUNDA PARTE
-                        textViewFeedAnalisados.setText("Numero de FeedBacks Analisados: " + contador[0]);
-
-                    }else{
-                        // NENHUM FEEDBACK ENCONTRAO PARA ESTE ESTABELECIMENTO
-
-                        //INFORMAÇÕES DO ESTABELECIMENTO
-                        textViewNomeInformacao.setText(estabelecimento.getNome());
-                        textViewEnderecoInformaco.setText(estabelecimento.getEndereco());
-                        textViewTamanhoInformacao.setText(" ");
-
-                        //PRIMEIRA PARTE
-                        textViewMovimentoAtual.setText("Nenhum feedback");
-                        textViewMovimentoAtual.setTextColor(Color.parseColor("#A1A1A1"));
-                        linearLayoutSeekBarAtual.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar_nenhum));
-                        textViewHora.setText("Ultima atualização: Nenhuma nas ultimas 24 horas");
-
-
-                         imageViewIconEstabelecimentoInfo.setImageResource(R.drawable.ic_nenhumfeedback);
-
-                        //SEGUNDA PARTE
-                        textViewMovientoInfo.setText("Nenhum feedback");
-                        textViewMovientoInfo.setTextColor(Color.parseColor("#A1A1A1"));
-                        linearLayoutSeekBar.setBackgroundDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.seek_bar_nenhum));
-
+                    if (progress > 0 && progress <= 50) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimento Tranquilo");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 50 && progress <= 75) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimentado");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 75 && progress <= 100) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Muito movimentado!");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
                     }
                 }
+                if (radioButtonMedio.isChecked()) {
+                    //ESCALA RESTAURANTE MEDIO...
+                    seekBar2.setMax(200);
+                    if (progress == 0) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Vazio");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                    }
+                    if (progress > 0 && progress <= 100) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimento Tranquilo");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 100 && progress <= 150) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimentado");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 150 && progress <= 200) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Muito movimentado!");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                if (radioButtonGrande.isChecked()) {
+                    //ESCALA RESTAURANTE GRANDE...
+                    seekBar2.setMax(400);
+                    if (progress == 0) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Vazio");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                    }
+                    if (progress > 0 && progress <= 175) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimento Tranquilo");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 175 && progress <= 300) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimentado");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 300 && progress <= 400) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Muito movimentado!");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                break;
+            case "Shopping":
+                //ESCALA PARA RESTAURANTE PEQUENO
+                if (radioButtonPequeno.isChecked()) {
+                    seekBar2.setMax(4000);
+                    //ESCALA SHOPING PEQUENO
+                    if (progress == 0) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Vazio");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                    }
+                    if (progress > 0 && progress <= 1000) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimento Tranquilo");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 1000 && progress <= 3000) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimentado");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 3000 && progress <= 4000) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Muito movimentado!");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                if (radioButtonMedio.isChecked()) {
+                    //ESCALA SHOPING MEDIO
+                    seekBar2.setMax(6000);
+                    if (progress == 0) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Vazio");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                    }
+                    if (progress > 0 && progress <= 2500) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimento Tranquilo");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 2500 && progress <= 5000) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimentado");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 5000 && progress <= 7000) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Muito movimentado!");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                if (radioButtonGrande.isChecked()) {
+                    //ESCALA SHOPING GRANDE
+                    seekBar2.setMax(15000);
+                    if (progress == 0) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Vazio");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                    }
+                    if (progress > 0 && progress <= 3000) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimento Tranquilo");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 3000 && progress <= 7500) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimentado");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 7500 && progress <= 15000) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Muito movimentado!");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                    }
+                }
+
+                break;
+            case "Mercado":
+                if (radioButtonPequeno.isChecked()) {
+                    seekBar2.setMax(500);
+
+                    if (progress == 0) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Vazio");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                    }
+                    if (progress > 0 && progress <= 100) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimento Tranquilo");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 100 && progress <= 300) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimentado");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 300 && progress <= 500) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Muito movimentado!");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                if (radioButtonMedio.isChecked()) {
+                    //ESCALA RESTAURANTE MEDIO...
+                    seekBar2.setMax(1500);
+                    if (progress == 0) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Vazio");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                    }
+                    if (progress > 0 && progress <= 500) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimento Tranquilo");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 500 && progress <= 750) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimentado");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 750 && progress <= 1500) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Muito movimentado!");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                    }
+                }
+                if (radioButtonGrande.isChecked()) {
+                    //ESCALA RESTAURANTE GRANDE...
+                    seekBar2.setMax(3500);
+                    if (progress == 0) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Vazio");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#000000")); //MUDANDO COR DO TEXTO
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
+                    }
+                    if (progress > 0 && progress <= 750) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimento Tranquilo");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#008000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 750 && progress <= 1500) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Movimentado");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FFFF00"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
+                    }
+                    if (progress > 1500 && progress <= 3500) {
+                        textViewProgues.setText(progress + " Pessoas aprox.");
+                        textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
+                        textViewMovimentacao.setText("Muito movimentado!");
+                        textViewMovimentacao.setTextColor(Color.parseColor("#FF0000"));
+                        seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.MULTIPLY);
+                        seekBar2.getThumb().setColorFilter(Color.parseColor("#FF0000"), PorterDuff.Mode.SRC_IN);
+                    }
+                }
+
+                break;
+        }
+    }
+
+    private void showAlertDialogDenuncia(int dialog_informacao_denuncia) {
+        builderDialog2 = new AlertDialog.Builder(view.getContext());
+        View LayoutView = getLayoutInflater().inflate(dialog_informacao_denuncia, null);
+        AppCompatButton dialogButtomEnviar = LayoutView.findViewById(R.id.botao_enviar_dialog);
+        AppCompatButton dialogButtomCancelar = LayoutView.findViewById(R.id.botao_cancelar_denuncia);
+        builderDialog2.setView(LayoutView);
+        alertDialogDenuncia = builderDialog2.create();
+        alertDialogDenuncia.show();
+
+        // Quando clicado no botão de "Ok" no custom dialog
+        dialogButtomEnviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Criando objeto para chamar o metodo de enviar denuncia
+                EnviarDenuncia enviarDenuncia = new EnviarDenuncia("tipoProblema", "idUsuario", "nomeEstabelecimento", "enderecoEstabelecimento","textoDescricao" );
+                enviarDenuncia.enviarDenuncia(LayoutView, usuarioID, estabelecimento.getNome() , estabelecimento.getEndereco(),getContext());
+                alertDialogDenuncia.dismiss();
             }
         });
-
-
+        //Metdo do botão de cancelar
+        dialogButtomCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialogDenuncia.dismiss();
+            }
+        });
     }
 
     private void showAlertDialogDois(int dialog_informacao_estabelecimento) {
@@ -1479,14 +934,12 @@ switch (tipo){
                             emailMenu = documentSnapshot.getString("email");
                             nome.setText(nomeMenu);
                             email.setText(emailMenu);
-
                         } catch (Exception e){
                             onStart();
                         }
                     }
                 }
             });
-
         } else getActivity().finish();
     }
 }

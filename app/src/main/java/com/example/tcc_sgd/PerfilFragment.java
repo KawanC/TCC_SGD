@@ -43,6 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PerfilFragment extends Fragment {
 
+    BancoFirestore metodoBanco = new BancoFirestore();
     private TextView email, nome, telefone, data_nasc;
     private Button deslogar, atualizar;
     CircleImageView imagemPerfil;
@@ -67,10 +68,10 @@ public class PerfilFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_perfil, container, false);
-       email = view.findViewById(R.id.textViewEmail);
-       nome = view.findViewById(R.id.textViewNome);
-       telefone = view.findViewById(R.id.textViewtelefone);
-       data_nasc = view.findViewById(R.id.textViewDataNascimento);
+        email = view.findViewById(R.id.textViewEmail);
+        nome = view.findViewById(R.id.textViewNome);
+        telefone = view.findViewById(R.id.textViewtelefone);
+        data_nasc = view.findViewById(R.id.textViewDataNascimento);
         deslogar = view.findViewById(R.id.buttonDeslogar);
         imagemPerfil = view.findViewById(R.id.imageViewPerfil);
         atualizar = view.findViewById(R.id.buttonAtualizarImagemPerfil);
@@ -162,13 +163,10 @@ public class PerfilFragment extends Fragment {
             public void onClick(View v) {
                 // Desabilitando o dialog
                 //Deslogando da conta e indo para o Login
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(view.getContext(), LoginActivity.class);
-                startActivity(intent);
+                metodoBanco.deslogarApp(getActivity(), view.getContext());
                 alertDialog.dismiss();
             }
         });
-
         dialogButtonCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,12 +180,7 @@ public class PerfilFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser usuarioLogado = FirebaseAuth.getInstance().getCurrentUser();
-        if(usuarioLogado != null){
-
-        }else {
-            getActivity().finish();
-        }
+        metodoBanco.verificaLogin(getActivity());
     }
 
     @Override

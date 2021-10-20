@@ -82,11 +82,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser usuarioLogado = FirebaseAuth.getInstance().getCurrentUser();
-        if(usuarioLogado != null){
-            Intent intent = new Intent(getContext(), MainActivity.class);
-            startActivity(intent);
-            getActivity().finish();
-        }
+        metodoBanco.verificaLoginInicial(getActivity(), getContext());
     }
 }
