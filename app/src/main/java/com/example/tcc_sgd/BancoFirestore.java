@@ -49,11 +49,12 @@ public class BancoFirestore {
                                RadioButton radioButtonPequeno,RadioButton radioButtonMedio, RadioButton radioButtonGrande , BottomSheetDialog bottomSheetDialogEtapa2, View view, Activity activity){
         //ATUALIZANDO A HORA
         String horaFeedback = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+        String dataAtualString = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
         estabelecimento.setHora(horaFeedback);
         // CODIGO BANCO DE DADOS
         if (radioButtonPequeno.isChecked() || radioButtonMedio.isChecked() || radioButtonGrande.isChecked()) {
             Feedback feedbackUsuario = new Feedback(estabelecimento.getNome(), Integer.toString(numeroMovimentacao), tipoEstabelecimento,
-                    tamanhoEstabelecimento, estabelecimento.getHora(), usuarioID, estabelecimento.getEndereco());
+                    tamanhoEstabelecimento, estabelecimento.getHora(),dataAtualString, usuarioID, estabelecimento.getEndereco());
 
             bancoDeDados.collection("Feedbacks").document(estabelecimento.getNome() + estabelecimento.getHora()).set(feedbackUsuario).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -75,44 +76,51 @@ public class BancoFirestore {
     }
 
     public void apagarDados(String idItem){
+        bancoDeDados.collection("Feedbacks").document(idItem).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
 
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
     }
 
     public void confereDiaEHora(Context context){
         String horaAtualString = new SimpleDateFormat("HH").format(Calendar.getInstance().getTime());
         String dataAtualString = new SimpleDateFormat("dd").format(Calendar.getInstance().getTime());
-
         bancoDeDados.collection("Feedbacks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()){
                     for (QueryDocumentSnapshot doc : task.getResult()){
-                        idFeed = doc.getId();
-                        horaF = (String) doc.get("horaFeedBack");
-                        dataF =  (String) doc.get("dataFeedBack");
-
-                        char data1 = dataF.charAt(0);
-                        char data2 = dataF.charAt(1);
-                        valorData = "" + data1 + data2;
-
-                        char numero1 = horaF.charAt(0);
-                        char numero2 = horaF.charAt(1);
-                        valorFinal = "" + numero1 + numero2;
-
-                        int dataFinal = Integer.parseInt(valorData);
-                        int dataAtual = Integer.parseInt(dataAtualString);
-                        int horaAtual = Integer.parseInt(horaAtualString);
-                        int horaFeedBack = Integer.parseInt(valorFinal);
-                        if (horaAtual > horaFeedBack){
-                            horaFeedBack =  horaAtual - horaFeedBack;
-                        } else {
-                            horaFeedBack = horaFeedBack - horaAtual;
-                        }
-                        if (dataAtual != dataFinal){
-                            if (horaFeedBack >= 0){
-                                //CONTINUA... (METODO PARA APAGAR)
+                        idFeed = doc.getId(); //PEGANDO ID DO FEEDBACKS NO BANCO
+                        horaF = (String) doc.get("horaFeedBack"); //PEGANDO A HORA DO FEEDBACKS
+                        dataF =  (String) doc.get("dataFeedBack"); //PEGANDO A DATA DO FEEDBACKS
+                            //PEGANDO OS 2 PRIMEIROS CARACTERES DA DATA E DA HORA
+                            char data1 = dataF.charAt(0);
+                            char data2 = dataF.charAt(1);
+                            valorData = "" + data1 + data2;
+                            char numero1 = horaF.charAt(0);
+                            char numero2 = horaF.charAt(1);
+                            valorFinal = "" + numero1 + numero2;
+                            //CONVERTENDO A STRING PARA INT PARA PODER REALIZAR O CALCULO E COMPARACAÇÃO
+                            int dataFinal = Integer.parseInt(valorData);
+                            int dataAtual = Integer.parseInt(dataAtualString);
+                            int horaAtual = Integer.parseInt(horaAtualString);
+                            int horaFeedBack = Integer.parseInt(valorFinal);
+                            //VERIFICANDO SE JÁ PASSOU UM DIA DESDE O FEEDBACK
+                            if (dataAtual != dataFinal){
+                                //LOGICA PARA APAGAR APENAS OS FEEEDBACKS QUE SÃO DO DIA ANTERIOR E PASSARAM DAS 3 HORAS DA MANHA
+                                if (horaAtual == 00 || horaAtual == 01 || horaAtual == 02 && horaFeedBack == 22 || horaFeedBack == 23){
+                                } else {
+                                    apagarDados(idFeed);
+                                }
                             }
-                        }
+                        dataF = null;
                     }
                 }
             }
