@@ -133,16 +133,6 @@
                     app:layout_constraintStart_toStartOf="@+id/textViewtelefone"
                     app:layout_constraintTop_toBottomOf="@+id/textViewtelefone" />
 
-                <Button
-                    android:id="@+id/buttonAtualizarImagemPerfil"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Atualizar"
-                    app:layout_constraintEnd_toEndOf="@+id/buttonDeslogar"
-                    app:layout_constraintStart_toStartOf="@+id/buttonDeslogar"
-                    app:layout_constraintTop_toBottomOf="@+id/buttonDeslogar" />
-
                 <ImageView
                     android:id="@+id/imageView10"
                     android:layout_width="wrap_content"
@@ -154,31 +144,31 @@
                     app:layout_constraintTop_toTopOf="@+id/textViewEmail" />
 
                 <ImageView
-                    android:id="@+id/imageView12"
+                    android:id="@+id/imageViewTelefone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_baseline_local_phone_24"
+                    android:src="@drawable/ic_baseline_edit_24"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewtelefone"
                     app:layout_constraintEnd_toEndOf="@+id/textViewtelefone"
                     app:layout_constraintTop_toTopOf="@+id/textViewtelefone" />
 
                 <ImageView
-                    android:id="@+id/imageView9"
+                    android:id="@+id/imageViewNome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_person_cadastrar"
+                    android:src="@drawable/ic_baseline_edit_24"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewNome"
                     app:layout_constraintEnd_toEndOf="@+id/textViewNome"
                     app:layout_constraintTop_toTopOf="@+id/textViewNome" />
 
                 <ImageView
-                    android:id="@+id/imageView11"
+                    android:id="@+id/imageViewDataNasc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_data_cadastrar"
+                    android:src="@drawable/ic_baseline_edit_24"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewDataNascimento"
                     app:layout_constraintEnd_toEndOf="@+id/textViewDataNascimento"
                     app:layout_constraintTop_toTopOf="@+id/textViewDataNascimento" />

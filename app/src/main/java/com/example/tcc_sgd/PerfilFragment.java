@@ -16,11 +16,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,9 +46,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PerfilFragment extends Fragment {
 
-    BancoFirestore metodoBanco = new BancoFirestore();
+    BancoFirestore metodoBanco = new BancoFirestore(); //Objeto para os metodos do banco
     private TextView email, nome, telefone, data_nasc;
-    private Button deslogar, atualizar;
+    private Button deslogar;
+    private ImageView imageViewNome, imageViewTelefone, imageViewDataNasc;
+
     CircleImageView imagemPerfil;
     View view;
     FirebaseFirestore feed = FirebaseFirestore.getInstance();
@@ -68,38 +73,21 @@ public class PerfilFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_perfil, container, false);
+
+        //PEGANDO IDS
         email = view.findViewById(R.id.textViewEmail);
         nome = view.findViewById(R.id.textViewNome);
         telefone = view.findViewById(R.id.textViewtelefone);
         data_nasc = view.findViewById(R.id.textViewDataNascimento);
         deslogar = view.findViewById(R.id.buttonDeslogar);
+        imageViewNome = view.findViewById(R.id.imageViewNome);
+        imageViewDataNasc = view.findViewById(R.id.imageViewDataNasc);
+        imageViewTelefone = view.findViewById(R.id.imageViewTelefone);
         imagemPerfil = view.findViewById(R.id.imageViewPerfil);
-        atualizar = view.findViewById(R.id.buttonAtualizarImagemPerfil);
 
         emailString = email.getText().toString();
 
-        imagem.getReference().child("Usuario").child(nome.getText().toString()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
- //           ImagemPerfil img = snapshot.getValue(ImagemPerfil.class);
-   //           Glide.with(view.getContext()).load(img.getImagem()).into(imagemPerfil);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-        atualizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-            }
-        });
-
+        //METODO PARA TROCAR IMAGEM DE PERFIL
         imagemPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,77 +98,37 @@ public class PerfilFragment extends Fragment {
             }
         });
 
-        try {
-            usuarioID = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-            DocumentReference documentReference = feed.collection("Usuarios").document(usuarioID);
-            documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                @Override
-                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                    if(documentSnapshot != null){
-                        try {
-                            nome = view.findViewById(R.id.textViewNome);
-                            email = view.findViewById(R.id.textViewEmail);
-                            telefone = view.findViewById(R.id.textViewtelefone);
-                            data_nasc = view.findViewById(R.id.textViewDataNascimento);
-                            nome.setText(documentSnapshot.getString("nome"));
-                            email.setText(documentSnapshot.getString("email"));
-                            data_nasc.setText(documentSnapshot.getString("data_nasc"));
-                            telefone.setText(documentSnapshot.getString("telefone"));
-                        } catch (Exception e){
-                            Toast.makeText(view.getContext(), "ERRO", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-            });
-
-        } catch (Exception e){
-            Toast.makeText(view.getContext(), "ERRO TEXTVIEW", Toast.LENGTH_SHORT).show();
-        }
-
+        //METEDO BOTÃO DESLOGAR
         deslogar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showAlertDialog(R.layout.dialog_confirmacao_sair);
             }
         });
-        return view;
 
-    }
-
-    // Metodo do custom dialog.
-    public void showAlertDialog(int layoutDialog) {
-        builderDialog = new AlertDialog.Builder(view.getContext());
-        View LayoutView = getLayoutInflater().inflate(layoutDialog, null);
-        AppCompatButton dialogButtomSair = LayoutView.findViewById(R.id.botao_sair_dialog);
-        AppCompatButton dialogButtonCancelar = LayoutView.findViewById(R.id.botao_cancelar_dialog);
-        builderDialog.setView(LayoutView);
-        alertDialog = builderDialog.create();
-        alertDialog.show();
-
-        // Quando clicado no botão de "Ok" no custom dialog
-        dialogButtomSair.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Desabilitando o dialog
-                //Deslogando da conta e indo para o Login
-                metodoBanco.deslogarApp(getActivity(), view.getContext());
-                alertDialog.dismiss();
-            }
-        });
-        dialogButtonCancelar.setOnClickListener(new View.OnClickListener() {
+        //METODO PARA ATUALIZAR AS INFORMAÇÕES DO USUARIO
+        imageViewNome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Desabilitando o dialog
-                alertDialog.dismiss();
+                showAlertDialogAtualizarInfo(R.layout.dialog_atualizar_nome, 1);
             }
         });
-    };
 
+        imageViewDataNasc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAlertDialogAtualizarInfo(R.layout.dialog_atualizar_data, 2);
+            }
+        });
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        metodoBanco.verificaLogin(getActivity());
+        imageViewTelefone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAlertDialogAtualizarInfo(R.layout.dialog_atualizar_telefone,3);
+            }
+        });
+
+        return view;
     }
 
     @Override
@@ -218,4 +166,150 @@ public class PerfilFragment extends Fragment {
             });
         }
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        metodoBanco.verificaLogin(getActivity());
+        try {
+            usuarioID = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            DocumentReference documentReference = feed.collection("Usuarios").document(usuarioID);
+            documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                    if(documentSnapshot != null){
+                        try {
+                            nome = view.findViewById(R.id.textViewNome);
+                            email = view.findViewById(R.id.textViewEmail);
+                            telefone = view.findViewById(R.id.textViewtelefone);
+                            data_nasc = view.findViewById(R.id.textViewDataNascimento);
+                            nome.setText(documentSnapshot.getString("nome"));
+                            email.setText(documentSnapshot.getString("email"));
+                            data_nasc.setText(documentSnapshot.getString("data_nasc"));
+                            telefone.setText(documentSnapshot.getString("telefone"));
+                        } catch (Exception e){
+                            Toast.makeText(view.getContext(), "ERRO", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            });
+
+        } catch (Exception e){
+            Toast.makeText(view.getContext(), "ERRO TEXTVIEW", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void showAlertDialogAtualizarInfo(int layoutDialog, int requestCode) {
+        builderDialog = new AlertDialog.Builder(view.getContext());
+        View LayoutView = getLayoutInflater().inflate(layoutDialog, null);
+        //BOTÕES DOS DIALOGS
+        AppCompatButton dialogButtomAtualizar = LayoutView.findViewById(R.id.botao_atualizar);
+        AppCompatButton dialogButtomAtualizar_data = LayoutView.findViewById(R.id.botao_atualizar_data);
+        AppCompatButton dialogButtomAtualizar_telefone = LayoutView.findViewById(R.id.botao_atualizar_tel);
+        AppCompatButton dialogButtonCancelar = LayoutView.findViewById(R.id.botao_cancel);
+        //EDIT TEXT DOS DIALOGS
+        EditText nomeNovo = LayoutView.findViewById(R.id.atualizarNome);
+        EditText nomeNovo2 = LayoutView.findViewById(R.id.atualizarNome2);
+        EditText dataNasc = LayoutView.findViewById(R.id.atualizarDataNasc);
+        EditText telefoneNovo = LayoutView.findViewById(R.id.atualizarTel);
+        //MONTANDO O DIALOG
+        builderDialog.setView(LayoutView);
+        alertDialog = builderDialog.create();
+        alertDialog.show();
+
+        if (requestCode == 1){
+            //Criando a maskara do nome
+            SimpleMaskFormatter nomeP = new SimpleMaskFormatter("LLLLLLLLLLLL");
+            MaskTextWatcher ttw = new MaskTextWatcher(nomeNovo, nomeP);
+            nomeNovo.addTextChangedListener(ttw);
+
+            //Criando a maskara do sobrenome
+            SimpleMaskFormatter nomeS = new SimpleMaskFormatter("LLLLLLLLLLLL");
+            MaskTextWatcher rtw = new MaskTextWatcher(nomeNovo2, nomeS);
+            nomeNovo2.addTextChangedListener(rtw);
+
+            //Atualizar Nome
+            nomeNovo.setText(nome.getText().toString());
+            dialogButtomAtualizar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String nomeCompleto = nomeNovo.getText().toString() + " " + nomeNovo2.getText().toString();
+                    metodoBanco.atualizarInformacoes(email.getText().toString(), nomeCompleto, data_nasc.getText().toString()
+                            , telefone.getText().toString(), view.getContext());
+                    alertDialog.dismiss();
+                }
+            });
+        }
+        if (requestCode == 2){
+            //Criando a maskara da data
+            SimpleMaskFormatter data = new SimpleMaskFormatter("NN/NN/NNNN");
+            MaskTextWatcher stw = new MaskTextWatcher(dataNasc, data);
+            dataNasc.addTextChangedListener(stw);
+            //Fim da mascara da data
+
+            //Atualizar data de nascimento
+            dataNasc.setText(data_nasc.getText().toString());
+       dialogButtomAtualizar_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                metodoBanco.atualizarInformacoes(email.getText().toString(), nome.getText().toString(), dataNasc.getText().toString()
+                        , telefone.getText().toString(), view.getContext());
+                alertDialog.dismiss();
+            }
+        });
+        }
+        if (requestCode == 3){
+            //Criando a maskara para o campo cadastro de celular
+            SimpleMaskFormatter cell = new SimpleMaskFormatter("(NN)NNNNN-NNNN");
+            MaskTextWatcher mtw = new MaskTextWatcher(telefoneNovo, cell);
+            telefoneNovo.addTextChangedListener(mtw);
+            //Fim da mascara do telefone
+
+            //Atualizar Telefone
+            telefoneNovo.setText(telefone.getText().toString());
+            dialogButtomAtualizar_telefone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    metodoBanco.atualizarInformacoes(email.getText().toString(), nome.getText().toString(), data_nasc.getText().toString()
+                            , telefoneNovo.getText().toString(), view.getContext());
+                    alertDialog.dismiss();
+                }
+            });
+        }
+        dialogButtonCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Desabilitando o dialog
+                alertDialog.dismiss();
+            }
+        });
+    }
+
+        // Metodo do custom dialog.
+    public void showAlertDialog(int layoutDialog) {
+        builderDialog = new AlertDialog.Builder(view.getContext());
+        View LayoutView = getLayoutInflater().inflate(layoutDialog, null);
+        AppCompatButton dialogButtomSair = LayoutView.findViewById(R.id.botao_sair_dialog);
+        AppCompatButton dialogButtonCancelar = LayoutView.findViewById(R.id.botao_cancelar_dialog);
+        builderDialog.setView(LayoutView);
+        alertDialog = builderDialog.create();
+        alertDialog.show();
+
+        // Quando clicado no botão de "Ok" no custom dialog
+        dialogButtomSair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Desabilitando o dialog
+                //Deslogando da conta e indo para o Login
+                metodoBanco.deslogarApp(getActivity(), view.getContext());
+                alertDialog.dismiss();
+            }
+        });
+        dialogButtonCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Desabilitando o dialog
+                alertDialog.dismiss();
+            }
+        });
+    };
 }

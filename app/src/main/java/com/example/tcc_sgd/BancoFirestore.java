@@ -692,7 +692,7 @@ public class BancoFirestore {
             if (senhaConfirmar.getText().toString().equals(senha.getText().toString())) {
                 CadastrarUsuario_Valores cadastro = new CadastrarUsuario_Valores(nomeCompleto,
                         email.getText().toString(), data_nasc.getText().toString(),
-                        telefone.getText().toString(), senha.getText().toString());
+                        telefone.getText().toString());
 
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.getText().toString(), senha.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -759,6 +759,18 @@ public class BancoFirestore {
                 }
             });
         }
+    }
+
+    public void atualizarInformacoes(String email, String nomeCompleto, String dataNasc, String telefone, Context context){
+        CadastrarUsuario_Valores cadastro = new CadastrarUsuario_Valores(nomeCompleto,
+                email, dataNasc, telefone);
+        bancoDeDados.collection("Usuarios").document(email)
+                .set(cadastro).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(context, "Dados atualizados com sucesso!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void redfinirSenha(EditText email, View view){
@@ -837,6 +849,26 @@ public class BancoFirestore {
             public void onClick(View v) {
                 // Desabilitando o dialog
                 alertDialog.dismiss();
+            }
+        });
+    }
+
+    //ALERT DIALOG DE CONFIRMAR CADASTRO
+    public void showAlertDialogAtualizarInfo(int layoutDialog, Context contexto, Activity activity) {
+        builderDialog = new AlertDialog.Builder(contexto);
+        View LayoutView = activity.getLayoutInflater().inflate(layoutDialog, null);
+        AppCompatButton dialogButtom = LayoutView.findViewById(R.id.botao_ok_dialog);
+        builderDialog.setView(LayoutView);
+        alertDialog = builderDialog.create();
+        alertDialog.show();
+
+        // Quando clicado no botão de "Ok" no custom dialog
+        dialogButtom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Desabilitando o dialog
+                alertDialog.dismiss();
+
             }
         });
     }

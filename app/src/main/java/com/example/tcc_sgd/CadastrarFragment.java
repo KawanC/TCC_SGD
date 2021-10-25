@@ -56,7 +56,7 @@ public class CadastrarFragment extends Fragment {
         mostrarSenha_Cadastrar2 = root.findViewById(R.id.imageViewSenha_Cadastrar2);
 
         //Criando a maskara para o campo cadastro de celular
-        SimpleMaskFormatter cell = new SimpleMaskFormatter("(NN)NNNNNN-NNNN");
+        SimpleMaskFormatter cell = new SimpleMaskFormatter("(NN)NNNNN-NNNN");
         MaskTextWatcher mtw = new MaskTextWatcher(telefone, cell);
         telefone.addTextChangedListener(mtw);
         //Fim da mascara do telefone
