@@ -49,19 +49,20 @@ public class PerfilFragment extends Fragment {
     BancoFirestore metodoBanco = new BancoFirestore(); //Objeto para os metodos do banco
     private TextView email, nome, telefone, data_nasc;
     private Button deslogar;
-    private ImageView imageViewNome, imageViewTelefone, imageViewDataNasc;
+    private ImageView imageViewNome, imageViewTelefone, imageViewDataNasc, imageViewEmail;
+    private String[] nomeFinal = new String[2];
 
-    CircleImageView imagemPerfil;
-    View view;
-    FirebaseFirestore feed = FirebaseFirestore.getInstance();
-    FirebaseDatabase imagem = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = imagem.getReference();
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    String usuarioID;
-    AlertDialog.Builder builderDialog;
-    AlertDialog alertDialog;
+    private CircleImageView imagemPerfil;
+    private View view;
+    private FirebaseFirestore feed = FirebaseFirestore.getInstance();
+    private FirebaseDatabase imagem = FirebaseDatabase.getInstance();
+    private DatabaseReference myRef = imagem.getReference();
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private String usuarioID;
+    private AlertDialog.Builder builderDialog;
+    private AlertDialog alertDialog;
 
-    String emailString;
+    private String emailString;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class PerfilFragment extends Fragment {
         imageViewDataNasc = view.findViewById(R.id.imageViewDataNasc);
         imageViewTelefone = view.findViewById(R.id.imageViewTelefone);
         imagemPerfil = view.findViewById(R.id.imageViewPerfil);
+        imageViewEmail = view.findViewById(R.id.imageViewEmail1);
 
         emailString = email.getText().toString();
 
@@ -102,9 +104,16 @@ public class PerfilFragment extends Fragment {
         deslogar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAlertDialog(R.layout.dialog_confirmacao_sair);
+                showAlertDialogSair(R.layout.dialog_confirmacao_sair);
             }
         });
+        
+        imageViewEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Não é possivel alterar o Email Cadastrado!", Toast.LENGTH_SHORT).show();
+            }
+        });        
 
         //METODO PARA ATUALIZAR AS INFORMAÇÕES DO USUARIO
         imageViewNome.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +165,6 @@ public class PerfilFragment extends Fragment {
                         }
                     });
                 }
-
 
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -227,8 +235,14 @@ public class PerfilFragment extends Fragment {
             MaskTextWatcher rtw = new MaskTextWatcher(nomeNovo2, nomeS);
             nomeNovo2.addTextChangedListener(rtw);
 
+            //SEPARANDO O NOME EM DUAS STRINGS
+            String[] newStr = nome.getText().toString().split("\\s+");
+            for (int i = 0; i < newStr.length; i++) {
+                nomeFinal[i] = newStr[i];
+            }
             //Atualizar Nome
-            nomeNovo.setText(nome.getText().toString());
+            nomeNovo.setText(nomeFinal[0]);
+            nomeNovo2.setText(nomeFinal[1]);
             dialogButtomAtualizar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -239,6 +253,7 @@ public class PerfilFragment extends Fragment {
                 }
             });
         }
+
         if (requestCode == 2){
             //Criando a maskara da data
             SimpleMaskFormatter data = new SimpleMaskFormatter("NN/NN/NNNN");
@@ -257,6 +272,7 @@ public class PerfilFragment extends Fragment {
             }
         });
         }
+
         if (requestCode == 3){
             //Criando a maskara para o campo cadastro de celular
             SimpleMaskFormatter cell = new SimpleMaskFormatter("(NN)NNNNN-NNNN");
@@ -285,7 +301,7 @@ public class PerfilFragment extends Fragment {
     }
 
         // Metodo do custom dialog.
-    public void showAlertDialog(int layoutDialog) {
+    public void showAlertDialogSair(int layoutDialog) {
         builderDialog = new AlertDialog.Builder(view.getContext());
         View LayoutView = getLayoutInflater().inflate(layoutDialog, null);
         AppCompatButton dialogButtomSair = LayoutView.findViewById(R.id.botao_sair_dialog);
