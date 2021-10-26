@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     AlertDialog.Builder builderDialog;
     AlertDialog alertDialog;
     BancoFirestore metodoBanco = new BancoFirestore();
+    private ImageView imagemViewMenu;
 
 
     private AppBarConfiguration mAppBarConfiguration;

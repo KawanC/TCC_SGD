@@ -36,6 +36,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -94,6 +95,7 @@ public class MapsFragment extends Fragment {
     private String tamanhoEstabelecimento, tipoEstabelecimento;
     private LinearLayout linearLayoutSeekBar, linearLayoutSeekBarAtual;
     String tipoProblema;
+    private ImageView imagemViewMenu;
 
     //ATRIBUTOS UTILIZADOS PARA OS METODOS DO BANCO
     BancoFirestore metodoBanco = new BancoFirestore();

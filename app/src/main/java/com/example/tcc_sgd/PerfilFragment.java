@@ -2,6 +2,7 @@ package com.example.tcc_sgd;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,12 +12,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +31,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,6 +45,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -61,6 +67,7 @@ public class PerfilFragment extends Fragment {
     private String usuarioID;
     private AlertDialog.Builder builderDialog;
     private AlertDialog alertDialog;
+    int TAKE_IMAGE_CODE = 10001;
 
     private String emailString;
 
@@ -87,16 +94,24 @@ public class PerfilFragment extends Fragment {
         imagemPerfil = view.findViewById(R.id.imageViewPerfil);
         imageViewEmail = view.findViewById(R.id.imageViewEmail1);
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
+            if(user.getPhotoUrl() != null){
+                Glide.with(this)
+                        .load(user.getPhotoUrl())
+                        .into(imagemPerfil);
+            }
+        }
+
         emailString = email.getText().toString();
 
-        //METODO PARA TROCAR IMAGEM DE PERFIL
         imagemPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, 33);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if(intent.resolveActivity(getActivity().getPackageManager()) != null){
+                    startActivityForResult(intent, TAKE_IMAGE_CODE);
+                }
             }
         });
 
@@ -138,46 +153,81 @@ public class PerfilFragment extends Fragment {
         });
 
         return view;
+
     }
 
-    @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if(data.getData() != null){
-            Uri profileUri = data.getData();
-            imagemPerfil.setImageURI(profileUri);
-
-            final StorageReference reference = storage.getReference().child("Fotos_Perfil")
-                    .child(email.getText().toString());
-
-            reference.putFile(profileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                    reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            myRef.child("Usuario").child("imagemPerfil").setValue(uri.toString());
-
-                            Toast.makeText(getContext(), "Ur", Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
-                }
-
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(view.getContext(), "Dur", Toast.LENGTH_SHORT).show();
-                }
-            });
+        if(requestCode == TAKE_IMAGE_CODE){
+            switch (resultCode){
+                case -1:
+                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                    imagemPerfil.setImageBitmap(bitmap);
+                    handleUpload(bitmap);
+            }
         }
     }
+
+    private void handleUpload(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        String uid  = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        StorageReference reference = FirebaseStorage.getInstance().getReference()
+                .child("profileImages")
+                .child(email.getText().toString() + ".jpeg");
+
+        reference.putBytes(baos.toByteArray())
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        getDownloadUrl(reference);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Falha ao salvar a foto de perfil", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void getDownloadUrl(StorageReference reference){
+        reference.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Toast.makeText(getContext(), "Sucesso", Toast.LENGTH_SHORT).show();
+                        setUserProfileUrl(uri);
+                    }
+                });
+    }
+
+    private void setUserProfileUrl(Uri uri){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                .setPhotoUri(uri)
+                .build();
+        user.updateProfile(request)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(getContext(), "Foto de perfil atualizada com sucesso", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Falha ao salvar a foto de perfil", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
     @Override
     public void onStart() {
         super.onStart();
         metodoBanco.verificaLogin(getActivity());
+
         try {
             usuarioID = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             DocumentReference documentReference = feed.collection("Usuarios").document(usuarioID);
