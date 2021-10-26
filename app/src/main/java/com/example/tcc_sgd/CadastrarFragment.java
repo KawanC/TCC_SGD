@@ -1,6 +1,7 @@
 package com.example.tcc_sgd;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ public class CadastrarFragment extends Fragment {
     ViewGroup root;
     EditText email, senha, nome, senhaConfirmar, telefone, data_nasc, sobrenome;
     ImageView mostrarSenha_Cadastrar1, mostrarSenha_Cadastrar2;
+    ProgressDialog progressDialog;
     int mostrarSenha_Cadastrar_contador = 0;
 
 
@@ -119,6 +121,7 @@ public class CadastrarFragment extends Fragment {
       cadastrar.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
+               metodoBanco.Progress(progressDialog, "Cadastrar", "Cadastrando, por-favor aguarde.", getContext());
                 metodoBanco.cadastrarUsuario(email, senha, nome, senhaConfirmar, telefone, data_nasc, sobrenome, root, root.getContext(), getActivity());
             }
        });
@@ -126,9 +129,5 @@ public class CadastrarFragment extends Fragment {
 
 
     }
-
-
-
-
 
 }

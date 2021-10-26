@@ -1,6 +1,6 @@
 package com.example.tcc_sgd;
 
-import android.content.Intent;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,18 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class LoginFragment extends Fragment {
     //Atributos
@@ -28,7 +18,9 @@ public class LoginFragment extends Fragment {
     TextView redefinir_senha;
     ImageView mostrarSenha_Login;
     int mostrarSenha_Login_contador = 0;
+    ProgressDialog progressDialog;
     //Banco de dados
+    View view;
     BancoFirestore metodoBanco = new BancoFirestore();
 
 
@@ -72,9 +64,12 @@ public class LoginFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+               metodoBanco.Progress(progressDialog, "Login", "Logando, por-favor aguarde.", getContext());
                 metodoBanco.loginUsuario(root, root.getContext(),email, senha, getActivity());
             }
         });
+
+
 
         return root;
     }
@@ -84,4 +79,7 @@ public class LoginFragment extends Fragment {
         super.onStart();
         metodoBanco.verificaLoginInicial(getActivity(), getContext());
     }
+
+
+
 }

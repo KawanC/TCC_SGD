@@ -2,6 +2,7 @@ package com.example.tcc_sgd;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     AlertDialog.Builder builderDialog;
     AlertDialog alertDialog;
     BancoFirestore metodoBanco = new BancoFirestore();
+
 
     private AppBarConfiguration mAppBarConfiguration;
         @Override

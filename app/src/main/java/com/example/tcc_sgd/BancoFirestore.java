@@ -2,6 +2,7 @@ package com.example.tcc_sgd;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -43,6 +44,7 @@ public class BancoFirestore {
     AlertDialog alertDialog;
     FirebaseFirestore bancoDeDados = FirebaseFirestore.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
+
 
 
     public void enviarFeedBack(Estabelecimento estabelecimento, String tamanhoEstabelecimento, int numeroMovimentacao, String tipoEstabelecimento, String usuarioID,
@@ -761,6 +763,8 @@ public class BancoFirestore {
         }
     }
 
+
+
     public void atualizarInformacoes(String email, String nomeCompleto, String dataNasc, String telefone, Context context){
         CadastrarUsuario_Valores cadastro = new CadastrarUsuario_Valores(nomeCompleto,
                 email, dataNasc, telefone);
@@ -891,6 +895,14 @@ public class BancoFirestore {
 
             }
         });
+    }
+
+
+    public void Progress(ProgressDialog progressDialog, String titulo, String mensagem, Context contexto) {
+        progressDialog = new ProgressDialog(contexto);
+        progressDialog.setTitle(titulo);
+        progressDialog.setMessage(mensagem);
+        progressDialog.show();
     }
 
 }
