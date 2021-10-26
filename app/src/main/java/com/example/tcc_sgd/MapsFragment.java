@@ -189,6 +189,8 @@ public class MapsFragment extends Fragment {
             mMap.clear();
             mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title(place.getName()));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
+            metodoBootomShetInformacao();
+
         }else if(resultCode == AutocompleteActivity.RESULT_ERROR){
             // Se nao deu certo, inicializamos o status
             Status status = Autocomplete.getStatusFromIntent(data);
@@ -282,7 +284,13 @@ public class MapsFragment extends Fragment {
         // Metodo do botão da informação
         metodoBootomShetEtapa1();
         // Metodo do botão da informação do estabelecimento
-        metodoBootomShetInformacao();
+        BotaoInformacao = view.findViewById(R.id.buttonInformacao);
+        BotaoInformacao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                metodoBootomShetInformacao();
+            }
+        });
     }
 
     public void metodoBootomShetEtapa1(){
@@ -454,46 +462,40 @@ public class MapsFragment extends Fragment {
     }
 
     public void metodoBootomShetInformacao(){
-        BotaoInformacao = view.findViewById(R.id.buttonInformacao);
-        BotaoInformacao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
-                        view.getContext(), R.style.BottomSheetDialogTheme
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                view.getContext(), R.style.BottomSheetDialogTheme
+        );
+        View bottomSheetView = LayoutInflater.from(view.getContext().getApplicationContext())
+                .inflate(
+                        R.layout.layout_informacao_estabelecimento,
+                        (LinearLayout) view.findViewById(R.id.bottomSheetContainer)
                 );
-                View bottomSheetView = LayoutInflater.from(view.getContext().getApplicationContext())
-                        .inflate(
-                                R.layout.layout_informacao_estabelecimento,
-                                (LinearLayout) view.findViewById(R.id.bottomSheetContainer)
-                        );
 
-                if(estabelecimento != null) {
+        if(estabelecimento != null) {
 
-                    bottomSheetDialog.setContentView(bottomSheetView);
-                    bottomSheetDialog.show();
+            bottomSheetDialog.setContentView(bottomSheetView);
+            bottomSheetDialog.show();
+            pesquisarMovimento(bottomSheetDialog);
+
+            //METODO DO BOTÃO DE ATUALIZAR
+            imageViewAtualizar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    bottomSheetDialog.cancel();
                     pesquisarMovimento(bottomSheetDialog);
+                    bottomSheetDialog.show();
+                }
+            });
 
-                    //METODO DO BOTÃO DE ATUALIZAR
-                   imageViewAtualizar.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            bottomSheetDialog.cancel();
-                            pesquisarMovimento(bottomSheetDialog);
-                            bottomSheetDialog.show();
-                        }
-                    });
+            //METODO DO BOTÃO DE DENUNCIA
+            imageViewDenuncia.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showAlertDialogDenuncia(R.layout.dialog_denuncia_informacao);
+                }
+            });
 
-                    //METODO DO BOTÃO DE DENUNCIA
-                   imageViewDenuncia.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            showAlertDialogDenuncia(R.layout.dialog_denuncia_informacao);
-                        }
-                    });
-
-                } else Toast.makeText(view.getContext(), "Por favor pesquise um estabelecimento antes de clicar no botão de informações!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        } else Toast.makeText(view.getContext(), "Por favor pesquise um estabelecimento antes de clicar no botão de informações!", Toast.LENGTH_SHORT).show();
     }
 
     public void pesquisarMovimento(BottomSheetDialog bottomSheetView){
