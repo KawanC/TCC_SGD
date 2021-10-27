@@ -1,6 +1,7 @@
 package com.example.tcc_sgd;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -54,19 +57,19 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PerfilFragment extends Fragment {
 
-    BancoFirestore metodoBanco = new BancoFirestore(); //Objeto para os metodos do banco
-    private TextView email, nome, telefone, data_nasc, alterarFoto;
+    private BancoFirestore metodoBanco = new BancoFirestore(); //Objeto para os metodos do banco
+    private TextView email, nome, telefone, data_nasc, alterarFoto, tirarFoto, galeriaFoto, cancelarFoto, removerFoto;
     private Button deslogar;
     private ImageView imageViewNome, imageViewTelefone, imageViewDataNasc, imageViewEmail;
     private String[] nomeFinal = new String[2];
-
+    private CircleImageView imagemPerfilMenu;
     private CircleImageView imagemPerfil;
     private View view;
     private FirebaseFirestore feed = FirebaseFirestore.getInstance();
-    private FirebaseDatabase imagem = FirebaseDatabase.getInstance();
     private String usuarioID;
     private AlertDialog.Builder builderDialog;
     private AlertDialog alertDialog;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,12 +92,14 @@ public class PerfilFragment extends Fragment {
         imageViewDataNasc = view.findViewById(R.id.imageViewDataNasc);
         imageViewTelefone = view.findViewById(R.id.imageViewTelefone);
         imagemPerfil = view.findViewById(R.id.imageViewPerfil);
+        imagemPerfilMenu = getActivity().findViewById(R.id.imageViewMenu);
         imageViewEmail = view.findViewById(R.id.imageViewEmail1);
         alterarFoto = view.findViewById(R.id.textViewAlterarFoto);
 
+        //SUBLINAHNDO TEXTO
         alterarFoto.setPaintFlags(alterarFoto.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         alterarFoto.setText("Alterar foto");
-
+        //ATUALIZANDO FOTO DE PERFIL
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
             if(user.getPhotoUrl() != null){
@@ -103,14 +108,62 @@ public class PerfilFragment extends Fragment {
                         .into(imagemPerfil);
             }
         }
+        //CRIANDO CAMPO DE LOADING
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Estamos upando sua foto, por favor aguerde...");
 
         alterarFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, 33);
+                //criando a tela de opções
+                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                        view.getContext(), R.style.BottomSheetDialogTheme
+                );
+                View bottomSheetView = LayoutInflater.from(view.getContext().getApplicationContext())
+                        .inflate(
+                                R.layout.alterarfoto_layout,
+                                (LinearLayout) view.findViewById(R.id.bottomSheetContainer)
+                        );
+
+                tirarFoto = bottomSheetView.findViewById(R.id.textViewTirarFoto);
+                galeriaFoto = bottomSheetView.findViewById(R.id.textViewGaleria);
+                cancelarFoto = bottomSheetView.findViewById(R.id.textViewCancelar);
+                removerFoto = bottomSheetView.findViewById(R.id.textViewRemover);
+
+                galeriaFoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        intent.setType("image/*");
+                        startActivityForResult(intent, 33);
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+                tirarFoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        if (intent.resolveActivity(getActivity().getPackageManager()) != null){
+                            startActivityForResult(intent, 10001);
+                            bottomSheetDialog.dismiss();
+                        }
+                    }
+                });
+                cancelarFoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+                removerFoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
                 }
         });
 
@@ -162,11 +215,20 @@ public class PerfilFragment extends Fragment {
                 case -1:
                     Uri imagem = (Uri) data.getData();
                     imagemPerfil.setImageURI(imagem);
+                    imagemPerfilMenu.setImageURI(imagem);
                     handleUpload(imagem);
+                    progressDialog.show();
             }
         }
         if (requestCode == 10001){
-
+            switch (resultCode){
+                case -1:
+                    Uri imagem = (Uri) data.getData();
+                    imagemPerfil.setImageURI(imagem);
+                    imagemPerfilMenu.setImageURI(imagem);
+                    handleUpload(imagem);
+                    progressDialog.show();
+            }
         }
     }
 
@@ -208,6 +270,7 @@ public class PerfilFragment extends Fragment {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(getContext(), "Foto de perfil atualizada com sucesso", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

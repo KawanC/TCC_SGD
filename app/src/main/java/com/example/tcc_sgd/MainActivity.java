@@ -1,11 +1,13 @@
 package com.example.tcc_sgd;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
+import android.service.voice.VoiceInteractionSession;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +42,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     FirebaseFirestore feed = FirebaseFirestore.getInstance();
     AlertDialog.Builder builderDialog;
     AlertDialog alertDialog;

@@ -76,34 +76,33 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MapsFragment extends Fragment {
 
     //private SearchView searchView;
     private View view;
     private EditText editTextPesquisa;
     private FloatingActionButton BotaoFeedback, BotaoInformacao;
-    private Button botaoinformacaodois;
     private SeekBar seekBar2;
     private TextView textViewMovimentacao, textViewNomeInformacao, textViewEnderecoInformaco,
             textViewTamanhoInformacao, textViewNomeFeedBack, textViewEnderecoFeedBack, textViewHora,
             textViewMovientoInfo, tituloProximo, textViewProgues, textViewMovimentoAtual, textViewMediaHoje, textViewFeedAnalisados;
     private RadioGroup radioGroupEstabelecimento, radioGroupTipo;
-    Estabelecimento estabelecimento;
-    private int numeroMovimentacao;
+    private Estabelecimento estabelecimento;
+    private int numeroMovimentacao, radioId2;
     private RadioButton radioButtonPequeno, radioButtonMedio, radioButtonGrande, radioButtonShop, radioButtonMercado, radioButtonRestaurante;
     private ImageView imageViewLocalizacao, imageViewIconEstabelecimentoInfo, imageViewDenuncia, imageViewAtualizar;
     private String tamanhoEstabelecimento, tipoEstabelecimento;
     private LinearLayout linearLayoutSeekBar, linearLayoutSeekBarAtual;
-    String tipoProblema;
-    private ImageView imagemViewMenu;
+    private CircleImageView imagemViewMenu;
 
     //ATRIBUTOS UTILIZADOS PARA OS METODOS DO BANCO
-    BancoFirestore metodoBanco = new BancoFirestore();
-    FirebaseFirestore feed = FirebaseFirestore.getInstance();
-    final int[] contador = {0};
-    final String[] movimentacao = new String[3];
-    final int [] movimentacaoNumero = new int[2];
-    int radioId2;
+    private BancoFirestore metodoBanco = new BancoFirestore();
+    private FirebaseFirestore feed = FirebaseFirestore.getInstance();
+    private final int[] contador = {0};
+    private final String[] movimentacao = new String[3];
+    private final int [] movimentacaoNumero = new int[2];
 
     //TEXT
     private TextView email, nome;
