@@ -71,7 +71,7 @@
                     android:id="@+id/textViewNome"
                     android:layout_width="260dp"
                     android:layout_height="35dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="70dp"
                     android:background="@drawable/edit_text_infoperfil"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
@@ -172,6 +172,22 @@
                     app:layout_constraintBottom_toBottomOf="@+id/textViewDataNascimento"
                     app:layout_constraintEnd_toEndOf="@+id/textViewDataNascimento"
                     app:layout_constraintTop_toTopOf="@+id/textViewDataNascimento" />
+
+                <TextView
+                    android:id="@+id/textViewAlterarFoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:elegantTextHeight="false"
+                    android:freezesText="false"
+                    android:text="Alterar foto"
+                    android:textAllCaps="false"
+                    android:textColor="@color/quantum_error_light"
+                    android:textIsSelectable="false"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/imageViewPerfil"
+                    app:layout_constraintStart_toStartOf="@+id/imageViewPerfil"
+                    app:layout_constraintTop_toBottomOf="@+id/imageViewPerfil" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

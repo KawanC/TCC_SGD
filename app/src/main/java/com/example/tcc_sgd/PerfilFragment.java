@@ -3,6 +3,7 @@ package com.example.tcc_sgd;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
+import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,7 +55,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class PerfilFragment extends Fragment {
 
     BancoFirestore metodoBanco = new BancoFirestore(); //Objeto para os metodos do banco
-    private TextView email, nome, telefone, data_nasc;
+    private TextView email, nome, telefone, data_nasc, alterarFoto;
     private Button deslogar;
     private ImageView imageViewNome, imageViewTelefone, imageViewDataNasc, imageViewEmail;
     private String[] nomeFinal = new String[2];
@@ -62,14 +64,9 @@ public class PerfilFragment extends Fragment {
     private View view;
     private FirebaseFirestore feed = FirebaseFirestore.getInstance();
     private FirebaseDatabase imagem = FirebaseDatabase.getInstance();
-    private DatabaseReference myRef = imagem.getReference();
-    private FirebaseStorage storage = FirebaseStorage.getInstance();
     private String usuarioID;
     private AlertDialog.Builder builderDialog;
     private AlertDialog alertDialog;
-    int TAKE_IMAGE_CODE = 10001;
-
-    private String emailString;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,6 +90,10 @@ public class PerfilFragment extends Fragment {
         imageViewTelefone = view.findViewById(R.id.imageViewTelefone);
         imagemPerfil = view.findViewById(R.id.imageViewPerfil);
         imageViewEmail = view.findViewById(R.id.imageViewEmail1);
+        alterarFoto = view.findViewById(R.id.textViewAlterarFoto);
+
+        alterarFoto.setPaintFlags(alterarFoto.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        alterarFoto.setText("Alterar foto");
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
@@ -103,16 +104,14 @@ public class PerfilFragment extends Fragment {
             }
         }
 
-        emailString = email.getText().toString();
-
-        imagemPerfil.setOnClickListener(new View.OnClickListener() {
+        alterarFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if(intent.resolveActivity(getActivity().getPackageManager()) != null){
-                    startActivityForResult(intent, TAKE_IMAGE_CODE);
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, 33);
                 }
-            }
         });
 
         //METEDO BOTÃO DESLOGAR
@@ -158,25 +157,22 @@ public class PerfilFragment extends Fragment {
 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == TAKE_IMAGE_CODE){
+        if(requestCode == 33){
             switch (resultCode){
                 case -1:
-                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                    imagemPerfil.setImageBitmap(bitmap);
-                    handleUpload(bitmap);
+                    Uri imagem = (Uri) data.getData();
+                    imagemPerfil.setImageURI(imagem);
+                    handleUpload(imagem);
             }
+        }
+        if (requestCode == 10001){
+
         }
     }
 
-    private void handleUpload(Bitmap bitmap){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        String uid  = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        StorageReference reference = FirebaseStorage.getInstance().getReference()
-                .child("profileImages")
-                .child(email.getText().toString() + ".jpeg");
-
-        reference.putBytes(baos.toByteArray())
+    private void handleUpload(Uri imagem){
+        StorageReference reference = FirebaseStorage.getInstance().getReference().child("profileImages").child(email.getText().toString() + ".jpeg");
+        reference.putFile(imagem)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -196,8 +192,8 @@ public class PerfilFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Toast.makeText(getContext(), "Sucesso", Toast.LENGTH_SHORT).show();
                         setUserProfileUrl(uri);
+
                     }
                 });
     }
@@ -220,7 +216,6 @@ public class PerfilFragment extends Fragment {
                         Toast.makeText(getContext(), "Falha ao salvar a foto de perfil", Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
 
     @Override

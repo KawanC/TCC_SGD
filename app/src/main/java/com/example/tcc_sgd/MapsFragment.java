@@ -938,6 +938,16 @@ public class MapsFragment extends Fragment {
                             emailMenu = documentSnapshot.getString("email");
                             nome.setText(nomeMenu);
                             email.setText(emailMenu);
+
+                            imagemViewMenu = getActivity().findViewById(R.id.imageViewMenu);
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            if(user != null){
+                                if(user.getPhotoUrl() != null){
+                                    Glide.with(getContext())
+                                            .load(user.getPhotoUrl())
+                                            .into(imagemViewMenu);
+                                }
+                            }
                         } catch (Exception e){
                             onStart();
                         }

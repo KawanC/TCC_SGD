@@ -68,9 +68,6 @@ public class LoginFragment extends Fragment {
                 metodoBanco.loginUsuario(root, root.getContext(),email, senha, getActivity());
             }
         });
-
-
-
         return root;
     }
 

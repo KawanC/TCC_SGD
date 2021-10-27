@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     AlertDialog.Builder builderDialog;
     AlertDialog alertDialog;
     BancoFirestore metodoBanco = new BancoFirestore();
-    private ImageView imagemViewMenu;
 
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -120,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 //Deslogando da conta e indo para o Login
                 metodoBanco.deslogarApp(MainActivity.this, MainActivity.this);
                 alertDialog.dismiss();
+                finish();
             }
         });
 
