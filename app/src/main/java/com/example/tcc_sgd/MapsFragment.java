@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -104,9 +105,13 @@ public class MapsFragment extends Fragment {
     private final String[] movimentacao = new String[3];
     private final int [] movimentacaoNumero = new int[2];
 
+    //CRIANDO CAMPO DE LOADING
+    private ProgressDialog progressDialog;
+
+
     //TEXT
     private TextView email, nome;
-    String usuarioID, usuarioLogado, nomeMenu, emailMenu;
+    String usuarioID, nomeMenu, emailMenu;
 
     AlertDialog.Builder builderDialog, builderDialog2 ;
     AlertDialog alertDialog, alertDialogDenuncia ;
@@ -136,6 +141,9 @@ public class MapsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_maps, container, false);
 
+        //Criando campo de laoding
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Carregando...");
 
         editTextPesquisa = view.findViewById(R.id.campo_pesquisa);
         // Inicializando o Google Places
@@ -180,10 +188,9 @@ public class MapsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 100 && resultCode == Activity.RESULT_OK){
-
             // Se deu certo, inicializamos o place
-            Place place = Autocomplete.getPlaceFromIntent(data);
 
+            Place place = Autocomplete.getPlaceFromIntent(data);
             estabelecimento = new Estabelecimento(place.getName(), place.getAddress(),"horaFeedback");
 
             // Adicionando o marcador no local pesquisado
@@ -473,17 +480,17 @@ public class MapsFragment extends Fragment {
                 );
 
         if(estabelecimento != null) {
-
             bottomSheetDialog.setContentView(bottomSheetView);
             bottomSheetDialog.show();
-            pesquisarMovimento(bottomSheetDialog);
+            progressDialog.show();
+            pesquisarMovimento(bottomSheetDialog, progressDialog);
 
             //METODO DO BOTÃO DE ATUALIZAR
             imageViewAtualizar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     bottomSheetDialog.cancel();
-                    pesquisarMovimento(bottomSheetDialog);
+                    pesquisarMovimento(bottomSheetDialog, progressDialog);
                     bottomSheetDialog.show();
                 }
             });
@@ -499,7 +506,7 @@ public class MapsFragment extends Fragment {
         } else Toast.makeText(view.getContext(), "Por favor pesquise um estabelecimento antes de clicar no botão de informações!", Toast.LENGTH_SHORT).show();
     }
 
-    public void pesquisarMovimento(BottomSheetDialog bottomSheetView){
+    public void pesquisarMovimento(BottomSheetDialog bottomSheetView, ProgressDialog progressDialog){
         //PEGANDO IDS
         textViewMovimentacao = bottomSheetView.findViewById(R.id.textViewMovimentoInfo);
         textViewNomeInformacao = bottomSheetView.findViewById(R.id.nomeEstabelecimentoInfo);
@@ -519,7 +526,8 @@ public class MapsFragment extends Fragment {
         metodoBanco.confereDiaEHora(view.getContext());
         metodoBanco.pesquisarMovimento(estabelecimento, textViewMediaHoje, textViewNomeInformacao, textViewEnderecoInformaco, textViewTamanhoInformacao,
                 textViewHora, textViewFeedAnalisados, textViewMovimentoAtual, textViewMovientoInfo, linearLayoutSeekBarAtual, linearLayoutSeekBar, imageViewIconEstabelecimentoInfo,
-                contador, movimentacaoNumero, movimentacao, view, bottomSheetView);
+                contador, movimentacaoNumero, movimentacao, view, bottomSheetView, progressDialog);
+
     }
 
     public void seekBarMudarCor(int progress){
@@ -945,7 +953,7 @@ public class MapsFragment extends Fragment {
                                     Glide.with(getContext())
                                             .load(user.getPhotoUrl())
                                             .into(imagemViewMenu);
-                                }
+                                } else imagemViewMenu.setImageResource(R.drawable.sgdbottomsheet);
                             }
                         } catch (Exception e){
                             onStart();

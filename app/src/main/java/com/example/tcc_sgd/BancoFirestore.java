@@ -34,8 +34,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class BancoFirestore {
     //Atributos
@@ -44,6 +46,7 @@ public class BancoFirestore {
     AlertDialog alertDialog;
     FirebaseFirestore bancoDeDados = FirebaseFirestore.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
+    ProgressDialog progressDialog;
 
 
 
@@ -139,7 +142,7 @@ public class BancoFirestore {
                                    TextView textViewFeedAnalisados, TextView textViewMovimentoAtual, TextView textViewMovientoInfo,
                                    LinearLayout linearLayoutSeekBarAtual, LinearLayout linearLayoutSeekBar, ImageView imageViewIconEstabelecimentoInfo,
                                    final int contador[], final int movimentacaoNumero[], final String movimentacao[], View view,
-                                   BottomSheetDialog bottomSheetView){
+                                   BottomSheetDialog bottomSheetView, ProgressDialog progressDialog){
 
         //PEGANDO O DIA ATUAL DE ACORDO COM A DATA DO APARELHO
         String diaAtual = new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTime());
@@ -682,63 +685,93 @@ public class BancoFirestore {
                 }
             }
         });
+        progressDialog.dismiss();
     }
 
     public void cadastrarUsuario(  EditText email, EditText senha, EditText nome,EditText senhaConfirmar,EditText telefone,EditText data_nasc,
                                    EditText sobrenome, View view, Context contexto, Activity activity){
-        String nomeCompleto = nome.getText().toString() + " " + sobrenome.getText().toString();
 
+        String nomeCompleto = nome.getText().toString() + " " + sobrenome.getText().toString();
         if(!nome.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !senha.getText().toString().isEmpty()
                 && !senhaConfirmar.getText().toString().isEmpty() && !sobrenome.getText().toString().isEmpty() && !data_nasc.getText().toString().isEmpty()
                 && !telefone.getText().toString().isEmpty())  {
-            if (senhaConfirmar.getText().toString().equals(senha.getText().toString())) {
-                CadastrarUsuario_Valores cadastro = new CadastrarUsuario_Valores(nomeCompleto,
-                        email.getText().toString(), data_nasc.getText().toString(),
-                        telefone.getText().toString());
+            try{
+                //CRIANDO FORMATAÇÃO DE DATA VALIDA
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String anoAtual = new SimpleDateFormat("yyyy").format(Calendar.getInstance().getTime());
+                simpleDateFormat.setLenient(false);
+                simpleDateFormat.parse(data_nasc.getText().toString());
+                char data1 = data_nasc.getText().toString().charAt(6);
+                char data2 = data_nasc.getText().toString().charAt(7);
+                char data3 = data_nasc.getText().toString().charAt(8);
+                char data4 = data_nasc.getText().toString().charAt(9);
+                String valorAno = "" + data1 + data2 + data3 + data4;
+                char ano1 = anoAtual.charAt(0);
+                char ano2 = anoAtual.charAt(1);
+                char ano3 = anoAtual.charAt(2);
+                char ano4 = anoAtual.charAt(3);
+                String valorAnoAtual = "" + ano1 + ano2 + ano3 + ano4;
+                //CONVERTENDO A STRING PARA INT PARA PODER REALIZAR O CALCULO E COMPARACAÇÃO
+                int anoFinal = Integer.parseInt(valorAno);
+                int anoAtualFinal = Integer.parseInt(valorAnoAtual);
+                if (anoAtualFinal - anoFinal >= 13 && anoAtualFinal - anoFinal <= 100){
+                    if (senhaConfirmar.getText().toString().equals(senha.getText().toString())) {
+                        String emailErrado = email.getText().toString();
+                        String emailCorreto = emailErrado.toLowerCase(Locale.ROOT);
+                        CadastrarUsuario_Valores cadastro = new CadastrarUsuario_Valores(nomeCompleto,
+                                emailCorreto, data_nasc.getText().toString(),
+                                telefone.getText().toString());
 
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.getText().toString(), senha.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            bancoDeDados.collection("Usuarios").document(email.getText().toString())
-                                    .set(cadastro).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    showAlertDialogCadastro(R.layout.dialog_cadastrar_conta_usuario, contexto,activity);
-                                    nome.getText().clear();
-                                    sobrenome.getText().clear();
-                                    email.getText().clear();
-                                    data_nasc.getText().clear();
-                                    telefone.getText().clear();
-                                    senha.getText().clear();
-                                    senhaConfirmar.getText().clear();
+                        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.getText().toString(), senha.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    bancoDeDados.collection("Usuarios").document(emailCorreto)
+                                            .set(cadastro).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            showAlertDialogCadastro(R.layout.dialog_cadastrar_conta_usuario, contexto,activity);
+                                            nome.getText().clear();
+                                            sobrenome.getText().clear();
+                                            email.getText().clear();
+                                            data_nasc.getText().clear();
+                                            telefone.getText().clear();
+                                            senha.getText().clear();
+                                            senhaConfirmar.getText().clear();
+                                        }
+                                    });
+
+                                } else {
+                                    try {
+                                        throw task.getException();
+                                    } catch (FirebaseAuthWeakPasswordException e) {
+                                        Toast.makeText(view.getContext(), "Digite uma senha de no mínimo 6 caracteres", Toast.LENGTH_SHORT).show();
+                                    } catch (FirebaseAuthUserCollisionException e) {
+                                        Toast.makeText(view.getContext(), "Conta já cadastrada com esse email", Toast.LENGTH_SHORT).show();
+                                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                                        Toast.makeText(view.getContext(), "Email inválido", Toast.LENGTH_SHORT).show();
+                                    } catch (Exception e) {
+                                        Toast.makeText(view.getContext(), "Erro loco " + e, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            });
-
-                        } else {
-                            try {
-                                throw task.getException();
-                            } catch (FirebaseAuthWeakPasswordException e) {
-                                Toast.makeText(view.getContext(), "Digite uma senha de no mínimo 6 caracteres", Toast.LENGTH_SHORT).show();
-                            } catch (FirebaseAuthUserCollisionException e) {
-                                Toast.makeText(view.getContext(), "Conta já cadastrada com esse email", Toast.LENGTH_SHORT).show();
-                            } catch (FirebaseAuthInvalidCredentialsException e) {
-                                Toast.makeText(view.getContext(), "Email inválido", Toast.LENGTH_SHORT).show();
-                            } catch (Exception e) {
-                                Toast.makeText(view.getContext(), "Erro loco " + e, Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        ;
-                    }
-                });
+                        });
 
-            }else{
-                Toast.makeText(view.getContext(), "Sua senha precisa ser a mesma", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(view.getContext(), "Sua senha precisa ser a mesma", Toast.LENGTH_SHORT).show();
+                    }
+                } else Toast.makeText(contexto, "Insira um ano valido (Necessario ser maior de 13 anos)", Toast.LENGTH_SHORT).show();
+
+            } catch (ParseException e) {
+                Toast.makeText(contexto, "Insira uma data valida", Toast.LENGTH_SHORT).show();
             }
+
         } else Toast.makeText(view.getContext(), "Preencha todos os campos", Toast.LENGTH_SHORT).show();
     }
 
     public void loginUsuario(View view, Context context, EditText emailLogin, EditText senhaLogin, Activity activity){
+        //Criando Tela de loading
+        Progress(progressDialog, "Login", "Logando...", context);
         if( emailLogin.getText().toString().isEmpty() || senhaLogin.getText().toString().isEmpty()){
             Toast.makeText(view.getContext(), "Preencha todos os campos", Toast.LENGTH_SHORT).show();
         }else{

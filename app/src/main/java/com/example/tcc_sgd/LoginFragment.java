@@ -64,7 +64,7 @@ public class LoginFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               metodoBanco.Progress(progressDialog, "Login", "Logando, por-favor aguarde.", getContext());
+               //metodoBanco.Progress(progressDialog, "Login", "Logando, por-favor aguarde.", getContext());
                 metodoBanco.loginUsuario(root, root.getContext(),email, senha, getActivity());
             }
         });

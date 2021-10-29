@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -70,6 +72,8 @@ public class PerfilFragment extends Fragment {
     private AlertDialog.Builder builderDialog;
     private AlertDialog alertDialog;
     private ProgressDialog progressDialog;
+    private Uri fotoDeletar;
+    private Object Uri;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,7 +110,8 @@ public class PerfilFragment extends Fragment {
                 Glide.with(this)
                         .load(user.getPhotoUrl())
                         .into(imagemPerfil);
-            }
+            }else   imagemPerfil.setImageResource(R.drawable.sgdbottomsheet);
+
         }
         //CRIANDO CAMPO DE LOADING
         progressDialog = new ProgressDialog(getContext());
@@ -159,7 +164,24 @@ public class PerfilFragment extends Fragment {
                 removerFoto.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+                        if (String.valueOf(user.getPhotoUrl()) != "null"){
+                      StorageReference storageReference = firebaseStorage.getReferenceFromUrl(String.valueOf(user.getPhotoUrl()));
+                      storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                          @Override
+                          public void onSuccess(Void unused) {
+                              imagemPerfil.setImageResource(R.drawable.sgdbottomsheet);
+                              imagemPerfilMenu.setImageResource(R.drawable.sgdbottomsheet);
+                              bottomSheetDialog.dismiss();
+                              deleteFoto();
+                          }
+                      }).addOnFailureListener(new OnFailureListener() {
+                          @Override
+                          public void onFailure(@NonNull Exception e) {
+                              Toast.makeText(view.getContext(), "Falha ao remover foto", Toast.LENGTH_SHORT).show();
+                          }
+                      });
+                  } else Toast.makeText(view.getContext(), "Você não possui nenhuma foto para ser removida", Toast.LENGTH_SHORT).show();
                     }
                 });
                 bottomSheetDialog.setContentView(bottomSheetView);
@@ -223,13 +245,32 @@ public class PerfilFragment extends Fragment {
         if (requestCode == 10001){
             switch (resultCode){
                 case -1:
-                    Uri imagem = (Uri) data.getData();
-                    imagemPerfil.setImageURI(imagem);
-                    imagemPerfilMenu.setImageURI(imagem);
-                    handleUpload(imagem);
+                    Bitmap imagem = (Bitmap) data.getExtras().get("data");
+                    imagemPerfil.setImageBitmap(imagem);
+                    imagemPerfilMenu.setImageBitmap(imagem);
+                    handleUpload1(imagem);
                     progressDialog.show();
             }
         }
+    }
+
+    private void handleUpload1(Bitmap imagem){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        imagem.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        StorageReference reference = FirebaseStorage.getInstance().getReference().child("profileImages").child(email.getText().toString() + ".jpeg");
+        reference.putBytes(baos.toByteArray())
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        getDownloadUrl(reference);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Falha ao salvar a foto de perfil", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void handleUpload(Uri imagem){
@@ -256,6 +297,29 @@ public class PerfilFragment extends Fragment {
                     public void onSuccess(Uri uri) {
                         setUserProfileUrl(uri);
 
+                    }
+                });
+    }
+
+    private void deleteFoto() {
+        progressDialog.show();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                .setPhotoUri(null)
+                .build();
+        user.updateProfile(request)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(getContext(), "Foto deletada com sucesso", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Falha ao deletadar a foto de perfil", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     }
                 });
     }

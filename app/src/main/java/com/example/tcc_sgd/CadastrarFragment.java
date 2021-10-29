@@ -28,22 +28,29 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Locale;
+
 public class CadastrarFragment extends Fragment {
 
 
-    ViewGroup root;
-    EditText email, senha, nome, senhaConfirmar, telefone, data_nasc, sobrenome;
-    ImageView mostrarSenha_Cadastrar1, mostrarSenha_Cadastrar2;
-    ProgressDialog progressDialog;
+    private ViewGroup root;
+    private EditText email, senha, nome, senhaConfirmar, telefone, data_nasc, sobrenome;
+    private ImageView mostrarSenha_Cadastrar1, mostrarSenha_Cadastrar2;
+    private ProgressDialog progressDialog;
     int mostrarSenha_Cadastrar_contador = 0;
 
+    //METODOS DO BANCO
+    private BancoFirestore metodoBanco = new BancoFirestore();
 
-    BancoFirestore metodoBanco = new BancoFirestore();
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         root = (ViewGroup) inflater.inflate(R.layout.cadastrar_fragment, container, false);
+
+        //Criando Tela de loading
+        progressDialog = new ProgressDialog(root.getContext());
+        progressDialog.setMessage("Estamos cadastrando sua conta, por favor aguarde...");
 
         //Pegando Ids dos componentes da tela
         nome = root.findViewById(R.id.nome_cadastrar);
@@ -108,6 +115,7 @@ public class CadastrarFragment extends Fragment {
                     senhaConfirmar.setTransformationMethod(android.text.method.HideReturnsTransformationMethod.getInstance());
                     mostrarSenha_Cadastrar2.setImageResource(R.drawable.ic_senha_mostrar);
                     mostrarSenha_Cadastrar_contador++;
+
                     break;
                     case 1:
                         senhaConfirmar.setTransformationMethod(android.text.method.PasswordTransformationMethod.getInstance());
@@ -121,8 +129,9 @@ public class CadastrarFragment extends Fragment {
       cadastrar.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               metodoBanco.Progress(progressDialog, "Cadastrar", "Cadastrando, por-favor aguarde.", getContext());
+                progressDialog.show();
                 metodoBanco.cadastrarUsuario(email, senha, nome, senhaConfirmar, telefone, data_nasc, sobrenome, root, root.getContext(), getActivity());
+                progressDialog.dismiss();
             }
        });
         return root;
