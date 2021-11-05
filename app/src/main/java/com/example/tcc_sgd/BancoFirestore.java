@@ -688,6 +688,16 @@ public class BancoFirestore {
         progressDialog.dismiss();
     }
 
+    public void limparDadosCadastro(EditText email, EditText senha, EditText senhaConfirmar, EditText nome, EditText sobrenome, EditText telefone, EditText data_nasc){
+        nome.getText().clear();
+        sobrenome.getText().clear();
+        email.getText().clear();
+        data_nasc.getText().clear();
+        telefone.getText().clear();
+        senha.getText().clear();
+        senhaConfirmar.getText().clear();
+    }
+
     public void cadastrarUsuario(  EditText email, EditText senha, EditText nome,EditText senhaConfirmar,EditText telefone,EditText data_nasc,
                                    EditText sobrenome, View view, Context contexto, Activity activity){
 
@@ -771,7 +781,7 @@ public class BancoFirestore {
 
     public void loginUsuario(View view, Context context, EditText emailLogin, EditText senhaLogin, Activity activity){
         //Criando Tela de loading
-        Progress(progressDialog, "Login", "Logando...", context);
+
         if( emailLogin.getText().toString().isEmpty() || senhaLogin.getText().toString().isEmpty()){
             Toast.makeText(view.getContext(), "Preencha todos os campos", Toast.LENGTH_SHORT).show();
         }else{
@@ -784,6 +794,7 @@ public class BancoFirestore {
                         emailLogin.getText().clear();
                         senhaLogin.getText().clear();
                         activity.finish();
+                        Progress(progressDialog, "Login", "Logando...", context);
                     } else {
                         try {
                             throw task.getException();
@@ -795,6 +806,8 @@ public class BancoFirestore {
             });
         }
     }
+
+
 
 
 

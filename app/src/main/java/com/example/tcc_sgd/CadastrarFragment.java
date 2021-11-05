@@ -35,6 +35,7 @@ public class CadastrarFragment extends Fragment {
 
     private ViewGroup root;
     private EditText email, senha, nome, senhaConfirmar, telefone, data_nasc, sobrenome;
+    private Button limparDados;
     private ImageView mostrarSenha_Cadastrar1, mostrarSenha_Cadastrar2;
     private ProgressDialog progressDialog;
     int mostrarSenha_Cadastrar_contador = 0;
@@ -57,6 +58,7 @@ public class CadastrarFragment extends Fragment {
         email = root.findViewById(R.id.email_cadastrar);
         senha = root.findViewById(R.id.senha_cadastrar);
         telefone = root.findViewById(R.id.telefone_cadastrar);
+        limparDados = root.findViewById(R.id.limparDadosCadastro);
         sobrenome = root.findViewById(R.id.sobrenome_cadastrar);
         data_nasc = root.findViewById(R.id.data_nascimento_cadastrar);
         senhaConfirmar = root.findViewById(R.id.confsenha_cadastrar);
@@ -134,6 +136,13 @@ public class CadastrarFragment extends Fragment {
                 progressDialog.dismiss();
             }
        });
+
+      limparDados.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              metodoBanco.limparDadosCadastro(email, senha, senhaConfirmar, nome, sobrenome, telefone, data_nasc);
+          }
+      });
         return root;
 
 

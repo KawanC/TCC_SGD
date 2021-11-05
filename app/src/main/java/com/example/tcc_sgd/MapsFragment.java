@@ -883,6 +883,7 @@ public class MapsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Criando objeto para chamar o metodo de enviar denuncia
+
                 EnviarDenuncia enviarDenuncia = new EnviarDenuncia("tipoProblema", "idUsuario", "nomeEstabelecimento", "enderecoEstabelecimento","textoDescricao" );
                 enviarDenuncia.enviarDenuncia(LayoutView, usuarioID, estabelecimento.getNome() , estabelecimento.getEndereco(),getContext());
                 alertDialogDenuncia.dismiss();

@@ -66,6 +66,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                //metodoBanco.Progress(progressDialog, "Login", "Logando, por-favor aguarde.", getContext());
                 metodoBanco.loginUsuario(root, root.getContext(),email, senha, getActivity());
+
             }
         });
         return root;

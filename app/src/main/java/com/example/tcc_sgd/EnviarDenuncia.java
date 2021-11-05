@@ -22,6 +22,7 @@ public class EnviarDenuncia {
     String texto, tipoProblema, idUsuario, nomeEstabelecimento, enderecoEstabelecimento;
     FirebaseFirestore feed = FirebaseFirestore.getInstance();
 
+
     public EnviarDenuncia(String tipoProblema, String idUsuario, String nomeEstabelecimento, String enderecoEstabelecimento, String texto) {
         this.tipoProblema = tipoProblema;
         this.idUsuario = idUsuario;
@@ -29,6 +30,7 @@ public class EnviarDenuncia {
         this.enderecoEstabelecimento = enderecoEstabelecimento;
         this.texto = texto;
     }
+
 
     public void enviarDenuncia(View view, String idUsuario, String nomeEstabelecimento, String enderecoEstabelecimento, Context context ){
 

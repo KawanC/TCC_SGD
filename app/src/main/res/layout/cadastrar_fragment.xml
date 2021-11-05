@@ -234,6 +234,20 @@
                     app:layout_constraintTop_toTopOf="@+id/email_cadastrar"
                     app:srcCompat="@drawable/ic_email_cadastrar" />
 
+                <Button
+                    android:id="@+id/limparDadosCadastro"
+                    android:layout_width="0dp"
+                    android:layout_height="61dp"
+                    android:layout_marginTop="24dp"
+                    android:backgroundTint="@color/purple_200"
+                    android:text="LIMPAR DADOS"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/BotaoCadastrar"
+                    app:layout_constraintStart_toStartOf="@+id/BotaoCadastrar"
+                    app:layout_constraintTop_toBottomOf="@+id/BotaoCadastrar" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
