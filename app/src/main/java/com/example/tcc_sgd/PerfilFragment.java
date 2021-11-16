@@ -62,7 +62,7 @@ public class PerfilFragment extends Fragment {
     private BancoFirestore metodoBanco = new BancoFirestore(); //Objeto para os metodos do banco
     private TextView email, nome, telefone, data_nasc, alterarFoto, tirarFoto, galeriaFoto, cancelarFoto, removerFoto;
     private Button deslogar;
-    private ImageView imageViewNome, imageViewTelefone, imageViewDataNasc, imageViewEmail;
+    private ImageView imageViewNome, imageViewTelefone, imageViewDataNasc, imageViewEmail, imageFoto;
     private String[] nomeFinal = new String[2];
     private CircleImageView imagemPerfilMenu;
     private CircleImageView imagemPerfil;
@@ -98,11 +98,8 @@ public class PerfilFragment extends Fragment {
         imagemPerfil = view.findViewById(R.id.imageViewPerfil);
         imagemPerfilMenu = getActivity().findViewById(R.id.imageViewMenu);
         imageViewEmail = view.findViewById(R.id.imageViewEmail1);
-        alterarFoto = view.findViewById(R.id.textViewAlterarFoto);
+        imageFoto = view.findViewById(R.id.imageViewAlterarPerfil);
 
-        //SUBLINAHNDO TEXTO
-        alterarFoto.setPaintFlags(alterarFoto.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        alterarFoto.setText("Alterar foto");
         //ATUALIZANDO FOTO DE PERFIL
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
@@ -117,7 +114,7 @@ public class PerfilFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Estamos upando sua foto, por favor aguerde...");
 
-        alterarFoto.setOnClickListener(new View.OnClickListener() {
+        imageFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //criando a tela de opções

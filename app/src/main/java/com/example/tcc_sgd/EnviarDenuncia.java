@@ -21,6 +21,7 @@ import java.util.Calendar;
 public class EnviarDenuncia {
     String texto, tipoProblema, idUsuario, nomeEstabelecimento, enderecoEstabelecimento;
     FirebaseFirestore feed = FirebaseFirestore.getInstance();
+    MapsFragment mapsFragment;
 
 
     public EnviarDenuncia(String tipoProblema, String idUsuario, String nomeEstabelecimento, String enderecoEstabelecimento, String texto) {
@@ -55,7 +56,11 @@ public class EnviarDenuncia {
                     tipoProblema = "Movimentação atual errada";
                     break;
             }
-            EnviarDenuncia denuncia = new EnviarDenuncia(tipoProblema, idUsuario, nomeEstabelecimento, enderecoEstabelecimento, textoDenuncia.getText().toString());
+            
+            if(!textoDenuncia.getText().toString().isEmpty()){
+            
+            EnviarDenuncia denuncia = new EnviarDenuncia(tipoProblema, idUsuario, nomeEstabelecimento, enderecoEstabelecimento,
+                    textoDenuncia.getText().toString());
             String horaDenuncia = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 
             feed.collection("Denuncias").document(nomeEstabelecimento + "-" + idUsuario + "-" + horaDenuncia)
@@ -63,13 +68,22 @@ public class EnviarDenuncia {
                 @Override
                 public void onSuccess(Void unused) {
                     Toast.makeText(context, "Erro reportado com sucesso", Toast.LENGTH_SHORT).show();
+                    mapsFragment.alertDialogDenuncia.dismiss();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(context, "Falha ao enviar", Toast.LENGTH_SHORT).show();
+                    mapsFragment.alertDialogDenuncia.dismiss();
                 }
             });
+
+            }else{
+                Toast.makeText(view.getContext(), "Escreva no espaço do texto para uma melhor eficiência de sua denúncia", Toast.LENGTH_SHORT).show();
+            }
+            
+            }else{
+            Toast.makeText(view.getContext(), "Selecione a sua denúncia e coloque um texto especificando o problema!", Toast.LENGTH_SHORT).show();
         }
 
      }

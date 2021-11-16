@@ -325,6 +325,7 @@ public class MapsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 seekBar2.setEnabled(true);
+                seekBar2.setProgress(0);
                 tamanhoEstabelecimento = "Pequeno";
             }
         });
@@ -332,6 +333,7 @@ public class MapsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 seekBar2.setEnabled(true);
+                seekBar2.setProgress(0);
                 tamanhoEstabelecimento = "Médio";
             }
         });
@@ -339,6 +341,7 @@ public class MapsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 seekBar2.setEnabled(true);
+                seekBar2.setProgress(0);
                 tamanhoEstabelecimento = "Grande";
             }
         });
@@ -875,6 +878,7 @@ public class MapsFragment extends Fragment {
         AppCompatButton dialogButtomEnviar = LayoutView.findViewById(R.id.botao_enviar_dialog);
         AppCompatButton dialogButtomCancelar = LayoutView.findViewById(R.id.botao_cancelar_denuncia);
         builderDialog2.setView(LayoutView);
+
         alertDialogDenuncia = builderDialog2.create();
         alertDialogDenuncia.show();
 
@@ -883,10 +887,8 @@ public class MapsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //Criando objeto para chamar o metodo de enviar denuncia
-
                 EnviarDenuncia enviarDenuncia = new EnviarDenuncia("tipoProblema", "idUsuario", "nomeEstabelecimento", "enderecoEstabelecimento","textoDescricao" );
                 enviarDenuncia.enviarDenuncia(LayoutView, usuarioID, estabelecimento.getNome() , estabelecimento.getEndereco(),getContext());
-                alertDialogDenuncia.dismiss();
             }
         });
         //Metdo do botão de cancelar
