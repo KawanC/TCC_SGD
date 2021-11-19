@@ -548,7 +548,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                     }
-                    if (progress > 0 && progress <= 50) {
+                    if (progress > 0 && progress <= 30) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimento Tranquilo");
@@ -556,7 +556,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 50 && progress <= 75) {
+                    if (progress > 30 && progress <= 75) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimentado");
@@ -564,7 +564,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 75 && progress <= 100) {
+                    if (progress > 75) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Muito movimentado!");
@@ -584,7 +584,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                     }
-                    if (progress > 0 && progress <= 100) {
+                    if (progress > 0 && progress <= 60) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimento Tranquilo");
@@ -592,7 +592,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 100 && progress <= 150) {
+                    if (progress > 60 && progress <= 150) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimentado");
@@ -600,7 +600,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 150 && progress <= 200) {
+                    if (progress > 150) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Muito movimentado!");
@@ -620,7 +620,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                     }
-                    if (progress > 0 && progress <= 175) {
+                    if (progress > 0 && progress <= 120) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimento Tranquilo");
@@ -628,7 +628,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 175 && progress <= 300) {
+                    if (progress > 120 && progress <= 300) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimentado");
@@ -636,7 +636,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 300 && progress <= 400) {
+                    if (progress > 300) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Muito movimentado!");
@@ -659,7 +659,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                     }
-                    if (progress > 0 && progress <= 1000) {
+                    if (progress > 0 && progress <= 1200) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimento Tranquilo");
@@ -667,7 +667,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 1000 && progress <= 3000) {
+                    if (progress > 1200 && progress <= 3000) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimentado");
@@ -675,7 +675,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 3000 && progress <= 4000) {
+                    if (progress > 3000) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Muito movimentado!");
@@ -695,7 +695,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                     }
-                    if (progress > 0 && progress <= 2500) {
+                    if (progress > 0 && progress <= 1800) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimento Tranquilo");
@@ -703,7 +703,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 2500 && progress <= 5000) {
+                    if (progress > 1800 && progress <= 4500) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimentado");
@@ -711,7 +711,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 5000 && progress <= 7000) {
+                    if (progress > 4500) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Muito movimentado!");
@@ -731,7 +731,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                     }
-                    if (progress > 0 && progress <= 3000) {
+                    if (progress > 0 && progress <= 4500) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimento Tranquilo");
@@ -739,7 +739,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 3000 && progress <= 7500) {
+                    if (progress > 4500 && progress <= 11250) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimentado");
@@ -747,7 +747,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 7500 && progress <= 15000) {
+                    if (progress > 11250) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Muito movimentado!");
@@ -770,7 +770,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                     }
-                    if (progress > 0 && progress <= 100) {
+                    if (progress > 0 && progress <= 150) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimento Tranquilo");
@@ -778,7 +778,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 100 && progress <= 300) {
+                    if (progress > 150 && progress <= 375) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimentado");
@@ -786,7 +786,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 300 && progress <= 500) {
+                    if (progress > 375) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Muito movimentado!");
@@ -806,7 +806,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                     }
-                    if (progress > 0 && progress <= 500) {
+                    if (progress > 0 && progress <= 450) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimento Tranquilo");
@@ -814,7 +814,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 500 && progress <= 750) {
+                    if (progress > 450 && progress <= 1125) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimentado");
@@ -822,7 +822,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 750 && progress <= 1500) {
+                    if (progress > 1125) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Muito movimentado!");
@@ -842,7 +842,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.MULTIPLY); //MUDANDO COR DA SEEKBAR
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#000000"), PorterDuff.Mode.SRC_IN); //MUDANDO COR DO PONTEIRO DA SEEKBAR
                     }
-                    if (progress > 0 && progress <= 750) {
+                    if (progress > 0 && progress <= 1050) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#008000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimento Tranquilo");
@@ -850,7 +850,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#008000"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 750 && progress <= 1500) {
+                    if (progress > 1050 && progress <= 2625) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FFFF00")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Movimentado");
@@ -858,7 +858,7 @@ public class MapsFragment extends Fragment {
                         seekBar2.getProgressDrawable().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.MULTIPLY);
                         seekBar2.getThumb().setColorFilter(Color.parseColor("#FFFF00"), PorterDuff.Mode.SRC_IN);
                     }
-                    if (progress > 1500 && progress <= 3500) {
+                    if (progress > 2625) {
                         textViewProgues.setText(progress + " Pessoas aprox.");
                         textViewProgues.setTextColor(Color.parseColor("#FF0000")); //MUDANDO COR DO TEXTO
                         textViewMovimentacao.setText("Muito movimentado!");
