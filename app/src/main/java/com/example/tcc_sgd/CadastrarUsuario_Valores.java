@@ -1,7 +1,7 @@
 package com.example.tcc_sgd;
 
 public class CadastrarUsuario_Valores {
-    private String nome, email, senha, telefone, data_nasc;
+    private String nome, email, telefone, data_nasc;
 
     public CadastrarUsuario_Valores(String nome , String email, String data_nasc, String telefone) {
         this.nome = nome;

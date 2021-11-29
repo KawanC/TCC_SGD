@@ -43,7 +43,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity{
-    FirebaseFirestore feed = FirebaseFirestore.getInstance();
     AlertDialog.Builder builderDialog;
     AlertDialog alertDialog;
     BancoFirestore metodoBanco = new BancoFirestore();

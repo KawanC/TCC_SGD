@@ -41,12 +41,12 @@ import java.util.Locale;
 
 public class BancoFirestore {
     //Atributos
-    String idFeed, dataF, horaF, valorFinal, valorData;
-    AlertDialog.Builder builderDialog;
-    AlertDialog alertDialog;
-    FirebaseFirestore bancoDeDados = FirebaseFirestore.getInstance();
-    FirebaseAuth auth = FirebaseAuth.getInstance();
-    ProgressDialog progressDialog;
+    private String idFeed, dataF, horaF, valorFinal, valorData;
+    private  AlertDialog.Builder builderDialog;
+    private AlertDialog alertDialog;
+    private FirebaseFirestore bancoDeDados = FirebaseFirestore.getInstance();
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private ProgressDialog progressDialog;
 
 
 

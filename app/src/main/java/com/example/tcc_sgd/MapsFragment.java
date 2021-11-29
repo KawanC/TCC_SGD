@@ -81,7 +81,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MapsFragment extends Fragment {
 
-    //private SearchView searchView;
     private View view;
     private EditText editTextPesquisa;
     private FloatingActionButton BotaoFeedback, BotaoInformacao;
@@ -107,7 +106,6 @@ public class MapsFragment extends Fragment {
 
     //CRIANDO CAMPO DE LOADING
     private ProgressDialog progressDialog;
-
 
     //TEXT
     private TextView email, nome;
