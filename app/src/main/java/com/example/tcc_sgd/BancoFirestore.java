@@ -761,7 +761,7 @@ public class BancoFirestore {
                                     } catch (FirebaseAuthInvalidCredentialsException e) {
                                         Toast.makeText(view.getContext(), "Email inválido", Toast.LENGTH_SHORT).show();
                                     } catch (Exception e) {
-                                        Toast.makeText(view.getContext(), "Erro loco " + e, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(view.getContext(), "Erro " + e, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
