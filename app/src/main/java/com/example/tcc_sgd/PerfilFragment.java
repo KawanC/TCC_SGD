@@ -371,7 +371,7 @@ public class PerfilFragment extends Fragment {
             });
 
         } catch (Exception e){
-            Toast.makeText(view.getContext(), "ERRO TEXTVIEW", Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(), "", Toast.LENGTH_SHORT).show();
         }
     }
 
