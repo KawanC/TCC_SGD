@@ -92,7 +92,7 @@ public class MapsFragment extends Fragment {
     private Estabelecimento estabelecimento;
     private int numeroMovimentacao, radioId2;
     private RadioButton radioButtonPequeno, radioButtonMedio, radioButtonGrande, radioButtonShop, radioButtonMercado, radioButtonRestaurante;
-    private ImageView imageViewLocalizacao, imageViewIconEstabelecimentoInfo, imageViewDenuncia, imageViewAtualizar;
+    private ImageView imageViewLocalizacao, imageViewIconEstabelecimentoInfo, imageViewDenuncia, imageViewAtualizar, imageViewDuvidaTamanho;
     private String tamanhoEstabelecimento, tipoEstabelecimento;
     private LinearLayout linearLayoutSeekBar, linearLayoutSeekBarAtual;
     private CircleImageView imagemViewMenu;
@@ -317,6 +317,15 @@ public class MapsFragment extends Fragment {
         radioButtonMedio = bottomSheetView2.findViewById(R.id.radioButtonMedio);
         radioButtonGrande = bottomSheetView2.findViewById(R.id.radioButtonGrande);
         radioGroupEstabelecimento = bottomSheetView2.findViewById(R.id.radioGroupTamanho);
+
+        //METODO DA IMAGEM DE DUVIDA
+        imageViewDuvidaTamanho = bottomSheetView2.findViewById(R.id.duvidaTamanho);
+        imageViewDuvidaTamanho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialogDois(R.layout.dialog_informacao_tamanho);
+            }
+        });
 
         //EVENTO AO CLICAR NO RADIO BUTTON
         radioButtonPequeno.setOnClickListener(new View.OnClickListener() {

@@ -30,6 +30,7 @@
         android:gravity="center_vertical">
 
         <View
+            android:id="@+id/view6"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorDuvider"
@@ -38,6 +39,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/duvidaTamanho"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_marginBottom="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_help_24"
+            app:layout_constraintBottom_toBottomOf="@+id/textView4"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="@+id/textView4"
+            app:riv_corner_radius="10dp" />
 
         <View
             android:id="@+id/view2"
@@ -48,18 +62,20 @@
 
         <TextView
             android:id="@+id/textView4"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:fontFamily="sans-serif-black"
             android:gravity="center_horizontal"
             android:text="Qual o tamanho do estabelecimento?"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/radioGroupTamanho"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.8" />
+            app:layout_constraintVertical_bias="0.444" />
 
         <RadioGroup
             android:id="@+id/radioGroupTamanho"
