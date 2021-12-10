@@ -109,10 +109,10 @@ public class MapsFragment extends Fragment {
 
     //TEXT
     private TextView email, nome;
-    String usuarioID, nomeMenu, emailMenu;
+    private String usuarioID, nomeMenu, emailMenu;
 
-    AlertDialog.Builder builderDialog, builderDialog2 ;
-    AlertDialog alertDialog, alertDialogDenuncia ;
+    private AlertDialog.Builder builderDialog, builderDialog2 ;
+    private AlertDialog alertDialog, alertDialogDenuncia ;
 
     // A classe FusedLocationProviderCliente irá fornecer os métodos para interagir com o GPS
     private FusedLocationProviderClient servicoLocalizacao;
@@ -128,7 +128,7 @@ public class MapsFragment extends Fragment {
     private boolean permitiuGPS = false;
 
     // Variável para armazenar o ponto retornoado pelo GPS do celular do usuario.
-    Location ultimaPosicao;
+    private Location ultimaPosicao;
 
 
 
@@ -896,6 +896,7 @@ public class MapsFragment extends Fragment {
                 //Criando objeto para chamar o metodo de enviar denuncia
                 EnviarDenuncia enviarDenuncia = new EnviarDenuncia("tipoProblema", "idUsuario", "nomeEstabelecimento", "enderecoEstabelecimento","textoDescricao" );
                 enviarDenuncia.enviarDenuncia(LayoutView, usuarioID, estabelecimento.getNome() , estabelecimento.getEndereco(),getContext());
+                alertDialogDenuncia.cancel();
             }
         });
         //Metdo do botão de cancelar

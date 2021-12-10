@@ -19,9 +19,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class EnviarDenuncia {
-    String texto, tipoProblema, idUsuario, nomeEstabelecimento, enderecoEstabelecimento;
-    FirebaseFirestore feed = FirebaseFirestore.getInstance();
-    MapsFragment mapsFragment;
+   private String texto, tipoProblema, idUsuario, nomeEstabelecimento, enderecoEstabelecimento;
+   private FirebaseFirestore feed = FirebaseFirestore.getInstance();
+
 
 
     public EnviarDenuncia(String tipoProblema, String idUsuario, String nomeEstabelecimento, String enderecoEstabelecimento, String texto) {
@@ -33,7 +33,7 @@ public class EnviarDenuncia {
     }
 
 
-    public void enviarDenuncia(View view, String idUsuario, String nomeEstabelecimento, String enderecoEstabelecimento, Context context ){
+    public void enviarDenuncia(View view, String idUsuario, String nomeEstabelecimento, String enderecoEstabelecimento, Context context){
 
         // Desabilitando o dialog
         RadioGroup tipoDenuncia = view.findViewById(R.id.radioGroupReportarErro);
@@ -68,13 +68,12 @@ public class EnviarDenuncia {
                 @Override
                 public void onSuccess(Void unused) {
                     Toast.makeText(context, "Erro reportado com sucesso", Toast.LENGTH_SHORT).show();
-                    mapsFragment.alertDialogDenuncia.dismiss();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(context, "Falha ao enviar", Toast.LENGTH_SHORT).show();
-                    mapsFragment.alertDialogDenuncia.dismiss();
+
                 }
             });
 
